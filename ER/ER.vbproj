@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ER</RootNamespace>
     <AssemblyName>ER</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -22,6 +22,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,7 @@
     <OutputPath>bin\</OutputPath>
     <DocumentationFile>ER.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,24 +42,24 @@
     <OutputPath>bin\</OutputPath>
     <DocumentationFile>ER.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
@@ -85,12 +87,20 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Administrador\Actividad.aspx" />
+    <Content Include="Administrador\Area.aspx" />
+    <Content Include="Administrador\Instalacion.aspx" />
+    <Content Include="Administrador\Usuario.aspx" />
+    <Content Include="Bootstrap\css\AdminLTE.min.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Bootstrap\css\bootstrap-reboot.css" />
     <Content Include="Bootstrap\css\bootstrap-reboot.min.css" />
     <Content Include="Bootstrap\css\bootstrap.css" />
     <Content Include="Bootstrap\css\bootstrap.min.css" />
+    <Content Include="Bootstrap\css\bootstrap4.4.1.min.css" />
+    <Content Include="Bootstrap\css\ionicons.min.css" />
+    <Content Include="Bootstrap\fonts\ionicons.svg" />
     <Content Include="Bootstrap\js\bootstrap.js" />
     <Content Include="Bootstrap\js\bootstrap.min.js" />
     <Content Include="Bootstrap\js\jquery-3.4.1.min.js" />
@@ -99,7 +109,35 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ER\Conexion.vb" />
+    <Compile Include="Administrador\Actividad.aspx.designer.vb">
+      <DependentUpon>Actividad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Actividad.aspx.vb">
+      <DependentUpon>Actividad.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Area.aspx.designer.vb">
+      <DependentUpon>Area.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Area.aspx.vb">
+      <DependentUpon>Area.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Instalacion.aspx.designer.vb">
+      <DependentUpon>Instalacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Instalacion.aspx.vb">
+      <DependentUpon>Instalacion.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Usuario.aspx.designer.vb">
+      <DependentUpon>Usuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Usuario.aspx.vb">
+      <DependentUpon>Usuario.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Conexion.vb" />
     <Compile Include="ER\Inicio.aspx.designer.vb">
       <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
@@ -150,6 +188,9 @@
     <Content Include="Bootstrap\css\bootstrap.css.map" />
     <Content Include="Bootstrap\css\bootstrap.min.css.map" />
     <Content Include="ER\Site.Master" />
+    <Content Include="Bootstrap\fonts\ionicons.eot" />
+    <Content Include="Bootstrap\fonts\ionicons.ttf" />
+    <Content Include="Bootstrap\fonts\ionicons.woff" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

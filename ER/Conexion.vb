@@ -4,7 +4,7 @@ Imports System.Windows.Forms
 
 Public Class Conexion
 
-    Private cadena As String = "server= ; User= ; database= ; password="
+    Private cadena As String = "server=NPLSMXL7471M3X,1433\SQLEXPRESS ; User=sa ; database=ER ; password=Sopenco21"
     Public conn As SqlConnection
     Private cmb As SqlCommandBuilder
     Public cmd As SqlCommand
