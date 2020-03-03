@@ -89,6 +89,7 @@
   <ItemGroup>
     <Content Include="Administrador\Actividad.aspx" />
     <Content Include="Administrador\Area.aspx" />
+    <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
     <Content Include="Administrador\Usuario.aspx" />
     <Content Include="Bootstrap\css\AdminLTE.min.css" />
@@ -121,6 +122,14 @@
     </Compile>
     <Compile Include="Administrador\Area.aspx.vb">
       <DependentUpon>Area.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\AtributosEmpleado.vb" />
+    <Compile Include="Administrador\Empleado.aspx.designer.vb">
+      <DependentUpon>Empleado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Empleado.aspx.vb">
+      <DependentUpon>Empleado.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\Instalacion.aspx.designer.vb">

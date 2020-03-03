@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="Instalacion.aspx.vb" Inherits="ER.Instalacion" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="Empleado.aspx.vb" Inherits="ER.Empleado" %>
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <title>Instalación</title>
+    <title>Empleado</title>
     <link href="../Bootstrap/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="../Bootstrap/css/bootstrap4.4.1.min.css" rel="stylesheet" />
 
@@ -17,16 +17,14 @@
     <form id="form1" runat="server" defaultbutton="btnBuscar">
                 <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
 
-
-
         <div>
             <section class="content-header">
-                <h1>Instalación</h1>
+                <h1>Empleado</h1>
             </section>
             <section class="content">
-               <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+           <%--    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
 
-                   <ContentTemplate>
+                   <ContentTemplate>--%>
                         <asp:Literal ID="litControl" runat="server"></asp:Literal>
 
                         <div class="col-lg-12">
@@ -36,28 +34,49 @@
                     <div class="row">
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
-                            <div class="form-group">
-                                <label class="font-weight-bold">Nombre:</label>
-                                <asp:TextBox class="form-control " ID="txtNombreInstalacion" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                               <div class="form-group">
+                                <label class="font-weight-bold">Nombre(s):</label>
+                                <asp:TextBox class="form-control " ID="txtNombre" runat="server" MaxLength="25" onkeypress="return AllowAlphabet(event)">
                    
                                 </asp:TextBox>
                              
-                                <asp:RequiredFieldValidator runat="server" ID="reqInstalacion" ControlToValidate="txtNombreInstalacion"
-                                    ErrorMessage="Nombre de instalación requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator runat="server" ID="reqNombre" ControlToValidate="txtNombre"
+                                    ErrorMessage="Nombre requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
                             </div>
-                        </div>
+                        
+                         
+                  
 
-                        <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label class="font-weight-bold">Region:</label>
+                                <label class="font-weight-bold">Apellido Paterno:</label>
+                                <asp:TextBox class="form-control " ID="txtPaterno" runat="server" MaxLength="25" onkeypress="return AllowAlphabet(event)">
+                   
+                                </asp:TextBox>
+                             
+                                <asp:RequiredFieldValidator runat="server" ID="reqInstalacion" ControlToValidate="txtPaterno"
+                                    ErrorMessage="Apellido Paterno requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Apellido Materno:</label>
+                                <asp:TextBox class="form-control " ID="txtMaterno" runat="server" MaxLength="25" onkeypress="return AllowAlphabet(event)">
+                   
+                                </asp:TextBox>
+                             
+                              
+                            </div>
+                            </div>
+                                                 <div class="col-sm-8 col-md-4 col-lg-4">
+<div class="form-group">
+                                <label class="font-weight-bold">Instalación:</label>
 
-                                <asp:DropDownList class="form-control" ID="ddl_Region" runat="server" DataTextField="Nombre" DataValueField="id_region"></asp:DropDownList>
-                                <asp:RequiredFieldValidator runat="server" ID="reqRegion" ControlToValidate="ddl_Region"
-                                    ErrorMessage="Nombre de región requerido." ForeColor="Red" InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                                <asp:DropDownList class="form-control" ID="ddl_Instalacion" runat="server" DataTextField="Nombre" DataValueField="Id_instalacion"></asp:DropDownList>
+                                <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="ddl_Instalacion"
+                                    ErrorMessage="Instalación requerida." ForeColor="Red" InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
 
                             </div>
-                            <div class="col-sm-12 col-md-2"></div>
-                        </div>
+
+</div>
+                      
                
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="vert-offset-bottom-2">
@@ -65,16 +84,13 @@
                             </div>
                             <div class="form-group Botones">
                                 <asp:Button class="btn btn-primary  MargingControles" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
-                                <a id="btn_ClearButton" class="btn btn-default" role="button" onclick="limpiar()">Limpiar</a>
-                                                                <a id="btnCerrar" class="btn btn-default" role="button">Cerrar</a>
-
-
+                                <a id="btn_ClearButton" class="btn btn-default " role="button" onclick="limpiar()">Limpiar</a>
+                                  <a id="btnCerrar" class="btn btn-default " role="button">Cerrar</a>
                             </div>
                         </div>
 
                     </div>
-
-
+                 
                 </div>
 
 
@@ -101,23 +117,24 @@
     <div class="container ">
         <div class="table-reponsive">
             <div style="overflow: auto; height: auto">
-                <asp:GridView ID="gridInstalacion"
+             <asp:GridView ID="gridEmpleado"
                     runat="server"
                     AutoGenerateColumns="false" AllowPaging="true"
                     CssClass=" table table-striped table-sm text-md-center"
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
                     EmptyDataText="Sin registros"
                  PageSize="10"
-                    OnPageIndexChanging="gridInstalacion_PageIndexChanging"
                     AllowCustomPaging="false" 
-                    DataKeyNames="Id_Instalacion" 
-                     OnRowCommand="gridInstalacion_RowCommand">
+                    DataKeyNames="Id_empleado" 
+                     >
                     <Columns>
                         <asp:TemplateField HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
 
-                                
-                                
+                                <div class="btn-group">
+                <asp:LinkButton runat="server" id="btnAgrear" class="btn btn-sm text-blue" CommandName="Agregar" ><span class=" ion-plus" ></span>Usuario</asp:LinkButton>
+            </div>
+                              
                                  <asp:LinkButton runat="server" ID="btnEditar" class="btn btn-primary" BackColor="#5b6060"  Text="Editar" CommandName="Editar">
                                 </asp:LinkButton>
                                    <asp:LinkButton runat="server" ID="btnAct" class="btn btn-primary" BackColor="#5b6060"  Text="Actualizar" CommandName="Actualizar" Visible="false" >
@@ -128,11 +145,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         
-                                <%--<asp:TemplateField HeaderStyle-Width="200px">
-                            <ItemTemplate>
                              
-                            </ItemTemplate>
-                        </asp:TemplateField>--%>
                         <asp:TemplateField HeaderStyle-Width="20px">
                             <ItemTemplate>
 
@@ -142,16 +155,31 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                           
-                        <%--                    <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />--%>
+                      
 
-                        <asp:TemplateField HeaderText="Instalación">
+                        <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>
-                                <asp:Label ID="lblInstalacion" runat="server" Text='<%# Eval("Instalacion") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditInstalacion" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
-                                    Text='<%# Eval("Instalacion") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                                <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                    Text='<%# Eval("Nombre") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField HeaderText="Región" DataField="Region" />
+                        <asp:TemplateField HeaderText="Apellido Paterno">
+                            <ItemTemplate>
+                                <asp:Label ID="lblApellidoPaterno" runat="server" Text='<%# Eval("ApellidoPaterno") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                    Text='<%# Eval("ApellidoPaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Apellido Materno">
+                            <ItemTemplate>
+                                <asp:Label ID="lblApellidoMaterno" runat="server" Text='<%# Eval("ApellidoMaterno") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                    Text='<%# Eval("ApellidoMaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />
+                          <asp:BoundField HeaderText="Fecha de creación " DataField="CreacionFecha" />
                      
                     </Columns>
                <PagerStyle HorizontalAlign = "Center" CssClass="" />
@@ -177,8 +205,8 @@
         
     </div>
                 </div>
-                   </ContentTemplate>
-               </asp:UpdatePanel>
+                  <%-- </ContentTemplate>
+               </asp:UpdatePanel>--%>
             </section>
         </div>
 
@@ -188,12 +216,9 @@
     <script src="../Bootstrap/js/popper.min.js"></script>
     <script src="../Bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-                            Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
-            function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
-
-               Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
-
-  var div = $('#DivInsertar');
+                    $(document).ready(function () {
+         
+                        var div = $('#DivInsertar');
                         div.hide();
                         $('#lnk_Agregar').click(function () {
 
@@ -204,18 +229,20 @@
                         $('#btnCerrar').click(function () {
                             div.slideUp();
                                  }); 
-        });
-                  
+                            
+                        
+                    }); 
            
                 
+            //    Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
+            //function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
 
-
-              function limpiar() {
+<%--               function limpiar() {
             document.getElementById("<%= txtNombreInstalacion.ClientID %>").value = "";
                    document.getElementById("<%= ddl_Region.ClientID %>").selectedIndex = 0;
 
-            }
+            }--%>
 
  //           function Mostrar() {
  //                var Div = document.getElementById('DivInsertar')

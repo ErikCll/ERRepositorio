@@ -14,9 +14,9 @@
     Private HaCambiadoElTexto As Boolean = False
 
     Public Sub MostrarGridInstalacion()
-        Dim Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL"
+        Dim Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL ORDER BY Id_Instalacion DESC"
         If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
-            Query += " AND catIns.Nombre LIKE  '%" + txtSearch.Text.Trim() + "%'"
+            Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL  AND catIns.Nombre LIKE  '%" + txtSearch.Text.Trim() + "%' ORDER BY Id_Instalacion DESC"
         End If
 
         gridInstalacion.DataSource = obj.Consultar(Query)
