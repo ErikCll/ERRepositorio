@@ -38,7 +38,7 @@
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label class="font-weight-bold">Nombre:</label>
-                                <asp:TextBox class="form-control " ID="txtNombreInstalacion" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                <asp:TextBox class="form-control " ID="txtNombreInstalacion" runat="server" MaxLength="30" onkeypress="return AllowAlphabet(event)">
                    
                                 </asp:TextBox>
                              
@@ -64,7 +64,7 @@
                                 <br />
                             </div>
                             <div class="form-group Botones">
-                                <asp:Button class="btn btn-primary  MargingControles" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
+                                <asp:Button class="btn btn-primary" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
                                 <a id="btn_ClearButton" class="btn btn-default" role="button" onclick="limpiar()">Limpiar</a>
                                                                 <a id="btnCerrar" class="btn btn-default" role="button">Cerrar</a>
 
@@ -148,7 +148,7 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblInstalacion" runat="server" Text='<%# Eval("Instalacion") %>'></asp:Label>
                                 <asp:TextBox ID="txtEditInstalacion" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
-                                    Text='<%# Eval("Instalacion") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                                    Text='<%# Eval("Instalacion") %>' Visible="false" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Región" DataField="Region" />
@@ -157,23 +157,11 @@
                <PagerStyle HorizontalAlign = "Center" CssClass="" />
                 </asp:GridView>
             </div>
-
-
-
-
-       
+   
         </div>
          
     </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" runat="server" visible="false">
-                <div class="vert-offset-bottom-2"></div>
-                <div class="form-group Botones">
-
-                    <asp:Button class="btn  btn-primary" ID="btnEditar" runat="server" Text="Editar" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button class="btn  btn-primary" ID="btnGuardarEdit" runat="server" Text="Actualizar" Visible="false" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button ID="btnCancelar" runat="server" class="btn btn-default" Text="Cancelar" Visible="false" />
-                </div>
-            </div>
+       
         
     </div>
                 </div>
@@ -216,7 +204,34 @@
                    document.getElementById("<%= ddl_Region.ClientID %>").selectedIndex = 0;
 
             }
+             function AllowAlphabet(e) {
+            isIE = document.all ? 1 : 0
+            keyEntry = !isIE ? e.which : event.keyCode;
+                 if (((keyEntry >= 65) && (keyEntry <= 90)) ||
+                     ((keyEntry >= 97) && (keyEntry <= 122)) ||
+                     (keyEntry == 46) || (keyEntry == 32) || keyEntry == 45 || (keyEntry == 32) || keyEntry == 45
+                     || (keyEntry == 241) || keyEntry == 209
+                     || (keyEntry == 225) || keyEntry == 233
+                     || (keyEntry == 237) || keyEntry == 243
+                     || (keyEntry == 243) || keyEntry == 250
+                     || (keyEntry == 193) || keyEntry == 201
+                     || (keyEntry == 205) || keyEntry == 211
+                     || (keyEntry == 218) ||(keyEntry >=48 && keyEntry<=57) || (keyEntry == 40) || keyEntry == 41 || keyEntry == 44 || keyEntry == 95 || keyEntry == 64) 
+                return true;
+            else {
+                return false;
+            }
+        }
 
+        function AlphabetOnly(sender, eventArgs) {
+               
+            var c = eventArgs.get_keyCode();
+            if ((c < 65) || (c > 90 && c < 97) || (c > 122)) {
+                eventArgs.set_cancel(true);
+                sender._invalid = true;
+                sender.updateCssClass();
+            }
+        }
  //           function Mostrar() {
  //                var Div = document.getElementById('DivInsertar')
 

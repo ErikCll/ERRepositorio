@@ -30,13 +30,13 @@
                         <div class="col-lg-12">
                     <div class="row">
                          <div class="box box-info" style="border-top-color: #5b6060">
-                <div class="box-body">
+                <div class="box-body" id="DivInsertar">
                     <div class="row">
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label class="font-weight-bold">Nombre:</label>
-                                <asp:TextBox class="form-control " ID="txtArea" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                <asp:TextBox class="form-control " ID="txtArea" runat="server" MaxLength="30" onkeypress="return AllowAlphabet(event)">
                    
                                 </asp:TextBox>
                              
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Instalación:</label>
 
-                               <asp:DropDownList runat="server" class="form-control" ID="ddl_Instalacion" DataTextField="Nombre" DataValueField="id_instalacion" AutoPostBack="true"></asp:DropDownList>
+                               <asp:DropDownList runat="server" class="form-control" ID="ddl_Instalacion" DataTextField="Nombre" DataValueField="id_instalacion" AutoPostBack="false"></asp:DropDownList>
                                 <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="ddl_Instalacion"
                                     ErrorMessage="Nombre de instalación requerido." InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
 
@@ -73,8 +73,9 @@
                                 <br />
                             </div>
                             <div class="form-group Botones">
-                                <asp:Button class="btn btn-primary  MargingControles" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
-                                <a id="btn_ClearButton" class="btn btn-default MargingControles" role="button" onclick="limpiar()">Limpiar</a>
+                                <asp:Button class="btn btn-primary" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
+                                <a id="btn_ClearButton" class="btn btn-default" role="button" onclick="limpiar()">Limpiar</a>
+                                                                                                <a id="btnCerrar" class="btn btn-default" role="button">Cerrar</a>
 
                             </div>
                         </div>
@@ -87,15 +88,19 @@
 
             </div>
                     </div>
-                       <div class="row barchearch">
-        <div class="col-sm-12 col-md-9">
+             <div class="row">
+                           <div class="col-sm-4 col-md-1"></div>
+        <div class="col-sm-4 col-md-7">
+             <div class="btn-group">
+                <a id="lnk_Agregar" class="btn btn-sm text-blue" ><span class=" ion-plus" ></span>Agregar</a>
+            </div>
         </div>
 
-        <div class="col-sm-12 col-md-3">
-            <div class="input-group ClaseInputBusquedaRapida pull-right">
+        <div class="col-sm-4 col-md-4">
+            <div class="input-group">
                 <div class="input-group btn">
-                   <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
-<asp:Button ID="btnBuscar" Text="Buscar" runat="server" OnClick="Search" CssClass="btn btn-default" />
+                   <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
+<asp:Button ID="btnBuscar" Text="Buscar" runat="server" OnClick="Search" CssClass="btn btn-default btn-sm" />
                 </div>
             </div>
         </div>
@@ -113,6 +118,8 @@
                  PageSize="10"
                     AllowCustomPaging="false" 
                     DataKeyNames="Id_area" 
+                     OnPageIndexChanging="gridArea_PageIndexChanging"
+                     OnRowCommand="gridArea_RowCommand"
                  >
                     <Columns>
                         <asp:TemplateField HeaderStyle-Width="200px">
@@ -170,7 +177,7 @@
         </div>
          
     </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" runat="server" visible="false">
+       <%-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" runat="server" visible="false">
                 <div class="vert-offset-bottom-2"></div>
                 <div class="form-group Botones">
 
@@ -178,7 +185,7 @@
                     <asp:Button class="btn  btn-primary" ID="btnGuardarEdit" runat="server" Text="Actualizar" Visible="false" BackColor="#5b6060" BorderColor="#5b6060" />
                     <asp:Button ID="btnCancelar" runat="server" class="btn btn-default" Text="Cancelar" Visible="false" />
                 </div>
-            </div>
+            </div>--%>
         
     </div>
                 </div>
@@ -188,15 +195,82 @@
         </div>
 
 
-        <script type="text/javascript">
-                Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
-                function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
-$(document).ready(function(){
-});
-        </script>
+        
     </form>
      <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
     <script src="../Bootstrap/js/popper.min.js"></script>
     <script src="../Bootstrap/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+                            Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
+            function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
+
+               Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
+
+  var div = $('#DivInsertar');
+                        div.hide();
+                        $('#lnk_Agregar').click(function () {
+
+                            //div.slideToggle(500);
+                            div.slideDown();
+
+                        });
+                        $('#btnCerrar').click(function () {
+                            div.slideUp();
+                                 }); 
+        });
+                  
+           
+                
+
+
+
+              function limpiar() {
+                  document.getElementById("<%= txtArea.ClientID %>").value = "";
+                    document.getElementById("<%= txt_NombreCodigo.ClientID %>").value = "";
+                   document.getElementById("<%= ddl_Instalacion.ClientID %>").selectedIndex = 0;
+
+            }
+             function AllowAlphabet(e) {
+            isIE = document.all ? 1 : 0
+            keyEntry = !isIE ? e.which : event.keyCode;
+                 if (((keyEntry >= 65) && (keyEntry <= 90)) ||
+                     ((keyEntry >= 97) && (keyEntry <= 122)) ||
+                     (keyEntry == 46) || (keyEntry == 32) || keyEntry == 45 || (keyEntry == 32) || keyEntry == 45
+                     || (keyEntry == 241) || keyEntry == 209
+                     || (keyEntry == 225) || keyEntry == 233
+                     || (keyEntry == 237) || keyEntry == 243
+                     || (keyEntry == 243) || keyEntry == 250
+                     || (keyEntry == 193) || keyEntry == 201
+                     || (keyEntry == 205) || keyEntry == 211
+                     || (keyEntry == 218) ||(keyEntry >=48 && keyEntry<=57) || (keyEntry == 40) || keyEntry == 41 || keyEntry == 44 || keyEntry == 95 || keyEntry == 64) 
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        function AlphabetOnly(sender, eventArgs) {
+               
+            var c = eventArgs.get_keyCode();
+            if ((c < 65) || (c > 90 && c < 97) || (c > 122)) {
+                eventArgs.set_cancel(true);
+                sender._invalid = true;
+                sender.updateCssClass();
+            }
+        }
+ //           function Mostrar() {
+ //                var Div = document.getElementById('DivInsertar')
+
+ //               if (Div.style.display=='none') {
+ //Div.style.display = 'inline'
+ //               }
+ //               else
+ //                    Div.style.display = 'none'
+               
+                
+//}
+    
+          
+</script>   
 </body>
 </html>

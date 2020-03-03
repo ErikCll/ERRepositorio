@@ -87,7 +87,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Administrador\Actividad.aspx" />
     <Content Include="Administrador\Area.aspx" />
     <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
@@ -110,13 +109,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administrador\Actividad.aspx.designer.vb">
-      <DependentUpon>Actividad.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administrador\Actividad.aspx.vb">
-      <DependentUpon>Actividad.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Administrador\Area.aspx.designer.vb">
       <DependentUpon>Area.aspx</DependentUpon>
     </Compile>

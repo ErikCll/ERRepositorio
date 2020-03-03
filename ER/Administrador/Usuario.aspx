@@ -22,9 +22,9 @@
                 <h1>Usuario</h1>
             </section>
             <section class="content">
-                <%--    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+                    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
 
-                   <ContentTemplate>--%>
+                   <ContentTemplate>
                 <asp:Literal ID="litControl" runat="server"></asp:Literal>
 
                 <div class="col-lg-12">
@@ -34,12 +34,13 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <h5>Datos del empleado</h5>
+                                        <asp:Label runat="server" ID="lblIdEmpleado" Visible="false"></asp:Label>
                                     </div>
                                     <div class="col-sm-8 col-md-4 col-lg-4">
                                         <div class="form-group">
 
                                             <div class="label">Nombre(s):</div>
-                                            <asp:Label runat="server" Text="Erik Alejandro" class="font-weight-bold"></asp:Label>
+                                            <asp:Label runat="server" ID="lblNombre" class="font-weight-bold"></asp:Label>
 
                                         </div>
 
@@ -50,12 +51,12 @@
 
 
                                             <div class="label">Apellido Paterno:</div>
-                                            <asp:Label runat="server" Text="Castañeda" class="font-weight-bold"></asp:Label>
+                                            <asp:Label runat="server" id="lblPaterno" class="font-weight-bold"></asp:Label>
                                         </div>
                                         <div class="form-group">
 
                                             <div class="label">Apellido Materno:</div>
-                                            <asp:Label runat="server" Text="Llanas" class="font-weight-bold"></asp:Label>
+                                            <asp:Label runat="server" id="lblMaterno" class="font-weight-bold"></asp:Label>
 
                                         </div>
                                     </div>
@@ -64,13 +65,13 @@
 
 
                                             <div class="label">Instalación:</div>
-                                            <asp:Label runat="server" Text="Instalacion de Prueba" class="font-weight-bold"></asp:Label>
+                                            <asp:Label runat="server" ID="lblInstalacion" class="font-weight-bold"></asp:Label>
                                         </div>
                                         <div class="form-group">
 
 
                                             <div class="label">Fecha de creación:</div>
-                                            <asp:Label runat="server" Text="01-03-2020" class="font-weight-bold"></asp:Label>
+                                            <asp:Label runat="server" ID="lblFecha" class="font-weight-bold"></asp:Label>
 
                                         </div>
 
@@ -117,7 +118,7 @@
                                             </asp:TextBox>
 
                                             <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator3" ControlToValidate="txtPassword"
-                                                 ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                                               ErrorMessage="Contraseña requerida"   ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
                                         </div>
                                     </div>
                                         <div class="col-sm-12 col-md-4 col-lg-4">
@@ -133,61 +134,33 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                        <div class="col-sm-12 col-md-4 col-lg-4"></div>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                         <div class="vert-offset-bottom-2">
                                             <br />
                                         </div>
-                                        <div class="form-group Botones">
+                                        <div class="form-group ">
                                             <asp:Button class="btn btn-primary" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
                                             <a id="btn_ClearButton" class="btn btn-default " role="button" onclick="limpiar()">Limpiar</a>
-                                            <a id="btnCerrar" class="btn btn-default " role="button">Cerrar</a>
+                                            <asp:Button runat="server" id="btnCerrar" class="btn btn-default " Text="Regresar"></asp:Button>
                                         </div>
                                     </div>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <%--     <div class="row">
-                        <div class="col-sm-4 col-md-1"></div>
-                        <div class="col-sm-4 col-md-7">
-                            <div class="btn-group">
-                                <a id="lnk_Agregar" class="btn btn-sm text-blue"><span class=" ion-plus"></span>Agregar</a>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-md-4">
-                            <div class="input-group">
-                                <div class="input-group btn">
-                                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
-                                    <asp:Button ID="btnBuscar" Text="Buscar" runat="server" CssClass="btn btn-default btn-sm" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>--%>
-                    <%--<div class="row">
-    <div class="container ">
-        <div class="table-reponsive">
-            <div style="overflow: auto; height: auto">
-             <asp:GridView ID="gridEmpleado"
-                    runat="server"
-                    AutoGenerateColumns="false" AllowPaging="true"
+                                    <div class="col-sm-12 col-md-7 col-lg-7">
+                                        <div class="table-responsive">
+                                            <asp:GridView ID="gridUsuario" runat="server"
+                                                AutoGenerateColumns="false" AllowPaging="true"
                     CssClass=" table table-striped table-sm text-md-center"
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
-                    EmptyDataText="Sin registros"
-                 PageSize="10"
-                    AllowCustomPaging="false" 
-                    DataKeyNames="Id_empleado" 
-                     >
-                    <Columns>
+                    EmptyDataText="Sin registro"
+                             DataKeyNames="Id_usuario" 
+                                                >
+                                                   <Columns>
                         <asp:TemplateField HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
 
-                                
-                                
+                       
+                              
                                  <asp:LinkButton runat="server" ID="btnEditar" class="btn btn-primary" BackColor="#5b6060"  Text="Editar" CommandName="Editar">
                                 </asp:LinkButton>
                                    <asp:LinkButton runat="server" ID="btnAct" class="btn btn-primary" BackColor="#5b6060"  Text="Actualizar" CommandName="Actualizar" Visible="false" >
@@ -208,58 +181,41 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                           
-                      
-
-                        <asp:TemplateField HeaderText="Nombre">
+                     
+                        <asp:TemplateField HeaderText="Acceso">
                             <ItemTemplate>
-                                <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
-                                    Text='<%# Eval("Nombre") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                                <asp:Label ID="lblAcceso" runat="server" Text='<%# Eval("Acceso") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditAcceso" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                    Text='<%# Eval("Acceso") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Apellido Paterno">
+                        <asp:TemplateField HeaderText="email">
                             <ItemTemplate>
-                                <asp:Label ID="lblApellidoPaterno" runat="server" Text='<%# Eval("ApellidoPaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
-                                    Text='<%# Eval("ApellidoPaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                                <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditEmail" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                    Text='<%# Eval("Email") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Apellido Materno">
-                            <ItemTemplate>
-                                <asp:Label ID="lblApellidoMaterno" runat="server" Text='<%# Eval("ApellidoMaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
-                                    Text='<%# Eval("ApellidoMaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />
+                 
+                       
                           <asp:BoundField HeaderText="Fecha de creación " DataField="CreacionFecha" />
                      
                     </Columns>
-               <PagerStyle HorizontalAlign = "Center" CssClass="" />
-                </asp:GridView>
-            </div>
+                                            </asp:GridView>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-2 col-lg-2"></div>
+                                </div>
+
+                            </div>
 
 
-
-
-       
-        </div>
-         
-    </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" runat="server" visible="false">
-                <div class="vert-offset-bottom-2"></div>
-                <div class="form-group Botones">
-
-                    <asp:Button class="btn  btn-primary" ID="btnEditar" runat="server" Text="Editar" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button class="btn  btn-primary" ID="btnGuardarEdit" runat="server" Text="Actualizar" Visible="false" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button ID="btnCancelar" runat="server" class="btn btn-default" Text="Cancelar" Visible="false" />
-                </div>
-            </div>
+                        </div>
+                    </div>
         
-    </div>--%>
                 </div>
-                <%-- </ContentTemplate>
-               </asp:UpdatePanel>--%>
+                 </ContentTemplate>
+               </asp:UpdatePanel>
             </section>
         </div>
 

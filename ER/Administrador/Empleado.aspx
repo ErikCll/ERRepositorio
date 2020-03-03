@@ -22,9 +22,9 @@
                 <h1>Empleado</h1>
             </section>
             <section class="content">
-           <%--    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+               <asp:UpdatePanel UpdateMode="Conditional" runat="server">
 
-                   <ContentTemplate>--%>
+                   <ContentTemplate>
                         <asp:Literal ID="litControl" runat="server"></asp:Literal>
 
                         <div class="col-lg-12">
@@ -126,13 +126,15 @@
                  PageSize="10"
                     AllowCustomPaging="false" 
                     DataKeyNames="Id_empleado" 
+                  OnPageIndexChanging="gridEmpleado_PageIndexChanging"
+                  OnRowCommand="gridEmpleado_RowCommand"
                      >
                     <Columns>
                         <asp:TemplateField HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
 
                                 <div class="btn-group">
-                <asp:LinkButton runat="server" id="btnAgrear" class="btn btn-sm text-blue" CommandName="Agregar" ><span class=" ion-plus" ></span>Usuario</asp:LinkButton>
+                <asp:LinkButton runat="server" id="btnAgregar" class="btn btn-sm text-blue" CommandName="Agregar" ><span class=" ion-plus" ></span>Usuario</asp:LinkButton>
             </div>
                               
                                  <asp:LinkButton runat="server" ID="btnEditar" class="btn btn-primary" BackColor="#5b6060"  Text="Editar" CommandName="Editar">
@@ -156,25 +158,26 @@
                         </asp:TemplateField>
                           
                       
+                                                <asp:BoundField HeaderText="Acceso" DataField="Acceso" />
 
                         <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>
                                 <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
                                     Text='<%# Eval("Nombre") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Apellido Paterno">
                             <ItemTemplate>
                                 <asp:Label ID="lblApellidoPaterno" runat="server" Text='<%# Eval("ApellidoPaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                <asp:TextBox ID="txtEditApellidoPaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
                                     Text='<%# Eval("ApellidoPaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Apellido Materno">
                             <ItemTemplate>
                                 <asp:Label ID="lblApellidoMaterno" runat="server" Text='<%# Eval("ApellidoMaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
+                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
                                     Text='<%# Eval("ApellidoMaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -205,8 +208,8 @@
         
     </div>
                 </div>
-                  <%-- </ContentTemplate>
-               </asp:UpdatePanel>--%>
+                   </ContentTemplate>
+               </asp:UpdatePanel>
             </section>
         </div>
 
@@ -215,10 +218,13 @@
        <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
     <script src="../Bootstrap/js/popper.min.js"></script>
     <script src="../Bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
-                    $(document).ready(function () {
-         
-                        var div = $('#DivInsertar');
+     <script type="text/javascript">
+                            Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
+            function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
+
+               Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
+
+  var div = $('#DivInsertar');
                         div.hide();
                         $('#lnk_Agregar').click(function () {
 
@@ -229,21 +235,49 @@
                         $('#btnCerrar').click(function () {
                             div.slideUp();
                                  }); 
-                            
-                        
-                    }); 
+        });
+                  
            
                 
-            //    Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
-            //function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
 
-<%--               function limpiar() {
-            document.getElementById("<%= txtNombreInstalacion.ClientID %>").value = "";
-                   document.getElementById("<%= ddl_Region.ClientID %>").selectedIndex = 0;
 
-            }--%>
+              function limpiar() {
+                  document.getElementById("<%= txtNombre.ClientID %>").value = "";
+                  document.getElementById("<%= txtPaterno.ClientID %>").value = "";
+                                      document.getElementById("<%= txtMaterno.ClientID %>").value = "";
 
+                   document.getElementById("<%= ddl_Instalacion.ClientID %>").selectedIndex = 0;
+
+            }
+             function AllowAlphabet(e) {
+            isIE = document.all ? 1 : 0
+            keyEntry = !isIE ? e.which : event.keyCode;
+                 if (((keyEntry >= 65) && (keyEntry <= 90)) ||
+                     ((keyEntry >= 97) && (keyEntry <= 122)) ||
+                     (keyEntry == 46) || (keyEntry == 32) || keyEntry == 45 || (keyEntry == 32) || keyEntry == 45
+                     || (keyEntry == 241) || keyEntry == 209
+                     || (keyEntry == 225) || keyEntry == 233
+                     || (keyEntry == 237) || keyEntry == 243
+                     || (keyEntry == 243) || keyEntry == 250
+                     || (keyEntry == 193) || keyEntry == 201
+                     || (keyEntry == 205) || keyEntry == 211
+                     || (keyEntry == 218) ||(keyEntry >=48 && keyEntry<=57) || (keyEntry == 40) || keyEntry == 41 || keyEntry == 44 || keyEntry == 95 || keyEntry == 64) 
+                return true;
+            else {
+                return false;
+            }
+        }
+
+        function AlphabetOnly(sender, eventArgs) {
+               
+            var c = eventArgs.get_keyCode();
+            if ((c < 65) || (c > 90 && c < 97) || (c > 122)) {
+                eventArgs.set_cancel(true);
+                sender._invalid = true;
+                sender.updateCssClass();
+            }
+        }
  //           function Mostrar() {
  //                var Div = document.getElementById('DivInsertar')
 
@@ -257,7 +291,7 @@
 //}
     
           
-</script>   
+</script>  
   
 </body>
 </html>
