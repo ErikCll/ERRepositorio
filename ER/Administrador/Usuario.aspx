@@ -82,9 +82,20 @@
 
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h5>Crear usuario</h5>
+                                        <div class="input-group">
+                                                                     <h5>Crear usuario</h5>
+                                           <div class="btn-group">
+                <a id="Plus2" class="btn btn-sm text-blue" ><span class=" ion-plus" ></span></a>
+            </div>
+                                                                      <div class="btn-group">
+                <a id="Remove2" class="btn btn-sm text-blue" ><span class=" ion-android-remove" ></span></a>
+            </div>
+
+                                        </div>
+               
                                     </div>
-                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                   
+                                         <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label class="font-weight-bold">Nombre de usuario:</label>
                                             <asp:TextBox class="form-control " ID="txtUsuario"  runat="server" MaxLength="20" onkeypress="return AllowAlphabet(event)">
@@ -210,15 +221,27 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-2 col-lg-2"></div>
+                                   
                                           <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="border-top my-3 "></div>
 
 
                                     </div>
                                        <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <h5>Accesos al sistema</h5>
-                                    </div>
-                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                           <div class="input-group">
+                                                                   <h5>Accesos al sistema</h5>
+                                              <div class="btn-group">
+                <a id="Plus" class="btn btn-sm text-blue" ><span class=" ion-plus" ></span></a>
+            </div>
+                                                                      <div class="btn-group">
+                <a id="Remove" class="btn btn-sm text-blue" ><span class=" ion-android-remove" ></span></a>
+            </div>
+                            
+                            
+                                           </div>
+                            </div>
+                                      <div class="col-sm-12 col-md-12 col-lg-12" id="PanelAccesos" >
+                                        <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="table-responsive">
                                             <asp:GridView ID="gridAcceso" runat="server"
                                                 AutoGenerateColumns="false" AllowPaging="true"
@@ -255,10 +278,12 @@
                                             </asp:GridView>
                                         </div>
                                     </div>
+                                      <div class="col-sm-12 col-md-8 col-lg-8"></div>
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                    <asp:Button class="btn btn-primary" ID="btnSave" runat="server" Text="Actualizar" BackColor="#5b6060" BorderColor="#5b6060" />
 
                                     </div>
+                                  </div>
                                 </div>
 
                             </div>
@@ -283,8 +308,30 @@
             function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
                Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
+                   
+                   //var div = $('#PanelAccesos');
+                   //var div2 = $('#Panel2');
+                   //div.hide();
+                   //                   div2.hide();
 
+                   //     $('#Plus').click(function () {
 
+                   //         //div.slideToggle(500);
+                   //         div.slideDown();
+
+                   //     });
+                   //     $('#Remove').click(function () {
+                   //         div.slideUp();
+                   //              }); 
+                   // $('#Plus2').click(function () {
+
+                   //         //div.slideToggle(500);
+                   //         div2.slideDown();
+
+                   //     });
+                   //     $('#Remove2').click(function () {
+                   //         div2.slideUp();
+                   //              }); 
         });
                   
            
