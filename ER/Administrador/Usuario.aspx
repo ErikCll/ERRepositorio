@@ -87,7 +87,7 @@
                                     <div class="col-sm-12 col-md-4 col-lg-4">
                                         <div class="form-group">
                                             <label class="font-weight-bold">Nombre de usuario:</label>
-                                            <asp:TextBox class="form-control " ID="txtUsuario" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                            <asp:TextBox class="form-control " ID="txtUsuario"  runat="server" MaxLength="20" onkeypress="return AllowAlphabet(event)">
                    
                                             </asp:TextBox>
 
@@ -113,7 +113,7 @@
                                         <div class="col-sm-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                             <label class="font-weight-bold">Contraseña:</label>
-                                            <asp:TextBox class="form-control " ID="txtPassword" runat="server" TextMode="Password" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                            <asp:TextBox class="form-control " ID="txtPassword" runat="server" TextMode="Password" MaxLength="15" onkeypress="return AllowAlphabet(event)">
                    
                                             </asp:TextBox>
 
@@ -124,9 +124,14 @@
                                         <div class="col-sm-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                             <label class="font-weight-bold">Confirmar contraseña:</label>
-                                            <asp:TextBox class="form-control " ID="txtPasswordConfirm" runat="server" TextMode="Password" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                                <div class="input-group">
+                                                              <asp:TextBox class="form-control " ID="txtPasswordConfirm" runat="server" TextMode="Password" MaxLength="15" onkeypress="return AllowAlphabet(event)">
                    
                                             </asp:TextBox>
+                                   <span class="btn input-group-addon"  onmousedown="mostrarContrasena()" onmouseup="NomostrarContrasena()" style="cursor:pointer"><i class=" ion-eye"></i></span>
+
+                                                </div>
+                                  
 
                                             <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator4" ControlToValidate="txtPasswordConfirm"
                                                 ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
@@ -142,7 +147,7 @@
                                         </div>
                                         <div class="form-group ">
                                             <asp:Button class="btn btn-primary" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
-                                            <a id="btn_ClearButton" class="btn btn-default " role="button" onclick="limpiar()">Limpiar</a>
+                                            <a id="btn_ClearButton" class="btn btn-default " role="button" onclick="limpiar()" runat="server">Limpiar</a>
                                             <asp:Button runat="server" id="btnCerrar" class="btn btn-default " Text="Regresar"></asp:Button>
                                         </div>
                                     </div>
@@ -154,7 +159,7 @@
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
                     EmptyDataText="Sin registro"
                              DataKeyNames="Id_usuario" 
-                                                >
+                                       OnRowCommand="gridUsuario_RowCommand" >
                                                    <Columns>
                         <asp:TemplateField HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
@@ -185,14 +190,14 @@
                         <asp:TemplateField HeaderText="Acceso">
                             <ItemTemplate>
                                 <asp:Label ID="lblAcceso" runat="server" Text='<%# Eval("Acceso") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditAcceso" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                <asp:TextBox ID="txtEditAcceso" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="150px"
                                     Text='<%# Eval("Acceso") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="email">
+                        <asp:TemplateField HeaderText="Email">
                             <ItemTemplate>
                                 <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditEmail" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                <asp:TextBox ID="txtEditEmail" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="150px"
                                     Text='<%# Eval("Email") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -205,6 +210,55 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-2 col-lg-2"></div>
+                                          <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="border-top my-3 "></div>
+
+
+                                    </div>
+                                       <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <h5>Accesos al sistema</h5>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4">
+                                        <div class="table-responsive">
+                                            <asp:GridView ID="gridAcceso" runat="server"
+                                                AutoGenerateColumns="false" AllowPaging="true"
+                    CssClass=" table table-striped table-sm text-md-center"
+                     HeaderStyle-CssClass="text-sm-center"
+                    EmptyDataText="Sin registro"
+                             DataKeyNames="Id_registro"
+                                                 PageSize="10"
+
+                                       >
+                                                <Columns>
+                                    <asp:TemplateField HeaderStyle-Width="15px" HeaderText="Agregar" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="header-center">
+                                        <ItemTemplate>
+                                            <asp:CheckBox runat="server" ID="chckAct" Checked='<%#Eval("Id_registro") %>' />
+
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:BoundField HeaderText="Descripción" DataField="Descripcion" HeaderStyle-CssClass="header-center" />
+                                    <asp:TemplateField Visible="false">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblwebForm" runat="server" Text='<%#Eval("Id_webform") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField Visible="false">
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label1" runat="server" Text='<%#Eval("Id_registro")%>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+
+
+
+                                            </asp:GridView>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                   <asp:Button class="btn btn-primary" ID="btnSave" runat="server" Text="Actualizar" BackColor="#5b6060" BorderColor="#5b6060" />
+
+                                    </div>
                                 </div>
 
                             </div>
@@ -225,33 +279,61 @@
     <script src="../Bootstrap/js/popper.min.js"></script>
     <script src="../Bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
+            function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
-            var div = $('#DivInsertar');
-            //div.hide();
-            $('#lnk_Agregar').click(function () {
-
-                //div.slideToggle(500);
-                div.slideDown();
-
-            });
-            $('#btnCerrar').click(function () {
-                div.slideUp();
-            });
+               Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
 
 
         });
+                  
+           
+                
 
 
-            //    Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
-            //function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
+
+              function limpiar() {
+                  document.getElementById("<%= txtUsuario.ClientID %>").value = "";
+                  document.getElementById("<%= txtEmail.ClientID %>").value = "";
+                                    document.getElementById("<%= txtPassword.ClientID %>").value = "";
+
+                                    document.getElementById("<%= txtPasswordConfirm.ClientID %>").value = "";
 
 
-<%--               function limpiar() {
-            document.getElementById("<%= txtNombreInstalacion.ClientID %>").value = "";
-                   document.getElementById("<%= ddl_Region.ClientID %>").selectedIndex = 0;
+        }
+          function mostrarContrasena(){
+      var tipo = document.getElementById("<%=txtPasswordConfirm.ClientID%>");
+      if(tipo.type == "password"){
+          tipo.type = "text";
+      }
+     
+        }
+         function NomostrarContrasena(){
+      var tipo = document.getElementById("<%=txtPasswordConfirm.ClientID%>");
+      if(tipo.type == "text"){
+          tipo.type = "password";
+      }
+     
+        }
+             function AllowAlphabet(e) {
+            isIE = document.all ? 1 : 0
+            keyEntry = !isIE ? e.which : event.keyCode;
+                 if (((keyEntry >= 65) && (keyEntry <= 90)) ||
+                     ((keyEntry >= 97) && (keyEntry <= 122)) ||
+                     (keyEntry == 46) || (keyEntry == 46) || keyEntry == 45 || (keyEntry == 46) || keyEntry == 45
+                     || (keyEntry == 241) || keyEntry == 209
+                     || (keyEntry == 225) || keyEntry == 233
+                     || (keyEntry == 237) || keyEntry == 243
+                     || (keyEntry == 243) || keyEntry == 250
+                     || (keyEntry == 193) || keyEntry == 201
+                     || (keyEntry == 205) || keyEntry == 211
+                     || (keyEntry == 218) ||(keyEntry >=48 && keyEntry<=57) || (keyEntry == 40) || keyEntry == 41 || keyEntry == 44 || keyEntry == 95 || keyEntry == 64) 
+                return true;
+            else {
+                return false;
+            }
+        }
 
-            }--%>
 
  //           function Mostrar() {
  //                var Div = document.getElementById('DivInsertar')
@@ -261,10 +343,9 @@
  //               }
  //               else
  //                    Div.style.display = 'none'
-
-
+               
+                
 //}
-
 
     </script>
 

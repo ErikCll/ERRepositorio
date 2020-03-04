@@ -14,9 +14,9 @@
     End Sub
 
     Public Sub MostrarGridEmpleado()
-        Dim Query = "SELECT Emp.Id_empleado,us.Acceso,Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado WHERE Emp.Activado IS NULL ORDER BY Emp.Id_empleado DESC"
+        Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL ORDER BY Emp.Id_empleado DESC"
         If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
-            Query = "SELECT Emp.Id_empleado,us.Acceso,Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY Emp.Id_empleado DESC"
+            Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY Emp.Id_empleado DESC"
         End If
 
         gridEmpleado.DataSource = obj.Consultar(Query)
@@ -135,68 +135,84 @@
 
 
         ElseIf e.CommandName = "Actualizar" Then
-            'Dim ctl = e.CommandSource
-            'Dim row As GridViewRow = ctl.NamingContainer
-            'Dim Id As Integer = gridEmpleado.DataKeys(row.RowIndex).Value
+            Dim ctl = e.CommandSource
+            Dim row As GridViewRow = ctl.NamingContainer
+            Dim Id As Integer = gridEmpleado.DataKeys(row.RowIndex).Value
 
-            'Dim AreaActual As Label = CType(row.FindControl("lblArea"), Label)
-            'Dim AreaNuevo As TextBox = CType(row.FindControl("txtEditArea"), TextBox)
+            Dim NombreActual As Label = CType(row.FindControl("lblNombre"), Label)
+            Dim NombreNuevo As TextBox = CType(row.FindControl("txtEditNombre"), TextBox)
 
-            'Dim CodigoActual As Label = CType(row.FindControl("lblCodigo"), Label)
+            Dim PaternoActual As Label = CType(row.FindControl("lblApellidoPaterno"), Label)
+            Dim PaternoNuevo As TextBox = CType(row.FindControl("txtEditApellidoPaterno"), TextBox)
 
-            'Dim CodigoNuevo As TextBox = CType(row.FindControl("txtEditCodigo"), TextBox)
+            Dim MaternoActual As Label = CType(row.FindControl("lblApellidoMaterno"), Label)
+            Dim MaternoNuevo As TextBox = CType(row.FindControl("txtEditApellidoMaterno"), TextBox)
 
 
-            'Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
 
-            'Dim btnAct As LinkButton = CType(row.FindControl("btnAct"), LinkButton)
 
-            'Dim btnAgregar As LinkButton = CType(row.FindControl("btnAgregar"), LinkButton)
+            Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
 
-            'Dim btnEditar As LinkButton = CType(row.FindControl("btnEditar"), LinkButton)
+            Dim btnAct As LinkButton = CType(row.FindControl("btnAct"), LinkButton)
 
-            'Dim sqlQuery = "UPDATE Cat_Area set Nombre= '" + AreaNuevo.Text + "', Codigo='" + CodigoNuevo.Text + "' Where Id_instalacion=" + Id.ToString + ""
-            'If AreaActual.Text <> AreaNuevo.Text Or CodigoActual.Text <> CodigoNuevo.Text Then
-            '    If obj.Modificar(sqlQuery) Then
+            Dim btnAgregar As LinkButton = CType(row.FindControl("btnAgregar"), LinkButton)
 
-            '        AreaActual.Text = AreaNuevo.Text
-            '        CodigoActual.Text = CodigoNuevo.Text
+            Dim btnEditar As LinkButton = CType(row.FindControl("btnEditar"), LinkButton)
 
-            '        AreaActual.Visible = True
-            '        AreaNuevo.Visible = False
-            '        CodigoActual.Visible = True
-            '        CodigoNuevo.Visible = False
+            Dim sqlQuery = "UPDATE Cat_Empleado set Nombre= '" + NombreNuevo.Text + "', ApellidoPaterno='" + PaternoNuevo.Text + "', ApellidoMaterno='" + MaternoNuevo.Text + "' Where Id_empleado=" + Id.ToString + ""
+            If NombreActual.Text <> NombreNuevo.Text Or PaternoActual.Text <> PaternoNuevo.Text Or MaternoActual.Text <> MaternoNuevo.Text Then
+                If obj.Modificar(sqlQuery) Then
 
-            '        btnCancel.Visible = False
-            '        btnAct.Visible = False
-            '        btnEditar.Visible = True
-            '        btnAgregar.Visible = True
+                    NombreActual.Text = NombreNuevo.Text
+                    PaternoActual.Text = PaternoNuevo.Text
+                    MaternoActual.Text = MaternoNuevo.Text
 
-            '        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
-            '        scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    NombreActual.Visible = True
+                    NombreNuevo.Visible = False
 
-            '    Else
-            '        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
-            '        scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-            '    End If
+                    PaternoActual.Visible = True
+                    PaternoNuevo.Visible = False
 
-            'End If
+                    MaternoActual.Visible = True
+                    MaternoNuevo.Visible = False
+
+                    btnCancel.Visible = False
+                    btnAct.Visible = False
+                    btnEditar.Visible = True
+                    btnAgregar.Visible = True
+
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
+                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                Else
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
+                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                End If
+
+            End If
 
         ElseIf e.CommandName = "Cancelar" Then
 
             Dim ctl = e.CommandSource
             Dim row As GridViewRow = ctl.NamingContainer
 
-            Dim txtEdit As TextBox = CType(row.FindControl("txtEditArea"), TextBox)
-            txtEdit.Visible = False
-            Dim lblArea As Label = CType(row.FindControl("lblArea"), Label)
-            lblArea.Visible = True
+            Dim txtEditNombre As TextBox = CType(row.FindControl("txtEditNombre"), TextBox)
+            txtEditNombre.Visible = False
+            Dim lblNombre As Label = CType(row.FindControl("lblNombre"), Label)
+            lblNombre.Visible = True
 
 
-            Dim txtEditCodigo As TextBox = CType(row.FindControl("txtEditCodigo"), TextBox)
-            txtEditCodigo.Visible = False
-            Dim lblCodigo As Label = CType(row.FindControl("lblCodigo"), Label)
-            lblCodigo.Visible = True
+            Dim txtEditApellidoPaterno As TextBox = CType(row.FindControl("txtEditApellidoPaterno"), TextBox)
+            txtEditApellidoPaterno.Visible = False
+            Dim lblApellidoPaterno As Label = CType(row.FindControl("lblApellidoPaterno"), Label)
+            lblApellidoPaterno.Visible = True
+
+
+            Dim txtEditApellidoMaterno As TextBox = CType(row.FindControl("txtEditApellidoMaterno"), TextBox)
+            txtEditApellidoMaterno.Visible = False
+            Dim ApellidoMaterno As Label = CType(row.FindControl("lblApellidoMaterno"), Label)
+            ApellidoMaterno.Visible = True
+
 
             Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
             btnCancel.Visible = False

@@ -143,7 +143,7 @@ Public Class Conexion
 
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Usuario='" + usuario + "' AND Activado IS NULL"
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Acceso='" + usuario + "' AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 

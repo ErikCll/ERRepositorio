@@ -130,7 +130,7 @@
                   OnRowCommand="gridEmpleado_RowCommand"
                      >
                     <Columns>
-                        <asp:TemplateField HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center">
+                        <asp:TemplateField HeaderStyle-Width="220px" ItemStyle-HorizontalAlign="Center">
                             <ItemTemplate>
 
                                 <div class="btn-group">
@@ -163,21 +163,21 @@
                         <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>
                                 <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("Nombre") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                <asp:TextBox ID="txtEditNombre" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="120px"
                                     Text='<%# Eval("Nombre") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Apellido Paterno">
                             <ItemTemplate>
                                 <asp:Label ID="lblApellidoPaterno" runat="server" Text='<%# Eval("ApellidoPaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoPaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                <asp:TextBox ID="txtEditApellidoPaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="100px"
                                     Text='<%# Eval("ApellidoPaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Apellido Materno">
                             <ItemTemplate>
                                 <asp:Label ID="lblApellidoMaterno" runat="server" Text='<%# Eval("ApellidoMaterno") %>'></asp:Label>
-                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                <asp:TextBox ID="txtEditApellidoMaterno" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="100px"
                                     Text='<%# Eval("ApellidoMaterno") %>' Visible="false"  onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -196,15 +196,7 @@
         </div>
          
     </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" runat="server" visible="false">
-                <div class="vert-offset-bottom-2"></div>
-                <div class="form-group Botones">
 
-                    <asp:Button class="btn  btn-primary" ID="btnEditar" runat="server" Text="Editar" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button class="btn  btn-primary" ID="btnGuardarEdit" runat="server" Text="Actualizar" Visible="false" BackColor="#5b6060" BorderColor="#5b6060" />
-                    <asp:Button ID="btnCancelar" runat="server" class="btn btn-default" Text="Cancelar" Visible="false" />
-                </div>
-            </div>
         
     </div>
                 </div>

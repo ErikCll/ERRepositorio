@@ -128,7 +128,7 @@
 
             Dim btnEditar As LinkButton = CType(row.FindControl("btnEditar"), LinkButton)
 
-            Dim sqlQuery = "UPDATE Cat_Area set Nombre= '" + AreaNuevo.Text + "', Codigo='" + CodigoNuevo.Text + "' Where Id_instalacion=" + Id.ToString + ""
+            Dim sqlQuery = "UPDATE Cat_Area set Nombre= '" + AreaNuevo.Text + "', Codigo='" + CodigoNuevo.Text + "' Where Id_area=" + Id.ToString + ""
             If AreaActual.Text <> AreaNuevo.Text Or CodigoActual.Text <> CodigoNuevo.Text Then
                 If obj.Modificar(sqlQuery) Then
 

@@ -176,6 +176,15 @@ Partial Public Class Usuario
     Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
+    '''Control btn_ClearButton.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btn_ClearButton As Global.System.Web.UI.HtmlControls.HtmlAnchor
+    
+    '''<summary>
     '''Control btnCerrar.
     '''</summary>
     '''<remarks>
@@ -192,4 +201,22 @@ Partial Public Class Usuario
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents gridUsuario As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control gridAcceso.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents gridAcceso As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control btnSave.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 End Class
