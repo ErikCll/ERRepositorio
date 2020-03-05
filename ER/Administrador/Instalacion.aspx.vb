@@ -2,6 +2,8 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Page.Form.DefaultButton = btnBuscar.UniqueID
+
         MaintainScrollPositionOnPostBack = True
 
         If Not Page.IsPostBack Then

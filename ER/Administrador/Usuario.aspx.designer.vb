@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class Usuario
     
     '''<summary>
-    '''Control form1.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
-    
-    '''<summary>
     '''Control scrScript.
     '''</summary>
     '''<remarks>
@@ -185,15 +176,6 @@ Partial Public Class Usuario
     Protected WithEvents btn_ClearButton As Global.System.Web.UI.HtmlControls.HtmlAnchor
     
     '''<summary>
-    '''Control btnCerrar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents btnCerrar As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
     '''Control gridUsuario.
     '''</summary>
     '''<remarks>
@@ -219,4 +201,13 @@ Partial Public Class Usuario
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btnCerrar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnCerrar As Global.System.Web.UI.WebControls.Button
 End Class

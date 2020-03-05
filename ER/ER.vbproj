@@ -87,9 +87,11 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Administrador\AdminInicio.aspx" />
     <Content Include="Administrador\Area.aspx" />
     <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
+    <Content Include="Administrador\StyleSheet1.css" />
     <Content Include="Administrador\Usuario.aspx" />
     <Content Include="Bootstrap\css\AdminLTE.min.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
@@ -109,6 +111,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administrador\Admin.Master.designer.vb">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Admin.Master.vb">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\AdminInicio.aspx.designer.vb">
+      <DependentUpon>AdminInicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\AdminInicio.aspx.vb">
+      <DependentUpon>AdminInicio.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Administrador\Area.aspx.designer.vb">
       <DependentUpon>Area.aspx</DependentUpon>
     </Compile>
@@ -192,6 +208,7 @@
     <Content Include="Bootstrap\fonts\ionicons.eot" />
     <Content Include="Bootstrap\fonts\ionicons.ttf" />
     <Content Include="Bootstrap\fonts\ionicons.woff" />
+    <Content Include="Administrador\Admin.Master" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

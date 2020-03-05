@@ -44,7 +44,7 @@
         For Each row As GridViewRow In gridUsuario.Rows
             If row.RowType = DataControlRowType.DataRow Then
                 Dim IdUsuario As Integer = Convert.ToInt32(gridUsuario.DataKeys(row.RowIndex).Values("Id_usuario"))
-                Dim Query = "SELECT Nav.Id_webform 'Id_webform', Nav.Descripcion 'Descripcion', Nav.URL, CASE WHEN UsAct.id_webform IS NULL THEN 0 else UsAct.Id_webform END 'Id_registro' FROM Cat_Navegacion Nav  LEFT JOIN (SELECT Id_webform FROM Op_Roles WHERE Id_Usuario=" + IdUsuario.ToString() + ") UsAct on Nav.Id_webform=UsAct.Id_webform"
+                Dim Query = "SELECT Nav.Id_webform 'Id_webform', Nav.Descripcion 'Descripcion', Nav.URL, CASE WHEN UsAct.id_webform IS NULL THEN 0 else UsAct.Id_webform END 'Id_registro' FROM Cat_Navegacion Nav  LEFT JOIN (SELECT Id_webform FROM Op_Roles WHERE Id_Usuario=" + IdUsuario.ToString() + ") UsAct on Nav.Id_webform=UsAct.Id_webform ORDER BY Id_registro DESC"
                 gridAcceso.DataSource = obj.Consultar(Query)
                 gridAcceso.DataBind()
             End If
@@ -102,6 +102,7 @@
         btnGuardar.Visible = False
         btn_ClearButton.Visible = False
         btnSave.Visible = True
+        gridAcceso.Visible = True
     End Sub
 
     Private Sub MostrarControles()
@@ -112,7 +113,7 @@
         btnGuardar.Visible = True
         btn_ClearButton.Visible = True
         btnSave.Visible = False
-
+        gridAcceso.Visible = False
 
     End Sub
 
@@ -237,6 +238,54 @@
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        For Each rowUs As GridViewRow In gridUsuario.Rows
+            If rowUs.RowType = DataControlRowType.DataRow Then
+                Dim IdUsuario As Integer = Convert.ToInt32(gridUsuario.DataKeys(rowUs.RowIndex).Values("Id_usuario"))
+                Dim Usuario As Label = CType(rowUs.FindControl("lblAcceso"), Label)
+
+                For Each row As GridViewRow In gridAcceso.Rows
+                    If row.RowType = DataControlRowType.DataRow Then
+                        Dim isChecked As Boolean = row.Cells(0).Controls.OfType(Of CheckBox)().FirstOrDefault().Checked
+                        Dim Id_Actividad = row.Cells(2).Controls.OfType(Of Label)().FirstOrDefault.Text
+                        Dim Id_Registro = row.Cells(3).Controls.OfType(Of Label)().FirstOrDefault.Text
+
+
+
+                        If isChecked = True And Id_Actividad <> Id_Registro Then
+                            Dim sqlInsert As String = "INSERT INTO Op_Roles (Id_Usuario,Id_webform) VALUES(" + IdUsuario.ToString() + "," + Id_Actividad + ") "
+                            If obj.Insertar(sqlInsert) Then
+                                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizaron los datos para el acceso " + Usuario.Text + " ")
+                                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                                MostrarGridUsuario()
+
+                            End If
+
+                        End If
+
+                        If Id_Registro <> 0 Then
+                            If isChecked = False Then
+                                Dim sqlDelete As String = "DELETE FROM Op_Roles WHERE Id_Usuario= " + IdUsuario.ToString() + "AND Id_webform= " + Id_Actividad + ""
+                                If obj.Eliminar(sqlDelete) Then
+                                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizaron los datos para el acceso " + Usuario.Text + " ")
+                                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                                    MostrarGridUsuario()
+
+
+
+
+                                End If
+                            End If
+
+                        End If
+
+                    End If
+
+                Next
+            End If
+
+        Next
+        'PanelAccesos.Visible = True
+
 
     End Sub
 End Class
