@@ -84,7 +84,7 @@
                                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="form-group">
                                                     <label class="font-weight-bold">Nombre de usuario:</label>
-                                                    <asp:TextBox class="form-control " ID="txtUsuario" runat="server" MaxLength="20" onkeypress="return AllowAlphabet(event)">
+                                                    <asp:TextBox class="form-control " ID="txtUsuario" runat="server" MaxLength="15" onkeypress="return AllowAlphabet(event)">
                    
                                                     </asp:TextBox>
 
@@ -309,7 +309,7 @@
             var div2 = $('#Panel2');
              var div = $('#PanelAccesos');
             div.hide();
-            div2.hide();
+            div2.show();
 
                   $('#AddUsuario').click(function () {
 

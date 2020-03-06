@@ -59,12 +59,11 @@
                             <a class="nav-link ion-android-exit" href="#"> Salir</a>
                         </li>--%>
                              <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle  ion-android-person" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Usuario
-                            </a>
+                            <a class="nav-link dropdown-toggle  ion-android-person" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;<asp:Label ID="lblUsuario" runat="server" ForeColor="White"></asp:Label></a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item  ion-ios-unlocked" href="#"> Cambiar contraseña</a>
                                 <div class="dropdown-divider"></div>
-                            <a class="dropdown-item ion-android-exit" href="#"> Salir</a>
+                                <asp:LinkButton runat="server" CssClass="dropdown-item ion-android-exit" OnClick="Unnamed_Click" Text=" Salir" ></asp:LinkButton>
                             </div>
                         </li>
     </ul>

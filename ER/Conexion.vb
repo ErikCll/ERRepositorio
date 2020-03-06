@@ -13,6 +13,7 @@ Public Class Conexion
     Public dt As New DataTable()
     Public dr As SqlDataReader
     Public Id As Integer
+    Public AccesoNAme As String
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
 
@@ -109,7 +110,7 @@ Public Class Conexion
 
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE usuario = '" + usuario + "' AND contrasena = '" + password + "' AND Activado IS NULL"
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso = '" + usuario + "' AND contrasena = '" + password + "' AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 
@@ -133,6 +134,7 @@ Public Class Conexion
         dr = cmd.ExecuteReader
         dr.Read()
         Id = dr(0)
+        AccesoName = dr(1)
 
 
         conn.Close()

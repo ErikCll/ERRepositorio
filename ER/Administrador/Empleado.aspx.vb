@@ -22,7 +22,6 @@
         End If
 
         gridEmpleado.DataSource = obj.Consultar(Query)
-
         gridEmpleado.DataBind()
     End Sub
 
