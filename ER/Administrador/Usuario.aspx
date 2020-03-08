@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/Administrador/Admin.Master" CodeBehind="Usuario.aspx.vb" Inherits="ER.Usuario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-   Inicio
+   Usuario
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
          <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>

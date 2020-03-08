@@ -2,7 +2,49 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
 
+
+    Private Sub Area_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        If Not IsPostBack Then
+
+
+            If HttpContext.Current.User.Identity.IsAuthenticated Then
+                Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+                Session("URL") = URL
+                Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+                If objUs Is Nothing Then
+                    FormsAuthentication.SignOut()
+                    Response.Redirect(URL.ToString())
+                End If
+                Dim IdUsuario = objUs.Id_usuario
+
+
+
+                If obj.RolUsuario(IdUsuario, URL) Then
+
+
+                Else
+                    Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                End If
+
+
+
+            Else
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+
+
+            End If
+        End If
+
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Session("DatosEmpleado") = Nothing
+
         Page.Form.DefaultButton = btnBuscar.UniqueID
 
 

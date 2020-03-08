@@ -2,7 +2,47 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
 
+    Private Sub Empleado_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        If Not IsPostBack Then
+
+            If HttpContext.Current.User.Identity.IsAuthenticated Then
+                Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+                Session("URL") = URL
+                Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+                If objUs Is Nothing Then
+                    FormsAuthentication.SignOut()
+                    Response.Redirect(URL.ToString())
+                End If
+                Dim IdUsuario = objUs.Id_usuario
+
+
+
+
+                If obj.RolUsuario(IdUsuario, URL) Then
+
+
+                Else
+                    Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                End If
+
+
+
+            Else
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+
+
+            End If
+        End If
+
+    End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Session("DatosEmpleado") = Nothing
+
         Page.Form.DefaultButton = btnBuscar.UniqueID
 
         MaintainScrollPositionOnPostBack = True
@@ -83,18 +123,18 @@
 
     Protected Sub gridEmpleado_RowCommand(sender As Object, e As GridViewCommandEventArgs)
         If e.CommandName = "Eliminar" Then
-            'Dim ctl = e.CommandSource
-            'Dim row As GridViewRow = ctl.NamingContainer
-            'Dim Id As Integer = gridEmpleado.DataKeys(row.RowIndex).Value
-            'Dim sqlQuery = "UPDATE Cat_Area set Activado=1 WHERE Id_Area= " + Id.ToString()
-            'If obj.Eliminar(sqlQuery) Then
-            '    MostrarGridEmpleado()
-            '    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
-            '    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-            'Else
-            '    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
-            '    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-            'End If
+            Dim ctl = e.CommandSource
+            Dim row As GridViewRow = ctl.NamingContainer
+            Dim Id As Integer = gridEmpleado.DataKeys(row.RowIndex).Value
+            Dim sqlQuery = "BEGIN TRAN UPDATE Cat_Empleado set Activado=1 WHERE Id_empleado= " + Id.ToString()+" UPDATE Usuario set Activado=1 WHERE Id_empleado="+Id.ToString()+" COMMIT TRAN"
+            If obj.Eliminar(sqlQuery) Then
+                MostrarGridEmpleado()
+                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
+                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+            Else
+                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
+                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+            End If
 
         ElseIf e.CommandName = "Editar" Then
             Dim ctl = e.CommandSource
@@ -257,6 +297,18 @@
             End With
             Session("DatosEmpleado") = objAtr
             Response.Redirect("Usuario.aspx")
+
+
+
+            'Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(lblNombre.Text)))
+            'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(lblApellidoPaterno.Text)))
+
+            ''Query String: ? strID = XXXX&strName=yyyy&strDate=zzzzz
+
+            'Dim queryString As String = Request.QueryString.ToString()
+            ''String.Format("yourpage.aspx?strId={0}&strName={1}&strDate{2}"
+
+            'Response.Redirect(String.Format("Usuario.aspx?lblNombre=encodedString&lblApellidoPaterno=encodedString2"))
         End If
     End Sub
 End Class

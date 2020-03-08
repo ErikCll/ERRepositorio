@@ -2,6 +2,43 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
 
+    Private Sub Usuario_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        If Not IsPostBack Then
+
+            If HttpContext.Current.User.Identity.IsAuthenticated Then
+
+                Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+                Session("URL") = URL
+                Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+                If objUs Is Nothing Then
+                    FormsAuthentication.SignOut()
+                    Response.Redirect(URL.ToString())
+                End If
+                Dim IdUsuario = objUs.Id_usuario
+
+
+                If obj.RolUsuario(IdUsuario, URL) Then
+
+
+                Else
+                    Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                End If
+
+
+
+            Else
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+
+
+            End If
+        End If
+
+    End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Dim obj As AtributosEmpleado = CType(Session("DatosEmpleado"), AtributosEmpleado)
@@ -13,14 +50,21 @@
                 lblMaterno.Text = obj.ApellidoMaterno
                 lblInstalacion.Text = obj.Instalacion
                 lblFecha.Text = obj.CreacionFecha
-
+            Else
+                Response.Redirect("Empleado.aspx")
             End If
+            'Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("lblNombre")))
+            ''Dim decodedString As String = Request.QueryString("lblNombre")
+            'lblNombre.Text = decodedString
             MostrarGridUsuario()
         End If
 
     End Sub
 
     Protected Sub btnCerrar_Click(sender As Object, e As EventArgs) Handles btnCerrar.Click
+
+        Session("DatosEmpleado") = Nothing
+
         Response.Redirect("Empleado.aspx")
     End Sub
 

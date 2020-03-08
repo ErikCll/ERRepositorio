@@ -163,11 +163,15 @@ Public Class Conexion
 
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM UsuarioActividad UsAct JOIN Usuario Us on UsAct.Id_Usuario=Us.Id_Usuario JOIN Actividad Act on UsAct.Id_Actividad=Act.Id_Actividad WHERE Us.Id_Usuario=" + IdUsuario + " AND Act.URL='" + URL + "' AND Us.Activado IS NULL "
+        Dim sqlQuery As String = " Select COUNT(*)From Op_Roles UsAct Join Usuario Us on UsAct.Id_usuario=Us.Id_Usuario Join Cat_Navegacion Act on UsAct.Id_webform= Act.Id_webform Where Us.Id_Usuario = " + IdUsuario + " And Act.URL ='" + URL + "' AND Us.Activado IS NULL"
+
+
+
         '//cadena conexion
         conn.Open()
 
         cmd = New SqlCommand(sqlQuery, conn)
+
 
         Dim i As Integer = cmd.ExecuteScalar()
         conn.Close()

@@ -5,7 +5,7 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Page.Form.DefaultButton = CType(Login1.FindControl("LoginButton"), Button).UniqueID
 
-
+        Session.RemoveAll()
 
     End Sub
 

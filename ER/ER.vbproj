@@ -89,6 +89,7 @@
   <ItemGroup>
     <Content Include="Administrador\AdminInicio.aspx" />
     <Content Include="Administrador\Area.aspx" />
+    <Content Include="Administrador\Contrasena.aspx" />
     <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
     <Content Include="Administrador\StyleSheet1.css" />
@@ -134,6 +135,13 @@
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\AtributosEmpleado.vb" />
+    <Compile Include="Administrador\Contrasena.aspx.designer.vb">
+      <DependentUpon>Contrasena.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Contrasena.aspx.vb">
+      <DependentUpon>Contrasena.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Administrador\Empleado.aspx.designer.vb">
       <DependentUpon>Empleado.aspx</DependentUpon>
     </Compile>
@@ -178,6 +186,7 @@
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
