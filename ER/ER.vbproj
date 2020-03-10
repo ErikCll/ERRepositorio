@@ -110,6 +110,7 @@
     <Content Include="Bootstrap\js\popper.min.js" />
     <Content Include="ER\Inicio.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Prueba.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +206,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Prueba.aspx.designer.vb">
+      <DependentUpon>Prueba.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Prueba.aspx.vb">
+      <DependentUpon>Prueba.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -142,7 +142,7 @@
                         </asp:TemplateField>
                           
                       
-                                                <asp:BoundField HeaderText="Acceso" DataField="Acceso" />
+                                                <asp:BoundField HeaderText="Usuario" DataField="Acceso" />
 
                         <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>

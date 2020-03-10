@@ -9,6 +9,8 @@ Public Class Conexion
     Private cmb As SqlCommandBuilder
     Public cmd As SqlCommand
     Public ds As DataSet
+    Public ds2 As DataSet
+
     Public da As SqlDataAdapter
     Public dt As New DataTable()
     Public dr As SqlDataReader
@@ -48,6 +50,16 @@ Public Class Conexion
         da.Fill(ds)
         conn.Close()
         Return ds
+    End Function
+
+    Public Function LlenarDropDownList2(ByVal sqlQuery As String)
+        conn.Open()
+        cmd = New SqlCommand(sqlQuery, conn)
+        da = New SqlDataAdapter(cmd)
+        ds2 = New DataSet()
+        da.Fill(ds2)
+        conn.Close()
+        Return ds2
     End Function
 #End Region
 

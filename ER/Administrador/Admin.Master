@@ -21,8 +21,14 @@
         }
     </style>
  <form id="form1" runat="server">
+   <%--  <div class="col-lg-12">
+           <div class="row">
+        <label class="ml-1">Texto1</label>
+     </div>
+     </div>--%>
+   
             <nav class="navbar navbar-expand-md navbar-dark sticky-top " style="background-color: rgba(0, 0, 0, 0.85); ">
-                <a class="navbar-brand" href="AdminInicio.aspx">Administrador</a>
+                <a class="navbar-brand ion-android-home" href="AdminInicio.aspx"></a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

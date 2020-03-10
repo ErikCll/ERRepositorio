@@ -21,7 +21,7 @@
 
         If obj.Autenticar(Login1.UserName, Login1.Password) Then
             FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet)
-            Dim sqlString As String = "SELECT Id_Usuario,Acceso FROM Usuario WHERE Acceso='" + Login1.UserName + "'"
+            Dim sqlString As String = "SELECT Id_Usuario,Acceso FROM Usuario WHERE Acceso='" + Login1.UserName + "' AND ACTIVADO IS NULL"
             obj.ObtenerIdUsuario(sqlString)
             Dim IdUsuario = obj.Id
             Dim Acceso = obj.AccesoNAme

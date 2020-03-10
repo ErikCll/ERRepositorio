@@ -36,7 +36,7 @@
                                         <div class="card-body">
                                             <div class="form-group">
 
-                                                <label>Acceso</label>
+                                                <label>Usuario</label>
                                                 <div class="input-group">
                                                     <asp:TextBox runat="server" ID="UserName" MaxLength="15" class="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
 
