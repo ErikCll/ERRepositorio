@@ -108,6 +108,7 @@
     <Content Include="Bootstrap\js\bootstrap.min.js" />
     <Content Include="Bootstrap\js\jquery-3.4.1.min.js" />
     <Content Include="Bootstrap\js\popper.min.js" />
+    <Content Include="Error.aspx" />
     <Content Include="ER\Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Prueba.aspx" />
@@ -166,6 +167,13 @@
     </Compile>
     <Compile Include="AtributosUsuario.vb" />
     <Compile Include="Conexion.vb" />
+    <Compile Include="Error.aspx.designer.vb">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.vb">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="ER\Inicio.aspx.designer.vb">
       <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>

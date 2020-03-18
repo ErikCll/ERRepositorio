@@ -14,28 +14,61 @@
     <%--<asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>--%>
 </head>
-<body class="bg-light">
+<body class="bg-light"
+    
+    >
     <style>
-        .dropdown:hover>.dropdown-menu{
-            display:block;
-        }
+   
+           .dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 6px;
+  top: .8em;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+.navbar{
+    min-height:13px;
+}
+.navbar  a {
+    font-size: 12.2px;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+  
+    background-color: #e1e3e9;
+}
+
+
     </style>
- <form id="form1" runat="server">
+ <form id="form1" runat="server" >
    <%--  <div class="col-lg-12">
            <div class="row">
         <label class="ml-1">Texto1</label>
      </div>
      </div>--%>
-   
-            <nav class="navbar navbar-expand-md navbar-dark sticky-top " style="background-color: rgba(0, 0, 0, 0.85); ">
-                <a class="navbar-brand ion-android-home" href="AdminInicio.aspx"></a>
+ <nav class="navbar navbar-expand-xl navbar-dark sticky-top " style="background-color: rgba(0, 0, 0, 0.85)  ">
+
+                <a class="navbar-brand ion-android-home" style="font-size:20px" href="AdminInicio.aspx"></a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
+
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" >
+           
+
+                       <ul class="navbar-nav mr-auto " >
+
                         <li class="nav-item active ">
 <%--                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>--%>
                         </li>
@@ -44,23 +77,90 @@
                         </li>
                         
                         <li class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle ion-android-apps " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catálogo
+                            <a class="nav-link dropdown-toggle ion-android-apps " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> CATÁLOGO
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item ion-android-radio-button-on" href="Area.aspx"> Área</a>
-                                <a class="dropdown-item ion-android-radio-button-on" href="Instalacion.aspx"> Instalación</a>
+                                <a class="dropdown-item ion-android-radio-button-on" href="Area.aspx"> ÁREA</a>
+                                <a class="dropdown-item ion-android-radio-button-on" href="Instalacion.aspx"> INSTALACIÓN</a>
 <%--                                <div class="dropdown-divider"></div>--%>
-                                <a class="dropdown-item  ion-android-radio-button-on" href="Empleado.aspx"> Empleado</a>
+                                <a class="dropdown-item  ion-android-radio-button-on" href="Empleado.aspx"> EMPLEADO</a>
                             </div>
                         </li>
                        <%-- <li class="nav-item">
                             <a class="nav-link ion-android-exit" href="#"> Salir</a>
                         </li>--%>
-                        <li class="nav-item" >
-<%--                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>--%>
+                         <asp:ListView ID="AdminTopListView" runat="server" OnItemDataBound="AdminTopListView_ItemDataBound" DataKeyNames="Nivel1">
+                    <ItemTemplate>
+                        <asp:Label runat="server" ID="lbl" Text=' <%# Eval("Nivel1") %>' Visible="false"></asp:Label>
+                        <li class="nav-item dropdown"><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><%# Eval("Nivel1") %></a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <asp:ListView ID="RequisitoNivel1" runat="server">
+                                    <ItemTemplate>
+                                        <li class="dropdown-item">
+                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisitoNivel1" Text='<%#" " + Eval("Requisito") %>' ForeColor="Blue"></asp:LinkButton>
+                                        </li>
+
+                                    </ItemTemplate>
+                                </asp:ListView>
+                                <asp:ListView ID="Menu2" runat="server">
+                                    <ItemTemplate>
+
+                                        <li class="dropdown-submenu">
+                                            <asp:Label runat="server" ID="lbl2" href="Area.aspx" Text='<%# Eval("Nivel2") %>' Visible="false">
+                                            </asp:Label><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel2") %></a>
+
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <asp:ListView ID="RequisitoNivel2" runat="server">
+                                                    <ItemTemplate>
+                                                        <li class="dropdown-item">
+                                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisitoNivel2" Text='<%#" " + Eval("Requisito") %>' ForeColor="Blue"></asp:LinkButton>
+                                                        </li>
+
+                                                    </ItemTemplate>
+                                                </asp:ListView>
+                                           
+                                                <asp:ListView ID="Menu3" runat="server">
+                                                    <ItemTemplate>
+                                                        <li class="dropdown-submenu">
+                                                            <asp:Label runat="server" ID="lbl3" Text='<%# Eval("Nivel3") %>' Visible="false"></asp:Label>
+                                                            <a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel3") %></a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                <asp:ListView ID="MenuRequisito" runat="server">
+                                                                    <ItemTemplate>
+                                                                        <li class="dropdown-item">
+                                                                                                                                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisito" Text='<%#" " + Eval(" Requisito") %>' ForeColor="Blue"></></asp:LinkButton>
+
+
+                                                                        </li>
+
+                                                                    </ItemTemplate>
+                                                                </asp:ListView>
+                                                            </ul>
+                                                        </li>
+
+                                                    </ItemTemplate>
+
+                                                </asp:ListView>
+                                            </ul>
+
+                                        </li>
+
+
+
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </ul>
+
+
                         </li>
+
+
+
+                    </ItemTemplate>
+                 
+                </asp:ListView>
                     </ul>
-                     <ul class="nav navbar-nav navbar-right">
+                     <ul class="navbar-nav ml-auto">
     <%--   <li class="nav-item">
                             <a class="nav-link ion-android-exit" href="#"> Salir</a>
                         </li>--%>
@@ -73,9 +173,16 @@
                             </div>
                         </li>
     </ul>
+                 
                 </div>
+              
            
             </nav>
+
+
+
+   
+           
             
 <section class="content-header">
                    <h1>
@@ -86,7 +193,7 @@
                 
               
             </section>
-                          <section class="content">
+                          <section class="content" >
    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 
                 </asp:ContentPlaceHolder>
@@ -108,5 +215,22 @@
     <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
     <script src="../Bootstrap/js/popper.min.js"></script>
     <script src="../Bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+  if (!$(this).next().hasClass('show')) {
+    $(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+  }
+  var $subMenu = $(this).next('.dropdown-menu');
+  $subMenu.toggleClass('show');
+
+
+  $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $('.dropdown-submenu .show').removeClass('show');
+  });
+
+
+  return false;
+});
+    </script>
 </body>
 </html>

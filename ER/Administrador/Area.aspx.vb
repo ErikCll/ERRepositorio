@@ -3,6 +3,17 @@
     Dim obj As New Conexion()
 
 
+
+
+    Private Sub Op_RSPA_Resultado_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
+        Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        'Session("Error") = objErr
+        Response.Redirect("Error.aspx")
+
+
+
+    End Sub
+
     Private Sub Area_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
 
         If Not IsPostBack Then
