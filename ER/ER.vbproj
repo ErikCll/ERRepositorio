@@ -92,6 +92,7 @@
     <Content Include="Administrador\Contrasena.aspx" />
     <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
+    <Content Include="Administrador\Menu.aspx" />
     <Content Include="Administrador\StyleSheet1.css" />
     <Content Include="Administrador\Usuario.aspx" />
     <Content Include="Bootstrap\css\AdminLTE.min.css" />
@@ -158,6 +159,13 @@
       <DependentUpon>Instalacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Administrador\Menu.aspx.designer.vb">
+      <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Menu.aspx.vb">
+      <DependentUpon>Menu.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Administrador\Usuario.aspx.designer.vb">
       <DependentUpon>Usuario.aspx</DependentUpon>
     </Compile>
@@ -167,6 +175,9 @@
     </Compile>
     <Compile Include="AtributosUsuario.vb" />
     <Compile Include="Conexion.vb" />
+    <Compile Include="Correo.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Error.aspx.designer.vb">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>

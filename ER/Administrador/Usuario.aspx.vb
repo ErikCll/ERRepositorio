@@ -18,15 +18,23 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-                If obj.RolUsuario(IdUsuario, URL) Then
+
+                If obj.AutenticarAdministrador(IdUsuario) Then
 
 
                 Else
-                    Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+                    If obj.RolUsuario(IdUsuario, URL) Then
 
-                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    Else
+                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    End If
 
                 End If
+
 
 
 
@@ -39,6 +47,16 @@
         End If
 
     End Sub
+
+    Private Sub Usuario_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
+        Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        Session("Error") = objErr
+        Response.Redirect("../Error.aspx")
+
+
+
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Dim obj As AtributosEmpleado = CType(Session("DatosEmpleado"), AtributosEmpleado)

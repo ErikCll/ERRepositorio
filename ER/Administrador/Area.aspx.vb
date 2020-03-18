@@ -5,10 +5,10 @@
 
 
 
-    Private Sub Op_RSPA_Resultado_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
+    Private Sub Area_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
         Dim objErr As Exception = Server.GetLastError().GetBaseException()
-        'Session("Error") = objErr
-        Response.Redirect("Error.aspx")
+        Session("Error") = objErr
+        Response.Redirect("../Error.aspx")
 
 
 
@@ -30,16 +30,24 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-
-                If obj.RolUsuario(IdUsuario, URL) Then
+                If obj.AutenticarAdministrador(IdUsuario) Then
 
 
                 Else
-                    Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+                    If obj.RolUsuario(IdUsuario, URL) Then
 
-                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    Else
+                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    End If
 
                 End If
+
+
+
 
 
 
