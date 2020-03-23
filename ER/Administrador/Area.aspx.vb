@@ -135,7 +135,7 @@
             Dim ctl = e.CommandSource
             Dim row As GridViewRow = ctl.NamingContainer
             Dim Id As Integer = gridArea.DataKeys(row.RowIndex).Value
-            Dim sqlQuery = "UPDATE Cat_Area set Activado=1 WHERE Id_Area= " + Id.ToString()
+            Dim sqlQuery = "UPDATE Cat_Area set Activadoo=1 WHERE Id_Area= " + Id.ToString()
             If obj.Eliminar(sqlQuery) Then
                 MostrarGridArea()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")

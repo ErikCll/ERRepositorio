@@ -11,59 +11,77 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Admin
+Partial Public Class Evidencia
     
     '''<summary>
-    '''Control form1.
+    '''Control scrScript.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents scrScript As Global.System.Web.UI.ScriptManager
     
     '''<summary>
-    '''Control lblInstalacion.
+    '''Control litControl.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lblInstalacion As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents litControl As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''Control AdminTopListView.
+    '''Control ddl_Nivel1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents AdminTopListView As Global.System.Web.UI.WebControls.ListView
+    Protected WithEvents ddl_Nivel1 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control lblUsuario.
+    '''Control ddl_Nivel2.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents lblUsuario As Global.System.Web.UI.WebControls.Label
+    Protected WithEvents ddl_Nivel2 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control head.
+    '''Control ddl_Nivel3.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents head As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents ddl_Nivel3 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control ContentPlaceHolder1.
+    '''Control ddl_Requisito.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ContentPlaceHolder1 As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents ddl_Requisito As Global.System.Web.UI.WebControls.DropDownList
+    
+    '''<summary>
+    '''Control txtSearch.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control btnBuscar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
 End Class

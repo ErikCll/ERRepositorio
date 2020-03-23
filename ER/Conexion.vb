@@ -18,6 +18,8 @@ Public Class Conexion
     Public dr As SqlDataReader
     Public Id As Integer
     Public AccesoNAme As String
+    Public InstalacionName As String
+
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
 
@@ -44,6 +46,16 @@ Public Class Conexion
 #End Region
 #Region "Funcion de llenar DropDownList"
 
+    Public Function Llenar(ByVal sqlQuery As String)
+        conn.Open()
+        cmd = New SqlCommand(sqlQuery, conn)
+        da = New SqlDataAdapter(cmd)
+        ds2 = New DataSet()
+        ds2.Clear()
+        da.Fill(ds2)
+        conn.Close()
+        Return ds2
+    End Function
     Public Function LlenarDropDownList(ByVal sqlQuery As String)
         conn.Open()
         cmd = New SqlCommand(sqlQuery, conn)
@@ -55,25 +67,6 @@ Public Class Conexion
         Return ds
     End Function
 
-    Public Function LlenarDropDownList2(ByVal sqlQuery As String)
-        conn.Open()
-        cmd = New SqlCommand(sqlQuery, conn)
-        da = New SqlDataAdapter(cmd)
-        ds2 = New DataSet()
-        da.Fill(ds2)
-        conn.Close()
-        Return ds2
-    End Function
-
-    Public Function LlenarDropDownList3(ByVal sqlQuery As String)
-        conn.Open()
-        cmd = New SqlCommand(sqlQuery, conn)
-        da = New SqlDataAdapter(cmd)
-        ds3 = New DataSet()
-        da.Fill(ds3)
-        conn.Close()
-        Return ds3
-    End Function
 #End Region
 
 #Region "Funcion Insertar"
@@ -160,6 +153,7 @@ Public Class Conexion
         dr.Read()
         Id = dr(0)
         AccesoName = dr(1)
+        InstalacionName = dr(2)
 
 
         conn.Close()

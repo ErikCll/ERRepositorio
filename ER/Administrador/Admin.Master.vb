@@ -11,7 +11,13 @@
 
             lblUsuario.Text = Page.User.Identity.Name
 
+            Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+            If objUs Is Nothing Then
+                FormsAuthentication.SignOut()
+                Response.Redirect("AdminInicio.aspx")
 
+            End If
+            lblInstalacion.Text = objUs.Instalacion
 
 
 
@@ -27,8 +33,8 @@
 
 
             Dim query As String = "select Nivel1 from cat_menu group by Nivel1"
-            obj.LlenarDropDownList(query)
-            AdminTopListView.DataSource = obj.ds
+            obj.Llenar(query)
+            AdminTopListView.DataSource = obj.ds2
             AdminTopListView.DataBind()
         End If
 
@@ -52,10 +58,10 @@
 
         Dim recommendedProducts1 As ListView = TryCast(e.Item.FindControl("Menu3"), ListView)
 
-        Dim query4 As String = "SELECT Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2 IS NULL AND Nivel3 IS NULL"
-        obj.LlenarDropDownList(query4)
+        Dim query4 As String = "SELECT id_requisito, Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2 IS NULL AND Nivel3 IS NULL"
+        obj.Llenar(query4)
 
-        RequisitoNivel1.DataSource = obj.ds
+        RequisitoNivel1.DataSource = obj.ds2
         RequisitoNivel1.DataBind()
         For Each item In childMenu.Items
             Dim recommendedProducts2 = TryCast(item.FindControl("Menu3"), ListView)
@@ -68,8 +74,8 @@
 
         Dim query As String = "SELECT Nivel2 FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND NIVEL2 IS NOT NULL GROUP BY Nivel2"
 
-        obj.LlenarDropDownList(query)
-        childMenu.DataSource = obj.ds
+        obj.Llenar(query)
+        childMenu.DataSource = obj.ds2
 
         childMenu.DataBind()
 
@@ -77,14 +83,14 @@
             Dim name2 As Label = CType(item.FindControl("lbl2"), Label)
             Dim recommendedProducts3 As ListView = TryCast(item.FindControl("Menu3"), ListView)
             Dim query2 As String = "SELECT Nivel3 FROM Cat_menu WHERE Nivel2 = '" + name2.Text + "' AND NIVEL3 IS NOT NULL GROUP BY Nivel3"
-            obj.LlenarDropDownList(query2)
-            recommendedProducts3.DataSource = obj.ds
+            obj.Llenar(query2)
+            recommendedProducts3.DataSource = obj.ds2
             recommendedProducts3.DataBind()
 
             Dim RequisitoNivel2 As ListView = TryCast(item.FindControl("RequisitoNivel2"), ListView)
-            Dim query5 As String = "SELECT Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2='" + name2.Text + "' AND NIVEL3 iS NULL"
-            obj.LlenarDropDownList(query5)
-            RequisitoNivel2.DataSource = obj.ds
+            Dim query5 As String = "SELECT id_requisito,Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2='" + name2.Text + "' AND NIVEL3 iS NULL"
+            obj.Llenar(query5)
+            RequisitoNivel2.DataSource = obj.ds2
             RequisitoNivel2.DataBind()
 
 
@@ -94,26 +100,13 @@
                 Dim name3 As Label = CType(item3.FindControl("lbl3"), Label)
 
                 Dim Requisito2 = TryCast(item3.FindControl("MenuRequisito"), ListView)
-                Dim query3 As String = "SELECT Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2='" + name2.Text + "' AND Nivel3='" + name3.Text + "'"
-                obj.LlenarDropDownList(query3)
-                Requisito2.DataSource = obj.ds
+                Dim query3 As String = "SELECT id_requisito,Requisito FROM Cat_menu WHERE Nivel1 = '" + name.Text + "' AND Nivel2='" + name2.Text + "' AND Nivel3='" + name3.Text + "'"
+                obj.Llenar(query3)
+                Requisito2.DataSource = obj.ds2
                 Requisito2.DataBind()
             Next
 
         Next
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -186,4 +179,48 @@
 
 
     End Sub
+
+    Protected Sub Requisito1_Click(sender As Object, e As EventArgs)
+        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+        Dim requisitoid As Label = CType(item.FindControl("id_requisito1"), Label)
+        Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel1"), LinkButton)
+
+        'Dim Requisito1 As String = requisito.Text
+
+        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+
+
+
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+        'Response.Redirect(String.Format("Usuario.aspx?lblNombre=encodedString&lblApellidoPaterno=encodedString2"))
+
+    End Sub
+
+    Protected Sub Requisito2_Click(sender As Object, e As EventArgs)
+        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+        Dim requisitoid As Label = CType(item.FindControl("id_requisito2"), Label)
+        Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel2"), LinkButton)
+
+        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+
+    End Sub
+
+    Protected Sub Requisito3_Click(sender As Object, e As EventArgs)
+        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+        Dim requisitoid As Label = CType(item.FindControl("id_requisito3"), Label)
+        Dim requisito As LinkButton = CType(item.FindControl("lblRequisito"), LinkButton)
+
+        'Dim id As Integer = CInt(lstVDataBind.DataKeys(item.DataItemIndex).Values("Id_Producto"))
+
+        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+
+    End Sub
+
 End Class

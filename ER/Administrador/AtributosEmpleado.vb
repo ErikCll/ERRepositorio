@@ -7,4 +7,6 @@
     Public Property Instalacion As String
     Public Property CreacionFecha As String
 
+
+
 End Class

@@ -20,6 +20,7 @@ Public Class Correo
 
         e_mail = New MailMessage()
         e_mail.From = New MailAddress(hotmail)
+        e_mail.To.Add("erik.castaneda@autozone.com")
         e_mail.To.Add(hotmail)
         e_mail.Subject = "Error Administrador"
         e_mail.IsBodyHtml = True
