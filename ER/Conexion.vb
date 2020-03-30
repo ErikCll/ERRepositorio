@@ -19,6 +19,8 @@ Public Class Conexion
     Public Id As Integer
     Public AccesoNAme As String
     Public InstalacionName As String
+    Public Email As String
+
 
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
@@ -154,6 +156,7 @@ Public Class Conexion
         Id = dr(0)
         AccesoName = dr(1)
         InstalacionName = dr(2)
+        Email = dr(3)
 
 
         conn.Close()

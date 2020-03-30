@@ -131,9 +131,9 @@
                         
                       
                                                 <asp:BoundField HeaderText="Creado por" DataField="Acceso" />
-
+                     
                      <asp:BoundField HeaderText="Estado" DataField="Estado" />
-                          <asp:BoundField HeaderText="Fecha de creación " DataField="Fecha" />
+                          <asp:BoundField HeaderText="Fecha de creación " DataField="Fecha"/>
 
                         <asp:TemplateField HeaderText="Observación">
                             <ItemTemplate>
@@ -143,7 +143,11 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                        
-                                                 
+                                           <asp:TemplateField Visible="false">
+                            <ItemTemplate>
+                                <asp:Label runat="server" ID="lblEmail" Text='<%# Eval("Email")%>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>         
 
                     </Columns>
                 </asp:GridView>

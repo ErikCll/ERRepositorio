@@ -38,7 +38,7 @@
 
                                                 <label>Usuario</label>
                                                 <div class="input-group">
-                                                    <asp:TextBox runat="server" ID="UserName" MaxLength="15" class="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="UserName" MaxLength="20" class="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
 
                                                     <span class="input-group-append bg-white border-left-0">
                                                         <span class="input-group-text bg-transparent">
@@ -52,7 +52,7 @@
                                             <div class="form-group">
                                                 <label>Contraseña</label>
                                                 <div class="input-group">
-                                                    <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" onkeypress="return AllowAlphabet(event)" ClientIDMode="Static"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" onkeypress="return AllowAlphabet(event)" ClientIDMode="Static" MaxLength="15"></asp:TextBox>
 
                                                     <span class="input-group-append bg-white">
                                                         <span class="btn border border-left-0" onmousedown="mostrarContrasena()" onmouseup="NomostrarContrasena()"><i class=" icon  ion-eye"></i></span>

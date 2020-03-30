@@ -2,7 +2,7 @@
 Public Class Requisito
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
-
+    Dim correo As New Correo()
 
     Protected Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
 
@@ -74,6 +74,7 @@ Public Class Requisito
 
         Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("id")))
         Dim id As String = decodedString
+        Dim Requisito As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
 
 
         Dim nombre As String = File1.FileName
@@ -86,6 +87,14 @@ Public Class Requisito
                 If obj.Insertar(sqlQuery) Then
                     File1.SaveAs(Server.MapPath("~/EvidenciaPDF/" & id.ToString() & ".pdf"))
                     MostrarGridEvidencia()
+
+
+                    Dim mensaje As String = "Evidencia cargada para el requisito: <b>" + Requisito + "</b><hr>" &
+            "<br>Creado por el usuario: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>" &
+                      "Observaciones: <b>" + txtDesc.Value.ToString() + "</b>"
+
+
+                    correo.EnviarCorreoAdministrador(mensaje)
                     txtDesc.Value = String.Empty
 
                     'Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se cargó la evidencia correctamente, en espera de aprobación.")
@@ -111,7 +120,7 @@ Public Class Requisito
     Public Sub MostrarGridEvidencia2()
         Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("id")))
         Dim id As String = decodedString
-        Dim Query As String = "SELECT TOP 1 id_evidencia, CASE WHEN estado=0 THEN 'En aprobación' WHEN estado=1 THEN 'Aprobada' ELSE 'Rechazada' END Estado, Acceso, CONVERT(varchar,fecha_registro,105) Fecha,observaciones FROM Op_Ev_Req Op JOIN Usuario us on op.id_usuario=us.Id_usuario WHERE Op.id_requisito=" + id.ToString() + "  ORDER BY Op.id_Evidencia DESC"
+        Dim Query As String = "SELECT TOP 1 id_evidencia, CASE WHEN estado=0 THEN 'En aprobación' WHEN estado=1 THEN 'Aprobada' ELSE 'Rechazada' END Estado, Acceso,Email, CONVERT(varchar,fecha_registro,105) Fecha,observaciones FROM Op_Ev_Req Op JOIN Usuario us on op.id_usuario=us.Id_usuario WHERE Op.id_requisito=" + id.ToString() + "  ORDER BY Op.id_Evidencia DESC"
         gridEvidencia2.DataSource = obj.Consultar(Query)
         gridEvidencia2.DataBind()
         For Each row As GridViewRow In gridEvidencia2.Rows
@@ -119,6 +128,14 @@ Public Class Requisito
             Dim btnAprobar As LinkButton = CType(row.FindControl("btnAprobar"), LinkButton)
             Dim btnRechazar As LinkButton = CType(row.FindControl("btnRechazar"), LinkButton)
             Dim btnEliminar As LinkButton = CType(row.FindControl("btnEliminar"), LinkButton)
+
+
+
+
+
+
+
+
 
             link.Target = "_blank"
 
@@ -151,17 +168,24 @@ Public Class Requisito
                 Response.Redirect(Request.UrlReferrer.ToString())
             End If
             Dim IdUsuario = objUs.Id_usuario
+            Dim Email = obj.Email
+
             If obj.AutenticarAdministrador(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
+                Dim CorreoUsuario As Label = CType(row.FindControl("lblEmail"), Label)
+                Dim Requisito As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
 
 
                 Dim Query As String = "UPDATE Op_Ev_Req SET Estado=1 WHERE id_evidencia=" + IdEvidencia.ToString() + ""
                 If obj.Modificar(Query) Then
                     MostrarGridEvidencia()
                     MostrarGridEvidencia2()
+                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Aprobada</b>.<hr>" &
+            "<br>Aprobada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>"
 
+                    correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se aprobó correctamente la evidencia.")
                     scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                     itemConsulta.Attributes("class") = "active"
@@ -182,17 +206,26 @@ Public Class Requisito
                 FormsAuthentication.SignOut()
                 Response.Redirect(Request.UrlReferrer.ToString())
             End If
+
             Dim IdUsuario = objUs.Id_usuario
+            Dim Email = obj.Email
+
             If obj.AutenticarAdministrador(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
+                Dim CorreoUsuario As Label = CType(row.FindControl("lblEmail"), Label)
+                Dim Requisito As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
 
 
                 Dim Query As String = "UPDATE Op_Ev_Req SET Estado=2 WHERE id_evidencia=" + IdEvidencia.ToString() + ""
                 If obj.Modificar(Query) Then
                     MostrarGridEvidencia()
                     MostrarGridEvidencia2()
+                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Rechazada</b>.<hr>" &
+            "<br>Rechazada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>"
+
+                    correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se rechazó correctamente la evidencia.")
                     scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
@@ -213,6 +246,8 @@ Public Class Requisito
                 Response.Redirect(Request.UrlReferrer.ToString())
             End If
             Dim IdUsuario = objUs.Id_usuario
+            Dim Email = obj.Email
+
             If obj.AutenticarAdministrador(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
