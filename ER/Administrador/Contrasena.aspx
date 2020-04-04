@@ -3,7 +3,7 @@
     Cambiar contraseña
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-            <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
+<%--            <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
 
         <asp:UpdatePanel runat="server" UpdateMode="Conditional" >
             <ContentTemplate>

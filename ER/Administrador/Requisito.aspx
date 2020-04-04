@@ -4,7 +4,7 @@
     <asp:Label runat="server" ForeColor="DarkGray" ID="lblRequisito"></asp:Label>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
+<%--    <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
         <ContentTemplate>
                                     <asp:Literal ID="litControl" runat="server"></asp:Literal>
@@ -143,7 +143,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                        
-                                           <asp:TemplateField Visible="false">
+                                           <asp:TemplateField Visible="true">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lblEmail" Text='<%# Eval("Email")%>'></asp:Label>
                             </ItemTemplate>
@@ -172,9 +172,9 @@
                   
               
         </ContentTemplate>
-     <%--          <Triggers>
+               <Triggers>
        <asp:PostBackTrigger ControlID="btnGuardar"  />
-   </Triggers>--%>
+   </Triggers>
     </asp:UpdatePanel>
       <script type="text/javascript">
 

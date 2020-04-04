@@ -3,8 +3,8 @@
    Instalación
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
-       <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+<%--     <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
+       <asp:UpdatePanel UpdateMode="Conditional" runat="server" ID="Update1">
 
                    <ContentTemplate>
                         <asp:Literal ID="litControl" runat="server"></asp:Literal>
@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Region:</label>
 
-                                <asp:DropDownList class="form-control" ID="ddl_Region" runat="server" DataTextField="Nombre" DataValueField="id_region"></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="ddl_Region" runat="server" DataTextField="Nombre" DataValueField="id_region" ></asp:DropDownList>
                                 <asp:RequiredFieldValidator runat="server" ID="reqRegion" ControlToValidate="ddl_Region"
                                     ErrorMessage="Nombre de región requerido." ForeColor="Red" InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
 
@@ -123,7 +123,7 @@
                         </asp:TemplateField>
                           
                         <%--                    <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />--%>
-
+                        
                         <asp:TemplateField HeaderText="Instalación">
                             <ItemTemplate>
                                 <asp:Label ID="lblInstalacion" runat="server" Text='<%# Eval("Instalacion") %>'></asp:Label>
@@ -168,7 +168,6 @@
                   
            
                 
-
 
 
               function limpiar() {

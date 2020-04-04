@@ -1,7 +1,14 @@
-﻿Public Class Admin
+﻿Imports Telerik.Web.UI
+Public Class Admin
+
     Inherits System.Web.UI.MasterPage
     Dim obj As New Conexion()
 
+    Public ReadOnly Property Text() As String
+        Get
+            Return lblInstalacion.Text
+        End Get
+    End Property
 
     Private Sub OpBitacora_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
 
@@ -31,16 +38,38 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
 
+            Dim IdInstalacion = RadComboBox1.SelectedIndex
 
-            Dim query As String = "select Nivel1 from cat_menu group by Nivel1"
+            lblIdInstalacion.Text = IdInstalacion
+
+            Dim query As String = "select Nivel1 from cat_menu group by Nivel1 ORDER BY Nivel1 DESC"
             obj.Llenar(query)
             AdminTopListView.DataSource = obj.ds2
             AdminTopListView.DataBind()
+            LlenarInstalacion()
+
         End If
 
 
 
+
+
+
+
+
     End Sub
+
+    Public Sub LlenarInstalacion()
+        'Dim query As String = "SELECT Id_Instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL"
+        'obj.LlenarDropDownList(query)
+        RadComboBox1.DataSource = obj.LlenarDropDownList("SELECT Id_Instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL")
+        RadComboBox1.DataBind()
+
+
+    End Sub
+
+
+
     Protected Sub Unnamed_Click(sender As Object, e As EventArgs)
         FormsAuthentication.SignOut()
         Response.Redirect(Request.UrlReferrer.ToString())
@@ -188,11 +217,12 @@
         'Dim Requisito1 As String = requisito.Text
 
         Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+        'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
 
+        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+        Dim s = System.Convert.ToBase64String(encodedString2)
 
-
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
         'Response.Redirect(String.Format("Usuario.aspx?lblNombre=encodedString&lblApellidoPaterno=encodedString2"))
 
     End Sub
@@ -201,11 +231,13 @@
         Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
         Dim requisitoid As Label = CType(item.FindControl("id_requisito2"), Label)
         Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel2"), LinkButton)
-
         Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+        'Dim encodedString2 As String = (Convert.ToBase64String(Encoding.ASCII.GetBytes(requisito.Text)))
+        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+        Dim s = System.Convert.ToBase64String(encodedString2)
 
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
 
     End Sub
 
@@ -217,10 +249,20 @@
         'Dim id As Integer = CInt(lstVDataBind.DataKeys(item.DataItemIndex).Values("Id_Producto"))
 
         Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+        'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
 
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + encodedString2)
+        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+        Dim s = System.Convert.ToBase64String(encodedString2)
+        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
 
     End Sub
 
+    Protected Sub RadComboBox1_SelectedIndexChanged(sender As Object, e As RadComboBoxSelectedIndexChangedEventArgs)
+        Dim IdInstalacion = RadComboBox1.SelectedValue
+        lblIdInstalacion.Text = IdInstalacion
+    End Sub
+
+    'Protected Sub RadComboBox1_ItemDataBound(sender As Object, e As RadComboBoxItemEventArgs)
+    '    e.Item.Text = String.Concat(e.Item.Text.ToLower().Split(" "c)(0), "@telerik.com")
+    'End Sub
 End Class

@@ -4,7 +4,10 @@ Imports System.Windows.Forms
 
 Public Class Conexion
 
-    Private cadena As String = "server=NPLSMXL7471M3X,1433\SQLEXPRESS ; User=sa ; database=ER ; password=Sopenco21"
+    'Private cadena As String = "server=NPLSMXL7471M3X,1433\SQLEXPRESS ; User=sa ; database=ER ; password=Sopenco21"
+    Private cadena As String = " Server=tcp:jcol.database.windows.net,1433;Initial Catalog=orygon;Persist Security Info=False;User ID=jcol;Password=Sopenco21;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+
+
     Public conn As SqlConnection
     Private cmb As SqlCommandBuilder
     Public cmd As SqlCommand
@@ -19,8 +22,10 @@ Public Class Conexion
     Public Id As Integer
     Public AccesoNAme As String
     Public InstalacionName As String
-    Public Email As String
+    Public InstalacionId As Integer
 
+    Public Email As String
+    Public IdEvidencia As Integer
 
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
@@ -127,15 +132,20 @@ Public Class Conexion
 
 
     Public Function Autenticar(ByVal usuario As String, ByVal password As String) As Boolean
-
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso =@Nombre AND contrasena =@Password AND Activado IS NULL"
+        '//conn.Open();
+        '//SqlCommand cmd = New SqlCommand(sqlQuery, conn)
+        '//cmd.Parameters.Add(New SqlParameter("Nombre", usuario))
+        '//cmd.Parameters.Add(New SqlParameter("Password", password))
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso = '" + usuario + "' AND contrasena = '" + password + "' AND Activado IS NULL"
+        'Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso = '" + usuario + "' AND contrasena = '" + password + "' AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 
         cmd = New SqlCommand(sqlQuery, conn)
-
+        cmd.Parameters.Add(New SqlParameter("Nombre", usuario))
+        cmd.Parameters.Add(New SqlParameter("Password", password))
         Dim i As Integer = cmd.ExecuteScalar()
         conn.Close()
         If i > 0 Then
@@ -156,12 +166,25 @@ Public Class Conexion
         Id = dr(0)
         AccesoName = dr(1)
         InstalacionName = dr(2)
-        Email = dr(3)
+        InstalacionId = dr(3)
+        Email = dr(4)
 
 
         conn.Close()
         Return Id
     End Function
+
+    Public Function ObtenerIdEvidencia()
+        conn.Open()
+        Dim sqlQuery As String = "select top 1 Id_evidencia from op_ev_req order by Id_evidencia DESC"
+        cmd = New SqlCommand(sqlQuery, conn)
+        IdEvidencia = cmd.ExecuteScalar
+        conn.Close()
+        Return IdEvidencia
+
+    End Function
+
+
 
     Public Function AutenticarUsuario(ByVal usuario As String) As Boolean
 
@@ -204,11 +227,11 @@ Public Class Conexion
 
     End Function
 
-    Public Function AutenticarAdministrador(ByVal IdUsuario As Integer) As Boolean
+    Public Function AutenticarSupremo(ByVal IdUsuario As Integer) As Boolean
 
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsAdministrador=1 AND Activado IS NULL"
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsSupremo=1 AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 

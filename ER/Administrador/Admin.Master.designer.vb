@@ -32,6 +32,24 @@ Partial Public Class Admin
     Protected WithEvents lblInstalacion As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control RadComboBox1.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents RadComboBox1 As Global.Telerik.Web.UI.RadComboBox
+    
+    '''<summary>
+    '''Control lblIdInstalacion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblIdInstalacion As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Control AdminTopListView.
     '''</summary>
     '''<remarks>

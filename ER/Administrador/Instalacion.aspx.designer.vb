@@ -14,13 +14,13 @@ Option Explicit On
 Partial Public Class Instalacion
     
     '''<summary>
-    '''Control scrScript.
+    '''Control Update1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents scrScript As Global.System.Web.UI.ScriptManager
+    Protected WithEvents Update1 As Global.System.Web.UI.UpdatePanel
     
     '''<summary>
     '''Control litControl.

@@ -1,7 +1,7 @@
 ﻿Public Class Instalacion
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
-
+    Dim objAdmin As New Admin
 
     Private Sub Instalacion_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
         Dim objErr As Exception = Server.GetLastError().GetBaseException()
@@ -28,7 +28,7 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-                If obj.AutenticarAdministrador(IdUsuario) Then
+                If obj.AutenticarSupremo(IdUsuario) Then
 
 
                 Else
@@ -95,6 +95,9 @@
         'ddl_Region.DataValueField = "id_Region"
         ddl_Region.DataBind()
         ddl_Region.Items.Insert(0, New ListItem("[Seleccionar]"))
+
+
+
     End Sub
 
 
@@ -118,13 +121,14 @@
                 Limpiar()
 
                 MostrarGridInstalacion()
+                objAdmin.LlenarInstalacion()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
             End If
         Catch ex As Exception
-            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro.")
-            scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro." + ex.ToString() + "")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
         End Try
 
@@ -239,10 +243,10 @@
             If obj.Eliminar(sqlQuery) Then
                 MostrarGridInstalacion()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         ElseIf e.CommandName = "Editar" Then
@@ -294,11 +298,11 @@
                     btnEditar.Visible = True
 
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             End If

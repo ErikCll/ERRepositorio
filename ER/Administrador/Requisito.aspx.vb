@@ -3,19 +3,23 @@ Public Class Requisito
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
     Dim correo As New Correo()
+    Dim Ins As New Admin()
 
     Protected Sub Page_PreRender(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.PreRender
 
-        Me.scrScript.RegisterPostBackControl(btnGuardar)
-
+        'Me.scrScript.RegisterPostBackControl(btnGuardar)
 
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         If Not IsPostBack() Then
-            Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
-            lblRequisito.Text = decodedString
+            Dim decodedString = System.Convert.FromBase64String(Request.QueryString("req"))
+            Dim requisito = System.Text.Encoding.UTF8.GetString(decodedString)
+
+            'Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
+
+            lblRequisito.Text = requisito
             MostrarGridEvidencia()
             MostrarGridEvidencia2()
         End If
@@ -70,7 +74,7 @@ Public Class Requisito
             Response.Redirect(Request.UrlReferrer.ToString())
         End If
         Dim IdUsuario = objUs.Id_usuario
-
+        Dim IdInstalacion = objUs.Id_Instalacion
 
         Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("id")))
         Dim id As String = decodedString
@@ -83,11 +87,12 @@ Public Class Requisito
         If File1.HasFile Then
 
             If fileExt = ".pdf" Or fileExt = ".PDF" Then
-                Dim sqlQuery As String = "INSERT INTO Op_Ev_Req(id_requisito,estado,Observaciones,id_usuario,activado) VALUES(" + id.ToString() + ",0,'" + txtDesc.Value + "'," + IdUsuario.ToString() + ",NULL)"
+                Dim sqlQuery As String = "INSERT INTO Op_Ev_Req(id_requisito,estado,Observaciones,id_usuario,activado,id_Instalacion) VALUES(" + id.ToString() + ",0,'" + txtDesc.Value + "'," + IdUsuario.ToString() + ",NULL," + IdInstalacion.ToString() + ")"
                 If obj.Insertar(sqlQuery) Then
-                    File1.SaveAs(Server.MapPath("~/EvidenciaPDF/" & id.ToString() & ".pdf"))
                     MostrarGridEvidencia()
-
+                    obj.ObtenerIdEvidencia()
+                    Dim Id_Evidencia = obj.IdEvidencia
+                    File1.SaveAs(Server.MapPath("~/EvidenciaPDF/" & Id_evidencia.ToString() & ".pdf"))
 
                     Dim mensaje As String = "Evidencia cargada para el requisito: <b>" + Requisito + "</b><hr>" &
             "<br>Creado por el usuario: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>" &
@@ -170,7 +175,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.AutenticarAdministrador(IdUsuario) Then
+            If obj.AutenticarSupremo(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -187,16 +192,16 @@ Public Class Requisito
 
                     correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se aprobó correctamente la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                     itemConsulta.Attributes("class") = "active"
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al aprobar la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede realizar esta acción.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
             End If
 
@@ -210,7 +215,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.AutenticarAdministrador(IdUsuario) Then
+            If obj.AutenticarSupremo(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -227,16 +232,16 @@ Public Class Requisito
 
                     correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se rechazó correctamente la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al rechazar la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede realizar esta acción.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         ElseIf e.CommandName = "Eliminar" Then
@@ -248,7 +253,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.AutenticarAdministrador(IdUsuario) Then
+            If obj.AutenticarSupremo(IdUsuario) Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -261,16 +266,16 @@ Public Class Requisito
                     MostrarGridEvidencia()
                     MostrarGridEvidencia2()
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar la evidencia.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede realizar esta acción.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
 

@@ -36,7 +36,7 @@
 
 
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se cambió la contraseña correctamente.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, True)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, True)
 
 
                 'Dim script As String = "alert('msj'); window.location.href= 'AdminInicio.aspx';"
@@ -44,13 +44,13 @@
                 'ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al cambiar la contraseña.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         Else
             Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "La contraseña actual es incorrecta.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-            End If
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+        End If
 
 
 

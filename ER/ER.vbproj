@@ -15,7 +15,7 @@
     <AssemblyName>ER</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -60,6 +60,12 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Telerik.Web.UI">
+      <HintPath>..\..\..\..\Desktop\Erik\Admins\Admins\bin\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins">
+      <HintPath>..\..\..\..\Desktop\Erik\Admins\Admins\bin\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EvidenciaPDF\" />
@@ -278,6 +284,11 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\EnergiaRegional - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy.pubxml" />
+    <None Include="My Project\PublishProfiles\ERdemo - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\ERdemo - ReadOnly - FTP.pubxml" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>

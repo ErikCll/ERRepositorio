@@ -16,6 +16,7 @@ Public Class Correo
         Smtp_Server.Credentials = New Net.NetworkCredential(hotmail, Password)
         Smtp_Server.Port = 587
         Smtp_Server.EnableSsl = True
+        Smtp_Server.DeliveryMethod = SmtpDeliveryMethod.Network
         Smtp_Server.Host = "smtp.live.com"
 
         e_mail = New MailMessage()

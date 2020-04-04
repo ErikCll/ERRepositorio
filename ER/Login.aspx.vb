@@ -25,12 +25,13 @@
 
         If obj.Autenticar(Login1.UserName, Login1.Password) Then
             FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet)
-            Dim sqlString As String = "SELECT Id_Usuario,Acceso,ISNULL(Ins.Nombre,''),email Nombre FROM Usuario us LEFT JOIN Cat_Empleado Emp on us.Id_empleado=emp.Id_empleado LEFT JOIN Cat_Instalacion Ins on Emp.Id_instalacion=Ins.Id_instalacion WHERE Acceso='" + Login1.UserName + "' AND us.ACTIVADO IS NULL"
+            Dim sqlString As String = "SELECT Id_Usuario,Acceso,ISNULL(Ins.Nombre,''),ISNULL(Ins.id_Instalacion,''),email Nombre FROM Usuario us LEFT JOIN Cat_Empleado Emp on us.Id_empleado=emp.Id_empleado LEFT JOIN Cat_Instalacion Ins on Emp.Id_instalacion=Ins.Id_instalacion WHERE Acceso='" + Login1.UserName + "' AND us.ACTIVADO IS NULL"
             obj.ObtenerIdUsuario(sqlString)
             Dim IdUsuario = obj.Id
             'Dim Acceso = obj.AccesoNAme
             Dim Instalacion = obj.InstalacionName
             Dim Email = obj.Email
+            Dim IdInstalacion = obj.InstalacionId
             Dim objUs As New AtributosUsuario
             With objUs
 
@@ -39,7 +40,9 @@
                 '.Acceso = Acceso
 
                 .Instalacion = Instalacion
+
                 .Email = Email
+                .Id_Instalacion = IdInstalacion
 
 
             End With
