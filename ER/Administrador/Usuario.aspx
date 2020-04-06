@@ -106,7 +106,12 @@
                                                         ErrorMessage="Email requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                                            <div class="col-sm-12 col-md-4 col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="font-weight-bold">Es supervisor de instalación:</label>
+                                                    <asp:CheckBox runat="server" ID="CheckSupervisor" />
+                                                </div>
+                                            </div>
                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="form-group">
                                                     <label class="font-weight-bold">Contraseña:</label>

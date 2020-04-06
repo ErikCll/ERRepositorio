@@ -23,6 +23,42 @@ Partial Public Class Requisito
     Protected WithEvents lblRequisito As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control lblAprobada.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblAprobada As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblEnAprobacion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblEnAprobacion As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblRechazada.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblRechazada As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblSinEvidencia.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblSinEvidencia As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Control litControl.
     '''</summary>
     '''<remarks>
@@ -50,6 +86,15 @@ Partial Public Class Requisito
     Protected WithEvents itemConsulta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
+    '''Control captura.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents captura As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
     '''Control File1.
     '''</summary>
     '''<remarks>
@@ -57,24 +102,6 @@ Partial Public Class Requisito
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents File1 As Global.System.Web.UI.WebControls.FileUpload
-    
-    '''<summary>
-    '''Control RegularExpressionValidator1.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents RegularExpressionValidator1 As Global.System.Web.UI.WebControls.RegularExpressionValidator
-    
-    '''<summary>
-    '''Control reqInstalacion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents reqInstalacion As Global.System.Web.UI.WebControls.RequiredFieldValidator
     
     '''<summary>
     '''Control txtDesc.
@@ -120,6 +147,24 @@ Partial Public Class Requisito
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents frame As Global.System.Web.UI.HtmlControls.HtmlIframe
+    
+    '''<summary>
+    '''Control consulta.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents consulta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
+    '''Control litControl2.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents litControl2 As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
     '''Control gridEvidencia2.

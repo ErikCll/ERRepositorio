@@ -17,7 +17,7 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-                If obj.AutenticarSupremo(IdUsuario) Then
+                If obj.EsAdministrador(IdUsuario) Then
 
 
                 Else
@@ -73,9 +73,9 @@
     End Sub
 
     Public Sub MostrarGridEmpleado()
-        Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL ORDER BY Emp.Id_empleado DESC"
+        Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
         If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
-            Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY Emp.Id_empleado DESC"
+            Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY us.EsSupervisor DESC Emp.Id_empleado DESC"
         End If
 
         gridEmpleado.DataSource = obj.Consultar(Query)

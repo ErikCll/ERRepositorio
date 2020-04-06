@@ -4,5 +4,7 @@
     Public Property Email As String
     Public Property Instalacion As String
     Public Property Id_Instalacion As Integer
+    Public Property Localizacion As String
+    Public Property Plaza As String
 
 End Class

@@ -26,6 +26,8 @@ Public Class Conexion
 
     Public Email As String
     Public IdEvidencia As Integer
+    Public LocalizacionName As String
+    Public PlazaName As String
 
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
@@ -168,6 +170,8 @@ Public Class Conexion
         InstalacionName = dr(2)
         InstalacionId = dr(3)
         Email = dr(4)
+        LocalizacionName = dr(5)
+        PlazaName = dr(6)
 
 
         conn.Close()
@@ -227,11 +231,30 @@ Public Class Conexion
 
     End Function
 
-    Public Function AutenticarSupremo(ByVal IdUsuario As Integer) As Boolean
+    Public Function EsAdministrador(ByVal IdUsuario As Integer) As Boolean
 
         '//consulta a la base de datos
 
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsSupremo=1 AND Activado IS NULL"
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsAdministrador=1 AND Activado IS NULL"
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlQuery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
+
+    Public Function EsSupervisorAdministrador(ByVal IdUsuario As Integer) As Boolean
+
+        '//consulta a la base de datos
+
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND (EsAdministrador=1 OR EsSupervisor=1) AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 

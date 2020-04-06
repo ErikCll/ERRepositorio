@@ -113,6 +113,15 @@ Partial Public Class Usuario
     Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
     
     '''<summary>
+    '''Control CheckSupervisor.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents CheckSupervisor As Global.System.Web.UI.WebControls.CheckBox
+    
+    '''<summary>
     '''Control txtPassword.
     '''</summary>
     '''<remarks>

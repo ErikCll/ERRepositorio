@@ -36,9 +36,25 @@
                                     ErrorMessage="Nombre de región requerido." ForeColor="Red" InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
 
                             </div>
-                            <div class="col-sm-12 col-md-2"></div>
                         </div>
-               
+                                                    <div class="col-sm-12 col-md-4"></div>
+
+               <div class="col-sm-8 col-md-4 col-md-lg-4">
+                   <div class="form-group">
+                       <label class="font-weight-bold">Ubicación:</label>
+                       <asp:TextBox runat="server" ID="txtUbicacion" CssClass="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtUbicacion"
+                                    ErrorMessage="Nombre de ubicación requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                   </div>
+               </div>
+                         <div class="col-sm-8 col-md-4 col-md-lg-4">
+                   <div class="form-group">
+                       <label class="font-weight-bold">Plaza:</label>
+                       <asp:TextBox runat="server" ID="txtPlaza" CssClass="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator2" ControlToValidate="txtPlaza"
+                                    ErrorMessage="Nombre de plaza requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                   </div>
+               </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="vert-offset-bottom-2">
                                 <br />

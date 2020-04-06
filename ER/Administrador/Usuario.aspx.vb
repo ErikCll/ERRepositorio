@@ -19,7 +19,7 @@
 
 
 
-                If obj.AutenticarSupremo(IdUsuario) Then
+                If obj.EsAdministrador(IdUsuario) Then
 
 
                 Else
@@ -125,23 +125,45 @@
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
         Else
-            Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE())"
-            Try
-                If obj.Insertar(sqlQuery) Then
+            If CheckSupervisor.Checked = True Then
+                Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha,EsSupervisor) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE(),1)"
+                Try
+                    If obj.Insertar(sqlQuery) Then
 
 
-                    Limpiar()
+                        Limpiar()
 
-                    MostrarGridUsuario()
-                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
+                        MostrarGridUsuario()
+                        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
+                        ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                    End If
+                Catch ex As Exception
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
                     ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
-                End If
-            Catch ex As Exception
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                End Try
+            Else
+                Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE())"
+                Try
+                    If obj.Insertar(sqlQuery) Then
 
-            End Try
+
+                        Limpiar()
+
+                        MostrarGridUsuario()
+                        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
+                        ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                    End If
+                Catch ex As Exception
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                End Try
+            End If
+
+
         End If
 
 
@@ -165,6 +187,7 @@
         btn_ClearButton.Visible = False
         btnSave.Visible = True
         gridAcceso.Visible = True
+        CheckSupervisor.Enabled = False
     End Sub
 
     Private Sub MostrarControles()
@@ -176,7 +199,7 @@
         btn_ClearButton.Visible = True
         btnSave.Visible = False
         gridAcceso.Visible = False
-
+        CheckSupervisor.Enabled = True
     End Sub
 
     Protected Sub gridUsuario_RowCommand(sender As Object, e As GridViewCommandEventArgs)

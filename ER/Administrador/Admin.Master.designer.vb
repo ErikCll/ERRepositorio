@@ -23,6 +23,15 @@ Partial Public Class Admin
     Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
     
     '''<summary>
+    '''Control litControl.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents litControl As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
     '''Control lblInstalacion.
     '''</summary>
     '''<remarks>
@@ -48,6 +57,24 @@ Partial Public Class Admin
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lblIdInstalacion As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblPlaza.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblPlaza As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblLocalizacion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblLocalizacion As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''Control AdminTopListView.

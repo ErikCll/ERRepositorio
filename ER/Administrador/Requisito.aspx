@@ -1,7 +1,18 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Administrador/Admin.Master" CodeBehind="Requisito.aspx.vb" Inherits="ER.Requisito" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    Requisito:
-    <asp:Label runat="server" ForeColor="DarkGray" ID="lblRequisito"></asp:Label>
+   
+    <label class=" font-weight-bold">Requisito:</label>
+    <asp:Label runat="server" ID="lblRequisito"></asp:Label>
+       <br />
+    <label class="font-weight-bold">Estado:</label>
+    <asp:Label runat="server" ID="lblAprobada"  Visible="false">Aprobada <a class=" ion-record text-green"></a></asp:Label>
+        <asp:Label runat="server" ID="lblEnAprobacion"  Visible="false">En aprobación <a class=" ion-record text-yellow"></a></asp:Label>
+            <asp:Label runat="server" ID="lblRechazada" Visible="false">Rechazada <a class=" ion-record text-red"></a></asp:Label>
+                <asp:Label runat="server" ID="lblSinEvidencia" Visible="true">Sin evidencia <a class=" ion-record text-gray"></a></asp:Label>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <%--    <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
@@ -10,35 +21,35 @@
                                     <asp:Literal ID="litControl" runat="server"></asp:Literal>
              <ul class="nav nav-tabs">
       <li class="nav-item" runat="server" id="itemCaptura">
-        <a data-toggle="tab" class="nav-link active" href="#captura">Evidencia</a>
+        <a data-toggle="tab" class="nav-link active" href="#<%= captura.ClientID %>">Evidencia</a>
       </li>
       <li class="nav-item" runat="server" id="itemConsulta">
-        <a data-toggle="tab" class="nav-link" href="#consulta">Aprobación de Evidencia</a>
+        <a data-toggle="tab" class="nav-link" href="#<%= consulta.ClientID %>">Aprobación de Evidencia</a>
       </li>
    
     </ul>
             <div class="col-lg-12">
                     <div class="tab-content">
-                        <div class="tab-pane active" id="captura" >
+                        <div class="tab-pane active" id="captura" runat="server" >
      <div class="row">  
          <div class="box box-info" style="border-top-color: #5b6060" >
-                <div class="box-body" id="DivInsertar">
+                <div class="box-body" id="DivInsertar" >
                     <div class="row">
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label class="font-weight-bold">Evidencia:</label>
-                                <asp:FileUpload runat="server" ID="File1"  />
-                             
+                              <asp:FileUpload runat="server" ID="File1" />
+                                <%--<input type="file" name="File3" />
                        
-                               
+                               <telerik:RadUpload ID="File2" runat="server"></telerik:RadUpload>--%>
 
                             </div>
-                              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Solo PDF." ForeColor="Red"
+                             <%-- <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Solo PDF." ForeColor="Red"
                                                         ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.pdf)$" ControlToValidate="File1" ValidationGroup="btnGuardar">
                                                     </asp:RegularExpressionValidator>
                                      <asp:RequiredFieldValidator runat="server" ID="reqInstalacion" ControlToValidate="File1"
-                                    ErrorMessage="Debe seleccionar un archivo PDF." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                                    ErrorMessage="Debe seleccionar un archivo PDF." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>--%>
                         </div>
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
@@ -74,8 +85,8 @@
 
             </div>
                       <asp:GridView runat="server" DataKeyNames="id_requisito" ID="gridEvidencia" AutoGenerateColumns="false" Visible="false"><Columns>
-                          <asp:BoundField  DataField="id_evidencia"/>
-                          <asp:BoundField DataField="id_requisito"                           
+                          <asp:BoundField  DataField="id_evidencia" HeaderText="ID de evidencia"/>
+                          <asp:BoundField DataField="id_requisito" HeaderText="Id requisito"                           
                            />
                           <asp:BoundField DataField="estado" />
                                                                                </Columns></asp:GridView>
@@ -84,11 +95,15 @@
             </div>
                                  <div class="embed-responsive embed-responsive-1by1">
             
-                <iframe class="embed-responsive-item" runat="server" id="frame" src="../EstatusPDF/EvidenciaEnAprobacion.pdf" frameBorder="0" style="border:0" ></iframe>
+                <iframe class="embed-responsive-item" runat="server" id="frame" visible="false" frameBorder="0" style="border:0" ></iframe>
                     </div></div>
                     </div>
-             <div class="tab-pane" id="consulta">
-                 <div class="row">
+             <div class="tab-pane" id="consulta" runat="server" >
+              
+                      <asp:UpdatePanel runat="server" UpdateMode="Conditional"><ContentTemplate>
+                                                              <asp:Literal ID="litControl2" runat="server"></asp:Literal>
+
+                             <div class="row">
    <div class="box box-info" style="border-top-color: #5b6060" >
                 <div class="box-body" >
                     <div class="row">
@@ -104,6 +119,9 @@
                  PageSize="10"
                     DataKeyNames="id_evidencia" 
                OnRowCommand="gridEvidencia2_RowCommand"
+                          OnPageIndexChanging="gridEvidencia2_PageIndexChanging"
+                         AllowCustomPaging="false"
+                          AllowPaging="true"
                      >
                     <Columns>
                         <asp:TemplateField HeaderStyle-Width="240px" ItemStyle-HorizontalAlign="Center">
@@ -143,13 +161,15 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                        
-                                           <asp:TemplateField Visible="true">
+                                           <asp:TemplateField Visible="false">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lblEmail" Text='<%# Eval("Email")%>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>         
 
                     </Columns>
+                                        <PagerStyle HorizontalAlign = "Center" CssClass="" />
+
                 </asp:GridView>
                 </div>
             </div>
@@ -166,6 +186,8 @@
             </div>                 
 
                  </div>
+                                                                               </ContentTemplate></asp:UpdatePanel>
+               
              </div>
                         </div>
                     </div>

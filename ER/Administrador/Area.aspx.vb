@@ -30,7 +30,7 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-                If obj.AutenticarSupremo(IdUsuario) Then
+                If obj.EsAdministrador(IdUsuario) Then
 
 
                 Else

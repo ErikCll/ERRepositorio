@@ -28,7 +28,7 @@
                 Dim IdUsuario = objUs.Id_usuario
 
 
-                If obj.AutenticarSupremo(IdUsuario) Then
+                If obj.EsAdministrador(IdUsuario) Then
 
 
                 Else
@@ -121,7 +121,7 @@
                 Limpiar()
 
                 MostrarGridInstalacion()
-                objAdmin.LlenarInstalacion()
+                'objAdmin.LlenarInstalacion()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
                 ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
