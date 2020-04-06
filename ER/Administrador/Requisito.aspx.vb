@@ -140,8 +140,6 @@ Public Class Requisito
 
 
 
-
-
             link.Target = "_blank"
 
             link.NavigateUrl = "~/EvidenciaPDF/" & id.ToString() & ".pdf"
