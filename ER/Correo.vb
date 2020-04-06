@@ -4,8 +4,8 @@ Imports System.Net.Security
 Public Class Correo
     Inherits System.Web.UI.Page
 
-    Public hotmail As String = "erik-ale1@hotmail.com"
-    Public Password As String = "Eriklenovo123"
+    Public hotmail As String = "orygonconsultores@gmail.com"
+    Public Password As String = "Orygonconsultores2020"
 
 
     Public Function SecuenciaCorreo(ByVal ObjetoError As String)
@@ -17,7 +17,7 @@ Public Class Correo
         Smtp_Server.Port = 587
         Smtp_Server.EnableSsl = True
         Smtp_Server.DeliveryMethod = SmtpDeliveryMethod.Network
-        Smtp_Server.Host = "smtp.live.com"
+        Smtp_Server.Host = "smtp.gmail.com"
 
         e_mail = New MailMessage()
         e_mail.From = New MailAddress(hotmail)
@@ -41,7 +41,7 @@ Public Class Correo
         Smtp_Server.Credentials = New Net.NetworkCredential(hotmail, Password)
         Smtp_Server.Port = 587
         Smtp_Server.EnableSsl = True
-        Smtp_Server.Host = "smtp.live.com"
+        Smtp_Server.Host = "smtp.gmail.com"
 
         e_mail = New MailMessage()
         e_mail.From = New MailAddress(hotmail)
@@ -65,7 +65,7 @@ Public Class Correo
         Smtp_Server.Credentials = New Net.NetworkCredential(hotmail, Password)
         Smtp_Server.Port = 587
         Smtp_Server.EnableSsl = True
-        Smtp_Server.Host = "smtp.live.com"
+        Smtp_Server.Host = "smtp.gmail.com"
 
         e_mail = New MailMessage()
         e_mail.From = New MailAddress(hotmail)

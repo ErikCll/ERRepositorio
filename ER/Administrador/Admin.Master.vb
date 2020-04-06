@@ -4,14 +4,14 @@ Public Class Admin
     Inherits System.Web.UI.MasterPage
     Dim obj As New Conexion()
 
-    Public ReadOnly Property Text() As String
+    Public ReadOnly Property IdInstalacion() As String
         Get
-            Return lblInstalacion.Text
+            Return lblIdInstalacion.Text
         End Get
+
     End Property
 
     Private Sub OpBitacora_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
-
 
 
         If HttpContext.Current.User.Identity.IsAuthenticated Then
@@ -24,8 +24,30 @@ Public Class Admin
                 Response.Redirect("AdminInicio.aspx")
 
             End If
-            lblInstalacion.Text = objUs.Instalacion
 
+            If obj.EsAdministrador(objUs.Id_usuario) Then
+                RadComboBox1.Visible = True
+                If Session("IdInstalacion") = Nothing Then
+                    lblIdInstalacion.Text = RadComboBox1.SelectedIndex
+                Else
+                    RadComboBox1.SelectedValue = Session("IdInstalacion")
+                    lblIdInstalacion.Text = Session("IdInstalacion")
+                End If
+            Else
+                lblInstalacion.Visible = True
+                lblInstalacion.Text = objUs.Instalacion
+                lblIdInstalacion.Text = objUs.Id_Instalacion
+                lblPlaza.Text = objUs.Plaza
+                lblLocalizacion.Text = objUs.Localizacion
+
+            End If
+
+
+            'lblInstalacion.Text = objUs.Instalacion
+
+
+
+            'lblIdInstalacion.Text = objUs.Id_Instalacion
 
 
         Else
@@ -36,11 +58,12 @@ Public Class Admin
 
     End Sub
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
         If Not IsPostBack Then
 
-            Dim IdInstalacion = RadComboBox1.SelectedIndex
 
-            lblIdInstalacion.Text = IdInstalacion
+
+
 
             Dim query As String = "select Nivel1 from cat_menu group by Nivel1 ORDER BY Nivel1 DESC"
             obj.Llenar(query)
@@ -210,56 +233,86 @@ Public Class Admin
     End Sub
 
     Protected Sub Requisito1_Click(sender As Object, e As EventArgs)
-        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
-        Dim requisitoid As Label = CType(item.FindControl("id_requisito1"), Label)
-        Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel1"), LinkButton)
+        If lblIdInstalacion.Text = -1 Then
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Seleccionar instalación.")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
-        'Dim Requisito1 As String = requisito.Text
 
-        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+        Else
+            Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+            Dim requisitoid As Label = CType(item.FindControl("id_requisito1"), Label)
+            Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel1"), LinkButton)
 
-        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
-        Dim s = System.Convert.ToBase64String(encodedString2)
+            'Dim Requisito1 As String = requisito.Text
 
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
-        'Response.Redirect(String.Format("Usuario.aspx?lblNombre=encodedString&lblApellidoPaterno=encodedString2"))
+            Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+            'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+
+            Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+            Dim s = System.Convert.ToBase64String(encodedString2)
+
+            Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
+            'Response.Redirect(String.Format("Usuario.aspx?lblNombre=encodedString&lblApellidoPaterno=encodedString2"))
+        End If
+
+
 
     End Sub
 
     Protected Sub Requisito2_Click(sender As Object, e As EventArgs)
-        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
-        Dim requisitoid As Label = CType(item.FindControl("id_requisito2"), Label)
-        Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel2"), LinkButton)
-        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        'Dim encodedString2 As String = (Convert.ToBase64String(Encoding.ASCII.GetBytes(requisito.Text)))
-        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
-        Dim s = System.Convert.ToBase64String(encodedString2)
+        If lblIdInstalacion.Text = -1 Then
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Seleccionar instalación.")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+        Else
+
+            Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+            Dim requisitoid As Label = CType(item.FindControl("id_requisito2"), Label)
+            Dim requisito As LinkButton = CType(item.FindControl("lblRequisitoNivel2"), LinkButton)
+            Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+            'Dim encodedString2 As String = (Convert.ToBase64String(Encoding.ASCII.GetBytes(requisito.Text)))
+            Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+            Dim s = System.Convert.ToBase64String(encodedString2)
 
 
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
+            Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
+        End If
+
 
     End Sub
 
     Protected Sub Requisito3_Click(sender As Object, e As EventArgs)
-        Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
-        Dim requisitoid As Label = CType(item.FindControl("id_requisito3"), Label)
-        Dim requisito As LinkButton = CType(item.FindControl("lblRequisito"), LinkButton)
+        If lblIdInstalacion.Text = -1 Then
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Seleccionar instalación.")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
-        'Dim id As Integer = CInt(lstVDataBind.DataKeys(item.DataItemIndex).Values("Id_Producto"))
+        Else
+            Dim item As ListViewItem = TryCast((TryCast(sender, LinkButton)).NamingContainer, ListViewItem)
+            Dim requisitoid As Label = CType(item.FindControl("id_requisito3"), Label)
+            Dim requisito As LinkButton = CType(item.FindControl("lblRequisito"), LinkButton)
 
-        Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
-        'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+            'Dim id As Integer = CInt(lstVDataBind.DataKeys(item.DataItemIndex).Values("Id_Producto"))
 
-        Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
-        Dim s = System.Convert.ToBase64String(encodedString2)
-        Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
+            Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisitoid.Text)))
+            'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(requisito.Text)))
+
+            Dim encodedString2 = System.Text.Encoding.UTF8.GetBytes(requisito.Text)
+            Dim s = System.Convert.ToBase64String(encodedString2)
+            Response.Redirect("Requisito.aspx?id=" + encodedString + "&req=" + s)
+        End If
+
 
     End Sub
 
     Protected Sub RadComboBox1_SelectedIndexChanged(sender As Object, e As RadComboBoxSelectedIndexChangedEventArgs)
-        Dim IdInstalacion = RadComboBox1.SelectedValue
-        lblIdInstalacion.Text = IdInstalacion
+        Dim Id_Instalacion = RadComboBox1.SelectedValue
+        lblIdInstalacion.Text = Id_Instalacion
+        Session("IdInstalacion") = Id_Instalacion
+
+        Response.Redirect(Request.UrlReferrer.ToString())
+        'Response.Redirect("AdminInicio.aspx")
+
+
     End Sub
 
     'Protected Sub RadComboBox1_ItemDataBound(sender As Object, e As RadComboBoxItemEventArgs)

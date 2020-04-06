@@ -167,7 +167,7 @@
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />
                           <asp:BoundField HeaderText="Fecha de creación " DataField="CreacionFecha" />
-                     
+                     <asp:BoundField DataField="Rol" />
                     </Columns>
                <PagerStyle HorizontalAlign = "Center" CssClass="" />
                 </asp:GridView>
