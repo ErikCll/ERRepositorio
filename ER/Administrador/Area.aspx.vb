@@ -2,7 +2,71 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
 
+
+
+
+    Private Sub Area_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
+        Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        Session("Error") = objErr
+        Response.Redirect("../Error.aspx")
+
+
+
+    End Sub
+
+    Private Sub Area_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        If Not IsPostBack Then
+
+
+            If HttpContext.Current.User.Identity.IsAuthenticated Then
+                Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+                Session("URL") = URL
+                Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+                If objUs Is Nothing Then
+                    FormsAuthentication.SignOut()
+                    Response.Redirect(URL.ToString())
+                End If
+                Dim IdUsuario = objUs.Id_usuario
+
+
+                If obj.EsAdministrador(IdUsuario) Then
+
+
+                Else
+                    If obj.RolUsuario(IdUsuario, URL) Then
+
+
+                    Else
+                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    End If
+
+                End If
+
+
+
+
+
+
+            Else
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+
+
+            End If
+        End If
+
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Session("DatosEmpleado") = Nothing
+
+        Page.Form.DefaultButton = btnBuscar.UniqueID
+
+
         MaintainScrollPositionOnPostBack = True
 
         If Not Page.IsPostBack Then
@@ -51,12 +115,12 @@
                 Limpiar()
                 MostrarGridArea()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         Catch ex As Exception
             Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro.")
-            scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
         End Try
 
     End Sub
@@ -71,14 +135,14 @@
             Dim ctl = e.CommandSource
             Dim row As GridViewRow = ctl.NamingContainer
             Dim Id As Integer = gridArea.DataKeys(row.RowIndex).Value
-            Dim sqlQuery = "UPDATE Cat_Area set Activado=1 WHERE Id_Area= " + Id.ToString()
+            Dim sqlQuery = "UPDATE Cat_Area set Activadoo=1 WHERE Id_Area= " + Id.ToString()
             If obj.Eliminar(sqlQuery) Then
                 MostrarGridArea()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         ElseIf e.CommandName = "Editar" Then
@@ -145,11 +209,11 @@
                     btnEditar.Visible = True
 
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             End If

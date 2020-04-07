@@ -11,16 +11,52 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Instalacion
+Partial Public Class Requisito
     
     '''<summary>
-    '''Control Update1.
+    '''Control lblRequisito.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Update1 As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents lblRequisito As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblAprobada.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblAprobada As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblEnAprobacion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblEnAprobacion As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblRechazada.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblRechazada As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblSinEvidencia.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblSinEvidencia As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''Control litControl.
@@ -32,31 +68,49 @@ Partial Public Class Instalacion
     Protected WithEvents litControl As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''Control txtNombreInstalacion.
+    '''Control itemCaptura.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtNombreInstalacion As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents itemCaptura As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
-    '''Control reqInstalacion.
+    '''Control itemConsulta.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents reqInstalacion As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents itemConsulta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
-    '''Control ddl_Region.
+    '''Control captura.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddl_Region As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents captura As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
+    '''Control File1.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents File1 As Global.System.Web.UI.WebControls.FileUpload
+    
+    '''<summary>
+    '''Control txtDesc.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtDesc As Global.System.Web.UI.HtmlControls.HtmlTextArea
     
     '''<summary>
     '''Control reqRegion.
@@ -68,42 +122,6 @@ Partial Public Class Instalacion
     Protected WithEvents reqRegion As Global.System.Web.UI.WebControls.RequiredFieldValidator
     
     '''<summary>
-    '''Control txtUbicacion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtUbicacion As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''Control RequiredFieldValidator1.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-    
-    '''<summary>
-    '''Control txtPlaza.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtPlaza As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''Control RequiredFieldValidator2.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-    
-    '''<summary>
     '''Control btnGuardar.
     '''</summary>
     '''<remarks>
@@ -113,29 +131,47 @@ Partial Public Class Instalacion
     Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
-    '''Control txtSearch.
+    '''Control gridEvidencia.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents gridEvidencia As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
-    '''Control btnBuscar.
+    '''Control frame.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents frame As Global.System.Web.UI.HtmlControls.HtmlIframe
     
     '''<summary>
-    '''Control gridInstalacion.
+    '''Control consulta.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents gridInstalacion As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents consulta As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
+    '''Control litControl2.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents litControl2 As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
+    '''Control gridEvidencia2.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents gridEvidencia2 As Global.System.Web.UI.WebControls.GridView
 End Class

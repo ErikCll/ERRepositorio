@@ -1,30 +1,10 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="Instalacion.aspx.vb" Inherits="ER.Instalacion" %>
-
-<!DOCTYPE html>
-
-<html >
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-    <title>Instalación</title>
-    <link href="../Bootstrap/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="../Bootstrap/css/bootstrap4.4.1.min.css" rel="stylesheet" />
-
-    <link href="../Bootstrap/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-</head>
-<body class="bg-light">
-    <form id="form1" runat="server" defaultbutton="btnBuscar">
-                <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
-
-
-
-        <div>
-            <section class="content-header">
-                <h1>Instalación</h1>
-            </section>
-            <section class="content">
-               <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/Administrador/Admin.Master" CodeBehind="Instalacion.aspx.vb" Inherits="ER.Instalacion" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+   Instalación
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%--     <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
+       <asp:UpdatePanel UpdateMode="Conditional" runat="server" ID="Update1">
 
                    <ContentTemplate>
                         <asp:Literal ID="litControl" runat="server"></asp:Literal>
@@ -51,14 +31,30 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Region:</label>
 
-                                <asp:DropDownList class="form-control" ID="ddl_Region" runat="server" DataTextField="Nombre" DataValueField="id_region"></asp:DropDownList>
+                                <asp:DropDownList class="form-control" ID="ddl_Region" runat="server" DataTextField="Nombre" DataValueField="id_region" ></asp:DropDownList>
                                 <asp:RequiredFieldValidator runat="server" ID="reqRegion" ControlToValidate="ddl_Region"
                                     ErrorMessage="Nombre de región requerido." ForeColor="Red" InitialValue="[Seleccionar]" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
 
                             </div>
-                            <div class="col-sm-12 col-md-2"></div>
                         </div>
-               
+                                                    <div class="col-sm-12 col-md-4"></div>
+
+               <div class="col-sm-8 col-md-4 col-md-lg-4">
+                   <div class="form-group">
+                       <label class="font-weight-bold">Ubicación:</label>
+                       <asp:TextBox runat="server" ID="txtUbicacion" CssClass="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtUbicacion"
+                                    ErrorMessage="Nombre de ubicación requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                   </div>
+               </div>
+                         <div class="col-sm-8 col-md-4 col-md-lg-4">
+                   <div class="form-group">
+                       <label class="font-weight-bold">Plaza:</label>
+                       <asp:TextBox runat="server" ID="txtPlaza" CssClass="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                         <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator2" ControlToValidate="txtPlaza"
+                                    ErrorMessage="Nombre de plaza requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
+                   </div>
+               </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="vert-offset-bottom-2">
                                 <br />
@@ -92,7 +88,7 @@
             <div class="input-group">
                 <div class="input-group btn">
                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
-<asp:Button ID="btnBuscar" Text="Buscar" runat="server" OnClick="Search" CssClass="btn btn-default btn-sm" />
+<asp:Button ID="btnBuscar" Text="Buscar" runat="server"  CssClass="btn btn-default btn-sm" />
                 </div>
             </div>
         </div>
@@ -143,7 +139,7 @@
                         </asp:TemplateField>
                           
                         <%--                    <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />--%>
-
+                        
                         <asp:TemplateField HeaderText="Instalación">
                             <ItemTemplate>
                                 <asp:Label ID="lblInstalacion" runat="server" Text='<%# Eval("Instalacion") %>'></asp:Label>
@@ -167,15 +163,7 @@
                 </div>
                    </ContentTemplate>
                </asp:UpdatePanel>
-            </section>
-        </div>
-
-
-    </form>
-       <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
-    <script src="../Bootstrap/js/popper.min.js"></script>
-    <script src="../Bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript">
+      <script type="text/javascript">
                             Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
             function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
@@ -196,7 +184,6 @@
                   
            
                 
-
 
 
               function limpiar() {
@@ -247,5 +234,5 @@
           
 </script>   
   
-</body>
-</html>
+</asp:Content>
+

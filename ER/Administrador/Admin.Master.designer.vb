@@ -11,16 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Instalacion
+Partial Public Class Admin
     
     '''<summary>
-    '''Control Update1.
+    '''Control form1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Update1 As Global.System.Web.UI.UpdatePanel
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
     
     '''<summary>
     '''Control litControl.
@@ -32,110 +32,83 @@ Partial Public Class Instalacion
     Protected WithEvents litControl As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''Control txtNombreInstalacion.
+    '''Control lblInstalacion.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtNombreInstalacion As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lblInstalacion As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control reqInstalacion.
+    '''Control RadComboBox1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents reqInstalacion As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents RadComboBox1 As Global.Telerik.Web.UI.RadComboBox
     
     '''<summary>
-    '''Control ddl_Region.
+    '''Control lblIdInstalacion.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddl_Region As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents lblIdInstalacion As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control reqRegion.
+    '''Control lblPlaza.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents reqRegion As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents lblPlaza As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control txtUbicacion.
+    '''Control lblLocalizacion.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtUbicacion As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lblLocalizacion As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control RequiredFieldValidator1.
+    '''Control AdminTopListView.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents AdminTopListView As Global.System.Web.UI.WebControls.ListView
     
     '''<summary>
-    '''Control txtPlaza.
+    '''Control lblUsuario.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtPlaza As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents lblUsuario As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control RequiredFieldValidator2.
+    '''Control head.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents head As Global.System.Web.UI.WebControls.ContentPlaceHolder
     
     '''<summary>
-    '''Control btnGuardar.
+    '''Control ContentPlaceHolder1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control txtSearch.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txtSearch As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''Control btnBuscar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control gridInstalacion.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents gridInstalacion As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents ContentPlaceHolder1 As Global.System.Web.UI.WebControls.ContentPlaceHolder
 End Class

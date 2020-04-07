@@ -1,0 +1,315 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Admin.master.vb" Inherits="ER.Admin" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+        <meta charset="utf-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <title></title>
+    <link href="../Bootstrap/css/ionicons.min.css" rel="stylesheet" />
+    <link href="../Bootstrap/css/bootstrap4.4.1.min.css" rel="stylesheet" />
+    <link href="../Bootstrap/css/AdminLTE.min.css" rel="stylesheet" />
+    <%--<asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>--%>
+</head>
+<body class="bg-light" 
+    
+    >
+    <style>
+   
+           .dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 6px;
+  top: .8em;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+.navbar{
+    min-height:13px;
+}
+.navbar  a {
+    font-size: 12.2px;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+  
+    background-color: #e1e3e9;
+}
+/*::-webkit-scrollbar 
+ {
+    width: 10px;
+    height: 10px;
+ }
+::-webkit-scrollbar-thumb 
+ {
+    background: #4A4A4A;
+    border-radius:1px;
+ }*/
+
+
+    </style>
+ <form id="form1" runat="server">
+     <asp:ScriptManager runat="server"></asp:ScriptManager>
+   <%--  <div class="col-lg-12">
+           <div class="row">
+        <label class="ml-1">Texto1</label>
+     </div>
+     </div>--%>
+
+
+                     <asp:Literal ID="litControl" runat="server"></asp:Literal>
+ <div class="col-lg-12">
+     <div class="row">
+
+            <div class="col-sm-2 col-md-3 col-lg-2">
+         <div class="card"
+             >
+             <div class="card-body">
+                 <label>Logo</label>
+             </div>
+         </div>
+     </div>
+      <div class="col-sm-10 col-md-10 col-lg-10">
+            <div class="card">
+         <div class="card-body">
+             <h5 class="card-title  text-center font-weight-bold">Modelo Económico de Estación de Servicio  en Plaza Comercial</h5>
+          <div class="row">
+                 <div class="col-sm-5 col-md-5 col-lg-5">
+                  <label>Nombre:</label>
+             <asp:Label runat="server" class="font-weight-bold" ID="lblInstalacion" Visible="false"></asp:Label>
+                         <telerik:RadComboBox Visible="false" AutoPostBack="true" OnSelectedIndexChanged="RadComboBox1_SelectedIndexChanged" ID="RadComboBox1" runat="server" DataTextField="Nombre" DataValueField="Id_Instalacion" RenderMode="Lightweight" MarkFirstMatch="true"   EmptyMessage="[Seleccionar]"></telerik:RadComboBox>
+                <%-- <telerik:RadAutoCompleteBox Visible="true" Height="34px" Width="250px" AutoPostBack="true" InputType="text" EmptyMessage="Nombre de empleado" Delimiter=" " runat="server" id="instala"
+                                                        DataValueField="Id_Instalacion" DataTextField="Nombre" TextSettings-SelectionMode="Single">
+                                                    </telerik:RadAutoCompleteBox>--%>
+                         <%--     <asp:SqlDataSource ID="Instalacion" runat="server" ConnectionString="<%$ ConnectionStrings:myConnectionString %>"
+                                                        ProviderName="System.Data.SqlClient" SelectCommand="SELECT [Id_Instalacion], [Nombre] FROM [Cat_Instalacion]">
+                                                     
+                                                    </asp:SqlDataSource>--%>
+             <asp:Label runat="server" ID="lblIdInstalacion" Visible="false"></asp:Label>
+             </div>
+             <div class="col-sm-5 col-md-5 col-lg-5">
+                 <label>Nombre:</label>
+                 <asp:Label runat="server" ID="lblPlaza"></asp:Label>
+              
+             </div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <label>Ubicación:</label>
+                <asp:Label runat="server" ID="lblLocalizacion" CssClass="font-weight-bold"></asp:Label>
+            </div>
+          </div>
+           
+         </div>
+     </div>
+     </div>
+     </div>
+      
+           
+ </div>
+ <nav class="navbar navbar-expand-xl navbar-dark sticky-top " style="background-color: rgba(0, 0, 0, 0.85); width:auto   ">
+
+                <a class="navbar-brand ion-android-home" style="font-size:20px" href="AdminInicio.aspx"></a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+           
+
+                           <ul class="navbar-nav mr-auto ">
+
+                        <li class="nav-item active " >
+<%--                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>--%>
+                        </li>
+                        <li class="nav-item">
+<%--                            <a class="nav-link" href="#">Link</a>--%>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ion-android-apps " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catálogo
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item ion-android-radio-button-on" href="Area.aspx"> Área</a>
+                                <a class="dropdown-item ion-android-radio-button-on" href="Instalacion.aspx"> Instalación</a>
+<%--                                <div class="dropdown-divider"></div>--%>
+                                <a class="dropdown-item  ion-android-radio-button-on" href="Empleado.aspx"> Empleado</a>
+<%--                                <a class="dropdown-item  ion-android-radio-button-on" href="Menu.aspx"> Menú</a>--%>
+
+                            </div>
+                        </li>
+                       <%-- <li class="nav-item">
+                            <a class="nav-link ion-android-exit" href="#"> Salir</a>
+                        </li>--%>
+                         <asp:ListView ID="AdminTopListView" runat="server" OnItemDataBound="AdminTopListView_ItemDataBound" DataKeyNames="Nivel1">
+                    <ItemTemplate>
+                        <asp:Label runat="server" ID="lbl" Text=' <%# Eval("Nivel1") %>' Visible="false"></asp:Label>
+                        <li class="nav-item dropdown"><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><%# Eval("Nivel1") %></a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <asp:ListView ID="RequisitoNivel1" runat="server" DataKeyNames="id_requisito">
+                                    <ItemTemplate>
+                                        <li class="dropdown-item" style="overflow:auto; max-height:300px;">
+                                            <asp:Label runat="server" ID="id_requisito1" Text='<%# Eval("id_requisito") %>' Visible="false"></asp:Label>
+                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisitoNivel1" Text='<%#" " + Eval("Requisito") %>' ForeColor="Blue" OnClick="Requisito1_Click" ></asp:LinkButton>
+                                        </li>
+
+                                    </ItemTemplate>
+                                </asp:ListView>
+                                <asp:ListView ID="Menu2" runat="server">
+                                    <ItemTemplate>
+
+                                        <li class="dropdown-submenu">
+                                            <asp:Label runat="server" ID="lbl2" href="Area.aspx" Text='<%# Eval("Nivel2") %>' Visible="false">
+                                            </asp:Label><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel2") %></a>
+
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                                                <asp:ListView ID="RequisitoNivel2" runat="server" DataKeyNames="id_requisito">
+                                                    <ItemTemplate>
+                                                        <li class="dropdown-item">
+                                                                                                        <asp:Label runat="server" ID="id_requisito2" Text='<%# Eval("id_requisito") %>' Visible="false"></asp:Label>
+
+                                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisitoNivel2" Text='<%#" " + Eval("Requisito") %>' ForeColor="Blue" OnClick="Requisito2_Click"></asp:LinkButton>
+                                                        </li>
+
+                                                    </ItemTemplate>
+                                                </asp:ListView>
+                                           
+                                                <asp:ListView ID="Menu3" runat="server">
+                                                    <ItemTemplate>
+                                                        <li class="dropdown-submenu">
+                                                            <asp:Label runat="server" ID="lbl3" Text='<%# Eval("Nivel3") %>' Visible="false"></asp:Label>
+                                                            <a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel3") %></a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="overflow:auto; max-height:300px;">
+                                                                <asp:ListView ID="MenuRequisito" runat="server" DataKeyNames="id_requisito">
+                                                                    <ItemTemplate>
+                                                                        <li class="dropdown-item">
+                                                                                                                        <asp:Label runat="server" ID="id_requisito3" Text='<%# Eval("id_requisito") %>' Visible="false"></asp:Label>
+
+                                                                             <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisito" Text='<%#" " + Eval(" Requisito") %>' ForeColor="Blue" OnClick="Requisito3_Click"></></asp:LinkButton>
+
+
+                                                                        </li>
+
+                                                                    </ItemTemplate>
+                                                                </asp:ListView>
+                                                            </ul>
+                                                        </li>
+
+                                                    </ItemTemplate>
+
+                                                </asp:ListView>
+                                            </ul>
+
+                                        </li>
+
+
+
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </ul>
+
+
+                        </li>
+
+
+
+                    </ItemTemplate>
+                 
+                </asp:ListView>
+                                  <li class="nav-item">
+                            <a class="nav-link ion-stats-bars" href="#"> Control Regulatorio (Construcción ES)</a>
+                        </li>
+                                      <li class="nav-item">
+                            <a class="nav-link ion-stats-bars" href="#"> Seguimiento de Cumplimiento Regulatorio (Operación ES)</a>
+                        </li>
+                    </ul>
+                     <ul class="navbar-nav ml-auto">
+    <%--   <li class="nav-item">
+                            <a class="nav-link ion-android-exit" href="#"> Salir</a>
+                        </li>--%>
+                             <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle  ion-android-person" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;<asp:Label ID="lblUsuario" runat="server" ForeColor="White"></asp:Label></a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item  ion-ios-unlocked" href="Contrasena.aspx"> Cambiar contraseña</a>
+                                <div class="dropdown-divider"></div>
+                                <asp:LinkButton runat="server" CssClass="dropdown-item ion-android-exit" OnClick="Unnamed_Click" Text=" Salir" ></asp:LinkButton>
+                            </div>
+                        </li>
+    </ul>
+                 
+                </div>
+              
+           
+            </nav>
+ 
+
+
+   
+           
+            
+<section class="content-header">
+                   <h1>
+                        <asp:ContentPlaceHolder ID="head" runat="server">
+                    </asp:ContentPlaceHolder>
+                   </h1>
+                   
+                
+              
+            </section>
+                          <section class="content" >
+   <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+
+                </asp:ContentPlaceHolder>
+             
+            </section>
+            
+    
+
+ <%--       <footer class="navbar fixed-bottom bg-dark position-sticky " >
+                    <div class="container text-white">    
+                        <small>Copyright &copy;</small>
+</div>
+
+        </footer>--%>
+
+    </form>
+ 
+    
+    <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="../Bootstrap/js/popper.min.js"></script>
+    <script src="../Bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+  
+    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+  if (!$(this).next().hasClass('show')) {
+    $(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+  }
+  var $subMenu = $(this).next('.dropdown-menu');
+  $subMenu.toggleClass('show');
+
+
+  $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $('.dropdown-submenu .show').removeClass('show');
+  });
+
+
+  return false;
+});
+    </script>
+</body>
+</html>

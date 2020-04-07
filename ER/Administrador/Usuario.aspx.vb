@@ -2,6 +2,61 @@
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
 
+    Private Sub Usuario_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+
+        If Not IsPostBack Then
+
+            If HttpContext.Current.User.Identity.IsAuthenticated Then
+
+                Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+                Session("URL") = URL
+                Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+                If objUs Is Nothing Then
+                    FormsAuthentication.SignOut()
+                    Response.Redirect(URL.ToString())
+                End If
+                Dim IdUsuario = objUs.Id_usuario
+
+
+
+                If obj.EsAdministrador(IdUsuario) Then
+
+
+                Else
+                    If obj.RolUsuario(IdUsuario, URL) Then
+
+
+                    Else
+                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+
+                        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+                    End If
+
+                End If
+
+
+
+
+            Else
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+
+
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Usuario_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
+        Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        Session("Error") = objErr
+        Response.Redirect("../Error.aspx")
+
+
+
+    End Sub
+
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not Page.IsPostBack Then
             Dim obj As AtributosEmpleado = CType(Session("DatosEmpleado"), AtributosEmpleado)
@@ -13,14 +68,21 @@
                 lblMaterno.Text = obj.ApellidoMaterno
                 lblInstalacion.Text = obj.Instalacion
                 lblFecha.Text = obj.CreacionFecha
-
+            Else
+                Response.Redirect("Empleado.aspx")
             End If
+            'Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("lblNombre")))
+            ''Dim decodedString As String = Request.QueryString("lblNombre")
+            'lblNombre.Text = decodedString
             MostrarGridUsuario()
         End If
 
     End Sub
 
     Protected Sub btnCerrar_Click(sender As Object, e As EventArgs) Handles btnCerrar.Click
+
+        Session("DatosEmpleado") = Nothing
+
         Response.Redirect("Empleado.aspx")
     End Sub
 
@@ -44,7 +106,7 @@
         For Each row As GridViewRow In gridUsuario.Rows
             If row.RowType = DataControlRowType.DataRow Then
                 Dim IdUsuario As Integer = Convert.ToInt32(gridUsuario.DataKeys(row.RowIndex).Values("Id_usuario"))
-                Dim Query = "SELECT Nav.Id_webform 'Id_webform', Nav.Descripcion 'Descripcion', Nav.URL, CASE WHEN UsAct.id_webform IS NULL THEN 0 else UsAct.Id_webform END 'Id_registro' FROM Cat_Navegacion Nav  LEFT JOIN (SELECT Id_webform FROM Op_Roles WHERE Id_Usuario=" + IdUsuario.ToString() + ") UsAct on Nav.Id_webform=UsAct.Id_webform"
+                Dim Query = "SELECT Nav.Id_webform 'Id_webform', Nav.Descripcion 'Descripcion', Nav.URL, CASE WHEN UsAct.id_webform IS NULL THEN 0 else UsAct.Id_webform END 'Id_registro' FROM Cat_Navegacion Nav  LEFT JOIN (SELECT Id_webform FROM Op_Roles WHERE Id_Usuario=" + IdUsuario.ToString() + ") UsAct on Nav.Id_webform=UsAct.Id_webform ORDER BY Id_registro DESC"
                 gridAcceso.DataSource = obj.Consultar(Query)
                 gridAcceso.DataBind()
             End If
@@ -60,26 +122,48 @@
 
         If (obj.AutenticarUsuario(Acceso)) Then
             Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ya existe este usuario con este nombre de acceso.")
-            scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
         Else
-            Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE())"
-            Try
-                If obj.Insertar(sqlQuery) Then
+            If CheckSupervisor.Checked = True Then
+                Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha,EsSupervisor) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE(),1)"
+                Try
+                    If obj.Insertar(sqlQuery) Then
 
 
-                    Limpiar()
+                        Limpiar()
 
-                    MostrarGridUsuario()
-                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                        MostrarGridUsuario()
+                        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
+                        ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
-                End If
-            Catch ex As Exception
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    End If
+                Catch ex As Exception
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
-            End Try
+                End Try
+            Else
+                Dim sqlQuery = "INSERT INTO Usuario(Id_empleado,Acceso,Contrasena,Email,CreacionFecha) VALUES(" + lblIdEmpleado.Text + ",'" + Acceso + "','" + Password + "','" + Email + "',GETDATE())"
+                Try
+                    If obj.Insertar(sqlQuery) Then
+
+
+                        Limpiar()
+
+                        MostrarGridUsuario()
+                        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Usuario creado exitosamente.")
+                        ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                    End If
+                Catch ex As Exception
+                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear usuario.")
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+                End Try
+            End If
+
+
         End If
 
 
@@ -102,6 +186,8 @@
         btnGuardar.Visible = False
         btn_ClearButton.Visible = False
         btnSave.Visible = True
+        gridAcceso.Visible = True
+        CheckSupervisor.Enabled = False
     End Sub
 
     Private Sub MostrarControles()
@@ -112,8 +198,8 @@
         btnGuardar.Visible = True
         btn_ClearButton.Visible = True
         btnSave.Visible = False
-
-
+        gridAcceso.Visible = False
+        CheckSupervisor.Enabled = True
     End Sub
 
     Protected Sub gridUsuario_RowCommand(sender As Object, e As GridViewCommandEventArgs)
@@ -125,10 +211,10 @@
             If obj.Eliminar(sqlQuery) Then
                 MostrarGridUsuario()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
-                scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
             End If
 
         ElseIf e.CommandName = "Editar" Then
@@ -195,11 +281,11 @@
                     btnEditar.Visible = True
 
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
-                    scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                 End If
 
             End If
@@ -237,6 +323,54 @@
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        For Each rowUs As GridViewRow In gridUsuario.Rows
+            If rowUs.RowType = DataControlRowType.DataRow Then
+                Dim IdUsuario As Integer = Convert.ToInt32(gridUsuario.DataKeys(rowUs.RowIndex).Values("Id_usuario"))
+                Dim Usuario As Label = CType(rowUs.FindControl("lblAcceso"), Label)
+
+                For Each row As GridViewRow In gridAcceso.Rows
+                    If row.RowType = DataControlRowType.DataRow Then
+                        Dim isChecked As Boolean = row.Cells(0).Controls.OfType(Of CheckBox)().FirstOrDefault().Checked
+                        Dim Id_Actividad = row.Cells(2).Controls.OfType(Of Label)().FirstOrDefault.Text
+                        Dim Id_Registro = row.Cells(3).Controls.OfType(Of Label)().FirstOrDefault.Text
+
+
+
+                        If isChecked = True And Id_Actividad <> Id_Registro Then
+                            Dim sqlInsert As String = "INSERT INTO Op_Roles (Id_Usuario,Id_webform) VALUES(" + IdUsuario.ToString() + "," + Id_Actividad + ") "
+                            If obj.Insertar(sqlInsert) Then
+                                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizaron los datos para el acceso " + Usuario.Text + " ")
+                                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                                MostrarGridUsuario()
+
+                            End If
+
+                        End If
+
+                        If Id_Registro <> 0 Then
+                            If isChecked = False Then
+                                Dim sqlDelete As String = "DELETE FROM Op_Roles WHERE Id_Usuario= " + IdUsuario.ToString() + "AND Id_webform= " + Id_Actividad + ""
+                                If obj.Eliminar(sqlDelete) Then
+                                    Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizaron los datos para el acceso " + Usuario.Text + " ")
+                                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                                    MostrarGridUsuario()
+
+
+
+
+                                End If
+                            End If
+
+                        End If
+
+                    End If
+
+                Next
+            End If
+
+        Next
+        'PanelAccesos.Visible = True
+
 
     End Sub
 End Class

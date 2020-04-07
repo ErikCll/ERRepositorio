@@ -1,28 +1,12 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="Empleado.aspx.vb" Inherits="ER.Empleado" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" MasterPageFile="~/Administrador/Admin.Master" CodeBehind="Empleado.aspx.vb" Inherits="ER.Empleado" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+   Empleado
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<%--             <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
 
-<html >
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
-    <title>Empleado</title>
-    <link href="../Bootstrap/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="../Bootstrap/css/bootstrap4.4.1.min.css" rel="stylesheet" />
-
-    <link href="../Bootstrap/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-</head>
-<body class="bg-light">
-    <form id="form1" runat="server" defaultbutton="btnBuscar">
-                <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>
-
-        <div>
-            <section class="content-header">
-                <h1>Empleado</h1>
-            </section>
-            <section class="content">
-               <asp:UpdatePanel UpdateMode="Conditional" runat="server">
+    <asp:UpdatePanel UpdateMode="Conditional" runat="server">
 
                    <ContentTemplate>
                         <asp:Literal ID="litControl" runat="server"></asp:Literal>
@@ -158,7 +142,7 @@
                         </asp:TemplateField>
                           
                       
-                                                <asp:BoundField HeaderText="Acceso" DataField="Acceso" />
+                                                <asp:BoundField HeaderText="Usuario" DataField="Acceso" />
 
                         <asp:TemplateField HeaderText="Nombre">
                             <ItemTemplate>
@@ -183,7 +167,7 @@
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />
                           <asp:BoundField HeaderText="Fecha de creación " DataField="CreacionFecha" />
-                     
+                     <asp:BoundField DataField="Rol" />
                     </Columns>
                <PagerStyle HorizontalAlign = "Center" CssClass="" />
                 </asp:GridView>
@@ -202,15 +186,7 @@
                 </div>
                    </ContentTemplate>
                </asp:UpdatePanel>
-            </section>
-        </div>
-
-
-    </form>
-       <script src="../Bootstrap/js/jquery-3.4.1.min.js"></script>
-    <script src="../Bootstrap/js/popper.min.js"></script>
-    <script src="../Bootstrap/js/bootstrap.min.js"></script>
-     <script type="text/javascript">
+        <script type="text/javascript">
                             Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
             function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
@@ -284,6 +260,5 @@
     
           
 </script>  
-  
-</body>
-</html>
+</asp:Content>
+

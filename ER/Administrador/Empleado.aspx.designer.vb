@@ -14,24 +14,6 @@ Option Explicit On
 Partial Public Class Empleado
     
     '''<summary>
-    '''Control form1.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
-    
-    '''<summary>
-    '''Control scrScript.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents scrScript As Global.System.Web.UI.ScriptManager
-    
-    '''<summary>
     '''Control litControl.
     '''</summary>
     '''<remarks>

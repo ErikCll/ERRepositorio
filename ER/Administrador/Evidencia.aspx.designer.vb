@@ -11,7 +11,16 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Area
+Partial Public Class Evidencia
+    
+    '''<summary>
+    '''Control scrScript.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents scrScript As Global.System.Web.UI.ScriptManager
     
     '''<summary>
     '''Control litControl.
@@ -23,67 +32,40 @@ Partial Public Class Area
     Protected WithEvents litControl As Global.System.Web.UI.WebControls.Literal
     
     '''<summary>
-    '''Control txtArea.
+    '''Control ddl_Nivel1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents txtArea As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents ddl_Nivel1 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control RequiredFieldValidator2.
+    '''Control ddl_Nivel2.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator2 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    Protected WithEvents ddl_Nivel2 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control ddl_Instalacion.
+    '''Control ddl_Nivel3.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents ddl_Instalacion As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents ddl_Nivel3 As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control RequiredFieldValidator1.
+    '''Control ddl_Requisito.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents RequiredFieldValidator1 As Global.System.Web.UI.WebControls.RequiredFieldValidator
-    
-    '''<summary>
-    '''Control txt_NombreCodigo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents txt_NombreCodigo As Global.System.Web.UI.WebControls.TextBox
-    
-    '''<summary>
-    '''Control reqCodigo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents reqCodigo As Global.System.Web.UI.WebControls.RequiredFieldValidator
-    
-    '''<summary>
-    '''Control btnGuardar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents ddl_Requisito As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
     '''Control txtSearch.
@@ -102,13 +84,4 @@ Partial Public Class Area
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control gridArea.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents gridArea As Global.System.Web.UI.WebControls.GridView
 End Class
