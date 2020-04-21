@@ -6,7 +6,7 @@
     Private Sub Instalacion_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
         Dim objErr As Exception = Server.GetLastError().GetBaseException()
         Session("Error") = objErr
-        Response.Redirect("../Error.aspx")
+        Response.Redirect("Error.aspx")
 
 
 
@@ -36,7 +36,7 @@
 
 
                     Else
-                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+                        Dim script As String = "alert('No cuentas con el acceso para este apartado'); window.location.href= 'AdminInicio.aspx';"
 
                         ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
 
@@ -77,9 +77,9 @@
     Private HaCambiadoElTexto As Boolean = False
 
     Public Sub MostrarGridInstalacion()
-        Dim Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL ORDER BY Id_Instalacion DESC"
+        Dim Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catIns.Localizacion,CatIns.Plaza,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL ORDER BY Id_Instalacion DESC"
         If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
-            Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL  AND catIns.Nombre LIKE  '%" + txtSearch.Text.Trim() + "%' ORDER BY Id_Instalacion DESC"
+            Query = "SELECT Id_Instalacion, catIns.Nombre as Instalacion,catIns.Localizacion,CatIns.Plaza,catReg.Nombre as Region FROM Cat_Instalacion catIns JOIN Cat_Region catReg on catIns.id_region=catReg.id_region WHERE catIns.Activado IS NULL  AND catIns.Nombre LIKE  '%" + txtSearch.Text.Trim() + "%' ORDER BY Id_Instalacion DESC"
         End If
 
         gridInstalacion.DataSource = obj.Consultar(Query)
@@ -90,6 +90,7 @@
 
 
     Public Sub DropDownListRegion()
+
         ddl_Region.DataSource = obj.LlenarDropDownList("SELECT id_Region, Nombre FROM Cat_Region WHERE Activado Is NULL")
         'ddl_Region.DataTextField = "Nombre"
         'ddl_Region.DataValueField = "id_Region"
@@ -113,24 +114,22 @@
         Dim txtInstalacionn As String = txtNombreInstalacion.Text
         Dim ddlRegion = ddl_Region.SelectedValue
 
-        Dim sqlQuery = "INSERT INTO Cat_Instalacion (id_region,Nombre,Activado) VALUES(" + ddlRegion + ",'" + txtInstalacionn + "',NULL)"
-        Try
-            If obj.Insertar(sqlQuery) Then
+        Dim sqlQuery = "INSERT INTO Cat_Instalacion (id_region,Nombre,Activado,Localizacion,Plaza) VALUES(" + ddlRegion + ",'" + txtInstalacionn + "',NULL,'" + txtUbicacion.Text + "','" + txtPlaza.Text + "')"
+        If obj.Insertar(sqlQuery) Then
 
 
-                Limpiar()
+            Limpiar()
 
-                MostrarGridInstalacion()
-                'objAdmin.LlenarInstalacion()
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-
-            End If
-        Catch ex As Exception
-            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro." + ex.ToString() + "")
+            MostrarGridInstalacion()
+            'objAdmin.LlenarInstalacion()
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+        Else
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro.")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+        End If
 
-        End Try
+
 
     End Sub
 
@@ -217,6 +216,8 @@
     'End Sub
     Private Sub Limpiar()
         txtNombreInstalacion.Text = String.Empty
+        txtUbicacion.Text = String.Empty
+        txtPlaza.Text = String.Empty
         ddl_Region.SelectedIndex = 0
         txtSearch.Text = String.Empty
     End Sub
@@ -259,6 +260,16 @@
             Dim lblInstalacion As Label = CType(row.FindControl("lblInstalacion"), Label)
             lblInstalacion.Visible = False
 
+            Dim txtEdit2 As TextBox = CType(row.FindControl("txtEditLocalizacion"), TextBox)
+            txtEdit2.Visible = True
+            Dim lblInstalacion2 As Label = CType(row.FindControl("lblLocalizacion"), Label)
+            lblInstalacion2.Visible = False
+
+            Dim txtEdit3 As TextBox = CType(row.FindControl("txtEditPlaza"), TextBox)
+            txtEdit3.Visible = True
+            Dim lblInstalacion3 As Label = CType(row.FindControl("lblPlaza"), Label)
+            lblInstalacion3.Visible = False
+
             Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
             btnCancel.Visible = True
 
@@ -280,19 +291,37 @@
 
             Dim Nuevo As TextBox = CType(row.FindControl("txtEditInstalacion"), TextBox)
 
+            Dim ActualLocalizacion As Label = CType(row.FindControl("lblLocalizacion"), Label)
+
+            Dim NuevoLocalizacion As TextBox = CType(row.FindControl("txtEditLocalizacion"), TextBox)
+
+            Dim ActualPlaza As Label = CType(row.FindControl("lblPlaza"), Label)
+
+            Dim NuevoPlaza As TextBox = CType(row.FindControl("txtEditPlaza"), TextBox)
+
+
             Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
 
             Dim btnAct As LinkButton = CType(row.FindControl("btnAct"), LinkButton)
 
             Dim btnEditar As LinkButton = CType(row.FindControl("btnEditar"), LinkButton)
 
-            Dim sqlQuery = "UPDATE Cat_Instalacion set Nombre= '" + Nuevo.Text + "' Where Id_instalacion=" + Id.ToString + ""
-            If Actual.Text <> Nuevo.Text Then
+            Dim sqlQuery = "UPDATE Cat_Instalacion set Nombre= '" + Nuevo.Text + "',Localizacion='" + NuevoLocalizacion.Text + "',Plaza='" + NuevoPlaza.Text + "' Where Id_instalacion=" + Id.ToString + ""
+            If Actual.Text <> Nuevo.Text Or ActualLocalizacion.Text <> NuevoLocalizacion.Text Or ActualPlaza.Text <> NuevoPlaza.Text Then
                 If obj.Modificar(sqlQuery) Then
 
                     Actual.Text = Nuevo.Text
                     Actual.Visible = True
                     Nuevo.Visible = False
+
+                    ActualLocalizacion.Text = NuevoLocalizacion.Text
+                    ActualLocalizacion.Visible = True
+                    NuevoLocalizacion.Visible = False
+
+                    ActualPlaza.Text = NuevoPlaza.Text
+                    ActualPlaza.Visible = True
+                    NuevoPlaza.Visible = False
+
                     btnCancel.Visible = False
                     btnAct.Visible = False
                     btnEditar.Visible = True
@@ -316,6 +345,16 @@
             txtEdit.Visible = False
             Dim lblInstalacion As Label = CType(row.FindControl("lblInstalacion"), Label)
             lblInstalacion.Visible = True
+
+            Dim txtEdit2 As TextBox = CType(row.FindControl("txtEditLocalizacion"), TextBox)
+            txtEdit2.Visible = False
+            Dim lblInstalacion2 As Label = CType(row.FindControl("lblLocalizacion"), Label)
+            lblInstalacion2.Visible = True
+
+            Dim txtEdit3 As TextBox = CType(row.FindControl("txtEditPlaza"), TextBox)
+            txtEdit3.Visible = False
+            Dim lblInstalacion3 As Label = CType(row.FindControl("lblPlaza"), Label)
+            lblInstalacion3.Visible = True
 
             Dim btnCancel As LinkButton = CType(row.FindControl("btnCancel"), LinkButton)
             btnCancel.Visible = False

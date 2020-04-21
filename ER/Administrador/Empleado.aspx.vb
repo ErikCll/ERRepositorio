@@ -26,7 +26,7 @@
 
 
                     Else
-                        Dim script As String = "alert('No cuentas con los accesos para este apartado'); window.location.href= 'AdminInicio.aspx';"
+                        Dim script As String = "alert('No cuentas con el acceso para este apartado'); window.location.href= 'AdminInicio.aspx';"
 
                         ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
 
@@ -51,7 +51,7 @@
     Private Sub Empleado_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
         Dim objErr As Exception = Server.GetLastError().GetBaseException()
         Session("Error") = objErr
-        Response.Redirect("../Error.aspx")
+        Response.Redirect("Error.aspx")
 
 
 
@@ -73,19 +73,49 @@
     End Sub
 
     Public Sub MostrarGridEmpleado()
-        Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
-        If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
-            Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY us.EsSupervisor DESC Emp.Id_empleado DESC"
+        Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+        If objUs Is Nothing Then
+            FormsAuthentication.SignOut()
+            Response.Redirect("AdminInicio.aspx")
+
+        End If
+        If obj.EsAdministrador(objUs.Id_usuario) Then
+            Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
+            If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
+                Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%'  ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
+            End If
+
+            gridEmpleado.DataSource = obj.Consultar(Query)
+            gridEmpleado.DataBind()
+        Else
+            Dim Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE Emp.Activado IS NULL AND Inst.Id_Instalacion=" + CType(Me.Master, Admin).IdInstalacion.ToString() + " ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
+            If Not String.IsNullOrEmpty(txtSearch.Text.Trim()) Then
+                Query = "SELECT Emp.Id_empleado,CASE WHEN us.Activado=1 THEN Null ELSE Us.Acceso END 'Acceso',Emp.Nombre,Emp.ApellidoPaterno,Emp.ApellidoMaterno, Inst.Nombre AS 'Instalacion', CONVERT(varchar,Emp.CreacionFecha,105)'CreacionFecha',CASE WHEN us.EsSupervisor IS NULL THEN '' ELSE 'Supervisor' END 'Rol' FROM Cat_Empleado Emp JOIN Cat_Instalacion Inst on Emp.Id_instalacion=Inst.Id_instalacion LEFT JOIN Usuario us on Emp.Id_empleado=us.Id_empleado AND Us.Activado IS NULL WHERE (Emp.Activado IS NULL AND Inst.Id_Instalacion=" + CType(Me.Master, Admin).IdInstalacion.ToString() + ") AND ( Emp.Nombre LIKE '%" + txtSearch.Text.Trim() + "%' OR us.Acceso LIKE '%" + txtSearch.Text.Trim() + "%')  ORDER BY us.EsSupervisor DESC, Emp.Id_empleado DESC"
+            End If
+
+            gridEmpleado.DataSource = obj.Consultar(Query)
+            gridEmpleado.DataBind()
         End If
 
-        gridEmpleado.DataSource = obj.Consultar(Query)
-        gridEmpleado.DataBind()
     End Sub
 
     Public Sub DropDownListInstalacion()
-        ddl_Instalacion.DataSource = obj.LlenarDropDownList("SELECt Id_instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL")
-        ddl_Instalacion.DataBind()
-        ddl_Instalacion.Items.Insert(0, New ListItem("[Seleccionar]"))
+        Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+        If objUs Is Nothing Then
+            FormsAuthentication.SignOut()
+            Response.Redirect("AdminInicio.aspx")
+
+        End If
+        If obj.EsAdministrador(objUs.Id_usuario) Then
+            ddl_Instalacion.DataSource = obj.LlenarDropDownList("SELECt Id_instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL")
+            ddl_Instalacion.DataBind()
+            ddl_Instalacion.Items.Insert(0, New ListItem("[Seleccionar]"))
+        Else
+            ddl_Instalacion.DataSource = obj.LlenarDropDownList("SELECt Id_instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL AND Id_instalacion=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "")
+            ddl_Instalacion.DataBind()
+            ddl_Instalacion.Items.Insert(0, New ListItem("[Seleccionar]"))
+        End If
+
     End Sub
 
     Protected Sub Search(sender As Object, e As EventArgs)
@@ -105,22 +135,20 @@
         Dim ddlInstalacion = ddl_Instalacion.SelectedValue
 
         Dim sqlQuery = "INSERT INTO Cat_Empleado(Id_instalacion,Nombre,ApellidoPaterno,ApellidoMaterno,CreacionFecha) VALUES(" + ddlInstalacion + ",'" + Nombre + "','" + Paterno + "','" + Materno + "',GETDATE())"
-        Try
-            If obj.Insertar(sqlQuery) Then
+        If obj.Insertar(sqlQuery) Then
 
 
-                Limpiar()
+            Limpiar()
 
-                MostrarGridEmpleado()
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
-
-            End If
-        Catch ex As Exception
+            MostrarGridEmpleado()
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Registro creado exitosamente.")
+            ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+        Else
             Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Error al crear registro.")
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+        End If
 
-        End Try
+
 
     End Sub
 

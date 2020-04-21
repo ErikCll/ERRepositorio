@@ -160,9 +160,10 @@
     <Content Include="Administrador\Empleado.aspx" />
     <Content Include="Administrador\Evidencia.aspx" />
     <Content Include="Administrador\Instalacion.aspx" />
-    <Content Include="Administrador\Menu.aspx" />
     <Content Include="Administrador\Requisito.aspx" />
+    <Content Include="Administrador\Requisitos.aspx" />
     <Content Include="Administrador\StyleSheet1.css" />
+    <Content Include="Administrador\Tablero.aspx" />
     <Content Include="Administrador\Usuario.aspx" />
     <Content Include="Bootstrap\css\AdminLTE.min.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
@@ -178,7 +179,9 @@
     <Content Include="Bootstrap\js\bootstrap.min.js" />
     <Content Include="Bootstrap\js\jquery-3.4.1.min.js" />
     <Content Include="Bootstrap\js\popper.min.js" />
-    <Content Include="Error.aspx" />
+    <Content Include="Administrador\Error.aspx" />
+    <Content Include="docs\LogoER.jpg" />
+    <Content Include="docs\LogoW.png" />
     <Content Include="ER\Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Prueba.aspx" />
@@ -235,18 +238,25 @@
       <DependentUpon>Instalacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Administrador\Menu.aspx.designer.vb">
-      <DependentUpon>Menu.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Administrador\Menu.aspx.vb">
-      <DependentUpon>Menu.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
-    </Compile>
     <Compile Include="Administrador\Requisito.aspx.designer.vb">
       <DependentUpon>Requisito.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administrador\Requisito.aspx.vb">
       <DependentUpon>Requisito.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Requisitos.aspx.designer.vb">
+      <DependentUpon>Requisitos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Requisitos.aspx.vb">
+      <DependentUpon>Requisitos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Administrador\Tablero.aspx.designer.vb">
+      <DependentUpon>Tablero.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\Tablero.aspx.vb">
+      <DependentUpon>Tablero.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\Usuario.aspx.designer.vb">
@@ -261,10 +271,10 @@
     <Compile Include="Correo.vb">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Error.aspx.designer.vb">
+    <Compile Include="Administrador\Error.aspx.designer.vb">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Error.aspx.vb">
+    <Compile Include="Administrador\Error.aspx.vb">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -340,6 +350,7 @@
     <Content Include="EstatusPDF\EvidenciaRechazada.pdf" />
     <Content Include="EstatusPDF\EvidenciaEnAprobacion.pdf" />
     <Content Include="EstatusPDF\SinEvidencia.pdf" />
+    <Content Include="docs\ManualDeUsuario.pdf" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

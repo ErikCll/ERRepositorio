@@ -17,7 +17,7 @@
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label class="font-weight-bold">Nombre:</label>
+                                <label class="font-weight-bold">Estación de Servicio:</label>
                                 <asp:TextBox class="form-control " ID="txtNombreInstalacion" runat="server" MaxLength="30" onkeypress="return AllowAlphabet(event)">
                    
                                 </asp:TextBox>
@@ -49,7 +49,7 @@
                </div>
                          <div class="col-sm-8 col-md-4 col-md-lg-4">
                    <div class="form-group">
-                       <label class="font-weight-bold">Plaza:</label>
+                       <label class="font-weight-bold">Plaza Comercial:</label>
                        <asp:TextBox runat="server" ID="txtPlaza" CssClass="form-control" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                          <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator2" ControlToValidate="txtPlaza"
                                     ErrorMessage="Nombre de plaza requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
@@ -88,7 +88,7 @@
             <div class="input-group">
                 <div class="input-group btn">
                    <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control form-control-sm"></asp:TextBox>
-<asp:Button ID="btnBuscar" Text="Buscar" runat="server"  CssClass="btn btn-default btn-sm" />
+<asp:Button ID="btnBuscar" Text="Buscar" runat="server" OnClick="Search"   CssClass="btn btn-default btn-sm" />
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
                     AutoGenerateColumns="false" AllowPaging="true"
                     CssClass=" table table-striped table-sm text-md-center"
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
-                    EmptyDataText="Sin registros"
+                    EmptyDataText="Sin registro de instalaciones"
                  PageSize="10"
                     OnPageIndexChanging="gridInstalacion_PageIndexChanging"
                     AllowCustomPaging="false" 
@@ -140,11 +140,25 @@
                           
                         <%--                    <asp:BoundField HeaderText="Instalación" DataField="Instalacion" />--%>
                         
-                        <asp:TemplateField HeaderText="Instalación">
+                        <asp:TemplateField HeaderText="Estación de Servicio">
                             <ItemTemplate>
                                 <asp:Label ID="lblInstalacion" runat="server" Text='<%# Eval("Instalacion") %>'></asp:Label>
                                 <asp:TextBox ID="txtEditInstalacion" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="300px"
                                     Text='<%# Eval("Instalacion") %>' Visible="false" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                               <asp:TemplateField HeaderText="Ubicación">
+                            <ItemTemplate>
+                                <asp:Label ID="lblLocalizacion" runat="server" Text='<%# Eval("Localizacion") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditLocalizacion" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                    Text='<%# Eval("Localizacion") %>' Visible="false" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                               <asp:TemplateField HeaderText="Plaza Comercial">
+                            <ItemTemplate>
+                                <asp:Label ID="lblPlaza" runat="server" Text='<%# Eval("Plaza") %>'></asp:Label>
+                                <asp:TextBox ID="txtEditPlaza" runat="server" BackColor="#ffffbb" BorderColor="#ffffbb" class="form-control" Width="200px"
+                                    Text='<%# Eval("Plaza") %>' Visible="false" onkeypress="return AllowAlphabet(event)"></asp:TextBox>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField HeaderText="Región" DataField="Region" />
@@ -187,7 +201,10 @@
 
 
               function limpiar() {
-            document.getElementById("<%= txtNombreInstalacion.ClientID %>").value = "";
+                  document.getElementById("<%= txtNombreInstalacion.ClientID %>").value = "";
+                              document.getElementById("<%= txtUbicacion.ClientID %>").value = "";
+            document.getElementById("<%= txtPlaza.ClientID %>").value = "";
+
                    document.getElementById("<%= ddl_Region.ClientID %>").selectedIndex = 0;
 
             }

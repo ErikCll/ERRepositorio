@@ -23,6 +23,15 @@
     >
     <style>
    
+      .navSt:focus, .navSt:hover {
+      
+   color: #000000;
+    text-decoration:rgba(0, 0, 0, 0.85);
+    background-color:rgba(73, 73, 73, 0.70);
+        /*background-color:rgba(88, 84, 84, 0.90);*/
+
+}
+
            .dropdown-submenu {
   position: relative;
 }
@@ -76,23 +85,23 @@
  <div class="col-lg-12">
      <div class="row">
 
-            <div class="col-sm-2 col-md-3 col-lg-2">
-         <div class="card"
+            <div class="col-sm-3 col-md-3 col-lg-3">
+         <div class="card shadow"
              >
              <div class="card-body">
-                 <label>Logo</label>
+                 <img class="img-fluid" src="../docs/LogoW.png" />
              </div>
          </div>
      </div>
-      <div class="col-sm-10 col-md-10 col-lg-10">
+      <div class="col-sm-9 col-md-9 col-lg-9">
             <div class="card">
          <div class="card-body">
-             <h5 class="card-title  text-center font-weight-bold">Modelo Económico de Estación de Servicio  en Plaza Comercial</h5>
+            <h5 class="card-title text-center font-weight-bolder">CASOS DE NEGOCIO DE ESTACIÓN DE SERVICIO </h5>
           <div class="row">
                  <div class="col-sm-5 col-md-5 col-lg-5">
-                  <label>Nombre:</label>
+                  <label>Estación de Servicio:</label>
              <asp:Label runat="server" class="font-weight-bold" ID="lblInstalacion" Visible="false"></asp:Label>
-                         <telerik:RadComboBox Visible="false" AutoPostBack="true" OnSelectedIndexChanged="RadComboBox1_SelectedIndexChanged" ID="RadComboBox1" runat="server" DataTextField="Nombre" DataValueField="Id_Instalacion" RenderMode="Lightweight" MarkFirstMatch="true"   EmptyMessage="[Seleccionar]"></telerik:RadComboBox>
+                         <telerik:RadComboBox  InputCssClass="font-weight-bold" Visible="false" AutoPostBack="true" OnSelectedIndexChanged="RadComboBox1_SelectedIndexChanged" ID="RadComboBox1" runat="server" DataTextField="Nombre" DataValueField="Id_Instalacion" RenderMode="Lightweight" Filter="StartsWith" MarkFirstMatch="true"   EmptyMessage="[Seleccionar]"></telerik:RadComboBox>
                 <%-- <telerik:RadAutoCompleteBox Visible="true" Height="34px" Width="250px" AutoPostBack="true" InputType="text" EmptyMessage="Nombre de empleado" Delimiter=" " runat="server" id="instala"
                                                         DataValueField="Id_Instalacion" DataTextField="Nombre" TextSettings-SelectionMode="Single">
                                                     </telerik:RadAutoCompleteBox>--%>
@@ -103,8 +112,8 @@
              <asp:Label runat="server" ID="lblIdInstalacion" Visible="false"></asp:Label>
              </div>
              <div class="col-sm-5 col-md-5 col-lg-5">
-                 <label>Nombre:</label>
-                 <asp:Label runat="server" ID="lblPlaza"></asp:Label>
+                 <label>Plaza Comercial:</label>
+                 <asp:Label runat="server" ID="lblPlaza" CssClass="font-weight-bold"></asp:Label>
               
              </div>
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -141,14 +150,18 @@
 <%--                            <a class="nav-link" href="#">Link</a>--%>
                         </li>
                         
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle ion-android-apps " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catálogo
+                        <li class="nav-item dropdown py-2">
+                            <a class="nav-link dropdown-toggle ion-android-apps text-white navSt" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catálogo
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item ion-android-radio-button-on" href="Area.aspx"> Área</a>
-                                <a class="dropdown-item ion-android-radio-button-on" href="Instalacion.aspx"> Instalación</a>
+                            <div class="dropdown-menu shadow" aria-labelledby="navbarDropdown">
+<%--                                <a class="dropdown-item ion-android-radio-button-on" href="Area.aspx"> Área</a>--%>
+                                <asp:LinkButton runat="server" class="dropdown-item ion-android-radio-button-on" OnClick="Instalacion_Click"> Instalación</asp:LinkButton>
 <%--                                <div class="dropdown-divider"></div>--%>
-                                <a class="dropdown-item  ion-android-radio-button-on" href="Empleado.aspx"> Empleado</a>
+                                <a class="dropdown-item  ion-android-radio-button-on" href="Empleado.aspx"> Empleado/Usuario</a>
+
+<%--                              <asp:LinkButton class="dropdown-item ion-stats-bars" OnClick="Tablero_Click"  runat="server"> Tablero resumen</asp:LinkButton>--%>
+                              <asp:LinkButton class="dropdown-item ion-android-radio-button-on" OnClick="Requisitos_Click"  runat="server"> Requisitos</asp:LinkButton>
+
 <%--                                <a class="dropdown-item  ion-android-radio-button-on" href="Menu.aspx"> Menú</a>--%>
 
                             </div>
@@ -159,8 +172,9 @@
                          <asp:ListView ID="AdminTopListView" runat="server" OnItemDataBound="AdminTopListView_ItemDataBound" DataKeyNames="Nivel1">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="lbl" Text=' <%# Eval("Nivel1") %>' Visible="false"></asp:Label>
-                        <li class="nav-item dropdown"><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><%# Eval("Nivel1") %></a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       
+                        <li class="nav-item dropdown py-2 "><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-white navSt"><%# Eval("Nivel1") %></a>
+                            <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                                 <asp:ListView ID="RequisitoNivel1" runat="server" DataKeyNames="id_requisito">
                                     <ItemTemplate>
                                         <li class="dropdown-item" style="overflow:auto; max-height:300px;">
@@ -177,7 +191,7 @@
                                             <asp:Label runat="server" ID="lbl2" href="Area.aspx" Text='<%# Eval("Nivel2") %>' Visible="false">
                                             </asp:Label><a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel2") %></a>
 
-                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                                            <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown" >
                                                 <asp:ListView ID="RequisitoNivel2" runat="server" DataKeyNames="id_requisito">
                                                     <ItemTemplate>
                                                         <li class="dropdown-item">
@@ -194,7 +208,7 @@
                                                         <li class="dropdown-submenu">
                                                             <asp:Label runat="server" ID="lbl3" Text='<%# Eval("Nivel3") %>' Visible="false"></asp:Label>
                                                             <a id="dropdownMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle" style="color:black"><%# Eval("Nivel3") %></a>
-                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="overflow:auto; max-height:300px;">
+                                                            <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown" style="overflow:auto; max-height:300px;">
                                                                 <asp:ListView ID="MenuRequisito" runat="server" DataKeyNames="id_requisito">
                                                                     <ItemTemplate>
                                                                         <li class="dropdown-item">
@@ -221,6 +235,15 @@
 
                                     </ItemTemplate>
                                 </asp:ListView>
+                                   <asp:ListView ID="RequisitoNivel12" runat="server" DataKeyNames="id_requisito" Visible="false">
+                                    <ItemTemplate>
+                                        <li class="dropdown-item" style="overflow:auto; max-height:300px;">
+                                            <asp:Label runat="server" ID="id_requisito1" Text='<%# Eval("id_requisito") %>' Visible="false"></asp:Label>
+                                            <asp:LinkButton CssClass="ion-android-document" runat="server" ID="lblRequisitoNivel1" Text='<%#" " + Eval("Requisito") %>' ForeColor="Blue" OnClick="Requisito1_Click" ></asp:LinkButton>
+                                        </li>
+
+                                    </ItemTemplate>
+                                </asp:ListView>
                             </ul>
 
 
@@ -231,21 +254,22 @@
                     </ItemTemplate>
                  
                 </asp:ListView>
-                                  <li class="nav-item">
-                            <a class="nav-link ion-stats-bars" href="#"> Control Regulatorio (Construcción ES)</a>
+                                  <li class="nav-item navSt">
+                            <asp:LinkButton class="nav-link ion-stats-bars text-white"  runat="server" OnClick="Tablero_Click" > Control Regulatorio (Construcción ES)</asp:LinkButton>
                         </li>
-                                      <li class="nav-item">
-                            <a class="nav-link ion-stats-bars" href="#"> Seguimiento de Cumplimiento Regulatorio (Operación ES)</a>
+                                      <li class="nav-item navSt">
+                          <asp:LinkButton class="nav-link ion-stats-bars text-white"  runat="server" OnClick="Tablero_Click" > Seguimiento de Cumplimiento Regulatorio (Operación ES)</asp:LinkButton>
                         </li>
                     </ul>
                      <ul class="navbar-nav ml-auto">
     <%--   <li class="nav-item">
                             <a class="nav-link ion-android-exit" href="#"> Salir</a>
                         </li>--%>
-                             <li class="nav-item dropdown">
+                             <li class="nav-item dropdown navSt">
                             <a class="nav-link dropdown-toggle  ion-android-person" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;<asp:Label ID="lblUsuario" runat="server" ForeColor="White"></asp:Label></a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item  ion-ios-unlocked" href="Contrasena.aspx"> Cambiar contraseña</a>
+                                <asp:HyperLink runat="server" class="dropdown-item ion-android-document text-blue" href="../docs/ManualDeUsuario.pdf" Target="_blank"> Manual de usuario</asp:HyperLink>
                                 <div class="dropdown-divider"></div>
                                 <asp:LinkButton runat="server" CssClass="dropdown-item ion-android-exit" OnClick="Unnamed_Click" Text=" Salir" ></asp:LinkButton>
                             </div>

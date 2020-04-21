@@ -106,7 +106,7 @@
                     AutoGenerateColumns="false" AllowPaging="true"
                     CssClass=" table table-striped table-sm text-md-center"
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
-                    EmptyDataText="Sin registros"
+                    EmptyDataText="Sin registro de empleados"
                  PageSize="10"
                     AllowCustomPaging="false" 
                     DataKeyNames="Id_empleado" 
@@ -191,6 +191,7 @@
             function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
                Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
+
 
   var div = $('#DivInsertar');
                         div.hide();

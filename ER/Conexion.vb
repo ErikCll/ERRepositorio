@@ -19,6 +19,10 @@ Public Class Conexion
     Public da As SqlDataAdapter
     Public dt As New DataTable()
     Public dr As SqlDataReader
+    Public drCorreo As SqlDataReader
+    Public drInstalacion As SqlDataReader
+
+
     Public Id As Integer
     Public AccesoNAme As String
     Public InstalacionName As String
@@ -178,10 +182,28 @@ Public Class Conexion
         Return Id
     End Function
 
-    Public Function ObtenerIdEvidencia()
+    Public Function DatosInstalacion(ByVal sqlQuery As String)
         conn.Open()
-        Dim sqlQuery As String = "select top 1 Id_evidencia from op_ev_req order by Id_evidencia DESC"
         cmd = New SqlCommand(sqlQuery, conn)
+        drInstalacion = cmd.ExecuteReader
+
+        Return drInstalacion
+    End Function
+
+    Public Function CorreosAdministradores(ByVal sqlQuery As String)
+        conn.Open()
+        cmd = New SqlCommand(sqlQuery, conn)
+        drCorreo = cmd.ExecuteReader
+
+        Return drCorreo
+    End Function
+
+
+
+    Public Function ObtenerIdEvidencia(ByVal query As String)
+        conn.Open()
+
+        cmd = New SqlCommand(query, conn)
         IdEvidencia = cmd.ExecuteScalar
         conn.Close()
         Return IdEvidencia

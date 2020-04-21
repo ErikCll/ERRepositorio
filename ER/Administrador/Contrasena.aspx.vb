@@ -6,7 +6,7 @@
     Private Sub Contrasena_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
         Dim objErr As Exception = Server.GetLastError().GetBaseException()
         Session("Error") = objErr
-        Response.Redirect("../Error.aspx")
+        Response.Redirect("Error.aspx")
 
 
 

@@ -8,15 +8,16 @@
        <br />
     <label class="font-weight-bold">Estado:</label>
     <asp:Label runat="server" ID="lblAprobada"  Visible="false">Aprobada <a class=" ion-record text-green"></a></asp:Label>
-        <asp:Label runat="server" ID="lblEnAprobacion"  Visible="false">En aprobación <a class=" ion-record text-yellow"></a></asp:Label>
+        <asp:Label runat="server" ID="lblEnAprobacion"  Visible="false">Pendiente de aprobación <a class=" ion-record text-yellow"></a></asp:Label>
             <asp:Label runat="server" ID="lblRechazada" Visible="false">Rechazada <a class=" ion-record text-red"></a></asp:Label>
-                <asp:Label runat="server" ID="lblSinEvidencia" Visible="true">Sin evidencia <a class=" ion-record text-gray"></a></asp:Label>
+                <asp:Label runat="server" ID="lblSinEvidencia" Visible="true">Sin evidencia <a class=" ion-record text-red"></a></asp:Label>
+                    <asp:Label runat="server" ID="lblNoAplica" Visible="false">No Aplica <a class=" ion-record text-gray"></a></asp:Label>
 
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <%--    <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
-    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+    <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="UpdatePanel1">
         <ContentTemplate>
                                     <asp:Literal ID="litControl" runat="server"></asp:Literal>
              <ul class="nav nav-tabs">
@@ -39,19 +40,28 @@
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label class="font-weight-bold">Evidencia:</label>
+                               
                               <asp:FileUpload runat="server" ID="File1" />
                                 <%--<input type="file" name="File3" />
                        
                                <telerik:RadUpload ID="File2" runat="server"></telerik:RadUpload>--%>
 
                             </div>
-                             <%-- <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Solo PDF." ForeColor="Red"
+                               <asp:RequiredFieldValidator runat="server" ID="reqFile" ControlToValidate="File1"
+                                    ErrorMessage="Debe seleccionar un archivo PDF." ForeColor="Red" ValidationGroup="btnGuardar" Enabled="false"></asp:RequiredFieldValidator>
+                              <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Solo PDF." ForeColor="Red"
                                                         ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.pdf)$" ControlToValidate="File1" ValidationGroup="btnGuardar">
                                                     </asp:RegularExpressionValidator>
-                                     <asp:RequiredFieldValidator runat="server" ID="reqInstalacion" ControlToValidate="File1"
-                                    ErrorMessage="Debe seleccionar un archivo PDF." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>--%>
+                                  
                         </div>
 
+                        <div class="col-sm-8 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="font-weight-bold">No aplica requisito:</label>
+                                <asp:CheckBox runat="server" ID="chkRequisito" />
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4"></div>
                         <div class="col-sm-8 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label class="font-weight-bold">Observaciones:</label>
@@ -115,7 +125,7 @@
                     AutoGenerateColumns="false" 
                     CssClass="table table-striped table-sm text-md-center"
                      HeaderStyle-CssClass=" thead-dark text-sm-center"
-                    EmptyDataText="Sin registro de evidencia"
+                    EmptyDataText="Sin registro de evidencias"
                  PageSize="10"
                     DataKeyNames="id_evidencia" 
                OnRowCommand="gridEvidencia2_RowCommand"
@@ -198,6 +208,14 @@
        <asp:PostBackTrigger ControlID="btnGuardar"  />
    </Triggers>
     </asp:UpdatePanel>
+  <%--     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+            <ProgressTemplate>
+            <div class="col" style="position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #000000; opacity: 0.7;">--%>
+<%--            <span style="border-width: 0px; position: fixed; padding: 50px; background-color: #FFFFFF; font-size: 36px; left: 40%; top: 40%;"></></span>--%>
+    <%--            <div class=" spinner-border" style="padding:50px;position:fixed;top:60%;left:60%"></div>
+        </div>   
+            </ProgressTemplate>
+        </asp:UpdateProgress>--%>
       <script type="text/javascript">
 
                             Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
@@ -219,7 +237,8 @@
           });
            
             function DisableButton() {
-      document.getElementById("<%= btnGuardar.ClientID %>").disabled = true;
+                document.getElementById("<%= btnGuardar.ClientID %>").disabled = true;
+
   }
   window.onbeforeunload = DisableButton;
                 

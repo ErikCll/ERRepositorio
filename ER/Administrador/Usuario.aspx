@@ -98,9 +98,9 @@
                                             <div class="col-sm-12 col-md-4 col-lg-4">
                                                 <div class="form-group">
                                                     <label class="font-weight-bold">Email:</label>
-                                                    <asp:TextBox class="form-control " ID="txtEmail" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)">
+                                                    <input class="form-control " ID="txtEmail" runat="server" MaxLength="50" onkeypress="return AllowAlphabet(event)" type="email" >
                    
-                                                    </asp:TextBox>
+                                                    
 
                                                     <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="txtEmail"
                                                         ErrorMessage="Email requerido." ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
@@ -141,7 +141,8 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                                            <div class="col-sm-12 col-md-4 col-lg-4">
+                                            </div>
 
                                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                                 <div class="vert-offset-bottom-2">
@@ -246,7 +247,7 @@
                                                             AutoGenerateColumns="false" AllowPaging="true"
                                                             CssClass=" table table-striped table-sm text-md-center"
                                                             HeaderStyle-CssClass="text-sm-center"
-                                                            EmptyDataText="Sin registro"
+                                                            EmptyDataText="Sin registro de usuario"
                                                             DataKeyNames="Id_registro"
                                                             PageSize="10">
                                                             <Columns>
