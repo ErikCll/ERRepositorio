@@ -230,6 +230,24 @@ Public Class Conexion
         End If
 
     End Function
+
+    Public Function AutenticarCorreo(ByVal sqlquery As String) As Boolean
+
+        '//consulta a la base de datos
+
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlquery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
     Public Function RolUsuario(ByVal IdUsuario As String, ByVal URL As String) As Boolean
 
         '//consulta a la base de datos

@@ -36,7 +36,8 @@
 
 
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se cambió la contraseña correctamente.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, True)
+                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
 
 
                 'Dim script As String = "alert('msj'); window.location.href= 'AdminInicio.aspx';"

@@ -53,7 +53,8 @@
 
                                             </div>
                                             <div class="form-group">
-                                                <label>Contraseña</label>
+                                                <label>Contraseña</label>  <asp:LinkButton runat="server" OnClick="Recuperar">(recuperar contraseña)</asp:LinkButton>
+
                                                 <div class="input-group">
                                                     <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" onkeypress="return AllowAlphabet(event)" ClientIDMode="Static" MaxLength="15"></asp:TextBox>
 

@@ -4,10 +4,11 @@
 
 
     Private Sub Login_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
-        Dim objErr As Exception = Server.GetLastError().GetBaseException()
-        Session("Error") = objErr
-        Response.Redirect("../Error.aspx")
-
+        'Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        'Session("Error") = objErr
+        'Response.Redirect("../Error.aspx")
+        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al ingresar.")
+        scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
 
     End Sub
@@ -63,4 +64,13 @@
             scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
         End If
     End Sub
+
+    Protected Sub Recuperar(sender As Object, e As EventArgs)
+        FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet)
+
+        Response.Redirect("RecuperarContrasena.aspx", True)
+
+    End Sub
+
+
 End Class

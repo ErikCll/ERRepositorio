@@ -185,6 +185,7 @@
     <Content Include="ER\Inicio.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Prueba.aspx" />
+    <Content Include="RecuperarContrasena.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +325,13 @@
     </Compile>
     <Compile Include="Prueba.aspx.vb">
       <DependentUpon>Prueba.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="RecuperarContrasena.aspx.designer.vb">
+      <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecuperarContrasena.aspx.vb">
+      <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
   </ItemGroup>
