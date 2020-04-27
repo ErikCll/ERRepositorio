@@ -4,6 +4,75 @@
    Usuario
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <style>
+
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+h1 {
+  margin: 0;
+  padding: 10px 0;
+  font-size: 24px;
+  text-align: center;
+  background: #eff4f7;
+  border-bottom: 1px solid #dde0e7;
+  box-shadow: 0 -1px 0 #fff inset;
+  border-radius: 5px 5px 0 0;
+  /* otherwise we get some uncut corners with container div */
+  text-shadow: 1px 1px 0 #fff;
+}
+
+
+label {
+  color: #555;
+}
+
+
+
+#pswd_info {
+  position: absolute;
+
+  /* IE Specific */
+
+  padding: 10px;
+  background: #fefefe;
+  font-size: .875em;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px #ccc;
+  border: 1px solid #ddd;
+}
+#pswd_info h4 {
+  margin: 0 0 10px 0;
+  padding: 0;
+  font-weight: normal;
+}
+#pswd_info::before {
+  content: "\25B2";
+  position: absolute;
+  top: -12px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #ddd;
+  text-shadow: none;
+  display: block;
+}
+.invalid {
+  line-height: 24px;
+  color: #ec3f41;
+}
+.valid {
+  line-height: 24px;
+  color: #3a7d34;
+}
+#pswd_info {
+  display: none;
+}
+    </style>
 <%--         <asp:ScriptManager runat="server" ID="scrScript"></asp:ScriptManager>--%>
 
           <asp:UpdatePanel UpdateMode="Conditional" runat="server">
@@ -118,6 +187,19 @@
                                                     <asp:TextBox class="form-control " ID="txtPassword" runat="server" TextMode="Password" MaxLength="15" onkeypress="return AllowAlphabet(event)">
                    
                                                     </asp:TextBox>
+                                                         <div id="pswd_info" class="dropdown-menu shadow" style="margin-top:-30px" >
+    <h4>La contraseña debería cumplir con los siguientes requerimientos:</h4>
+    <ul>
+      <li id="letter" class="invalid">Al menos <strong>una letra</strong>
+      </li>
+      <li id="capital" class="invalid">Al menos <strong>una letra mayúscula</strong>
+      </li>
+      <li id="number" class="invalid">Al menos <strong>un número</strong>
+      </li>
+      <li id="length" class="invalid">Mínimo <strong>8 carácteres</strong>
+      </li>
+    </ul>
+  </div>
 
                                                     <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator3" ControlToValidate="txtPassword"
                                                         ErrorMessage="Contraseña requerida" ForeColor="Red" ValidationGroup="btnGuardar"></asp:RequiredFieldValidator>
@@ -309,8 +391,62 @@
         Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
         function BeginRequestHandler(sender, args) { var oControl = args.get_postBackElement(); oControl.disabled = true; }
 
-        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
 
+              var longitud = false,
+    minuscula = false,
+    numero = false,
+    mayuscula = false;
+  $("#<%=txtPassword.ClientID%>").keyup(function() {
+    var pswd = $(this).val();
+    if (pswd.length < 8) {
+      $('#length').removeClass('valid').addClass('invalid');
+      longitud = false;
+    } else {
+      $('#length').removeClass('invalid').addClass('valid');
+      longitud = true;
+    }
+
+    //validate letter
+    if (pswd.match(/[A-z]/)) {
+      $('#letter').removeClass('invalid').addClass('valid');
+      minuscula = true;
+    } else {
+      $('#letter').removeClass('valid').addClass('invalid');
+      minuscula = false;
+    }
+
+    //validate capital letter
+    if (pswd.match(/[A-Z]/)) {
+      $('#capital').removeClass('invalid').addClass('valid');
+      mayuscula = true;
+    } else {
+      $('#capital').removeClass('valid').addClass('invalid');
+      mayuscula = false;
+    }
+
+    //validate number
+    if (pswd.match(/\d/)) {
+      $('#number').removeClass('invalid').addClass('valid');
+      numero = true;
+    } else {
+      $('#number').removeClass('valid').addClass('invalid');
+      numero = false;
+    }
+  }).focus(function() {
+    $('#pswd_info').show();
+  }).blur(function() {
+    $('#pswd_info').hide();
+                });
+            $("#<%=txtPassword.ClientID%>").keyup(function () {
+                           if (longitud && minuscula && numero && mayuscula) {
+                $("#<%=btnGuardar.ClientID%>").removeAttr('disabled');
+     
+            } else {
+                $("#<%=btnGuardar.ClientID%>").attr('disabled','disabled');
+                         }
+            })
+ 
      
             var div2 = $('#Panel2');
              var div = $('#PanelAccesos');
