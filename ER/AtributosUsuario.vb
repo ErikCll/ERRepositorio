@@ -6,5 +6,6 @@
     Public Property Id_Instalacion As Integer
     Public Property Localizacion As String
     Public Property Plaza As String
+    Public Property Rol As String
 
 End Class

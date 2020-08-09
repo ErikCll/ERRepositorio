@@ -15,8 +15,8 @@ Public Class _Error
                 objErr = "<b>Favor de corregir</b><hr><br>" &
             "<br><b>Error in: </b>" & Session("URL").ToString() &
             "<br><b>Error Message: </b>" & objErr.Message.ToString() &
-            "<br><b>Stack Trace:</b><br>" & objErr.StackTrace.ToString()
-
+            "<br><b>Stack Trace:</b><br>" & objErr.StackTrace.ToString() &
+               "<br><b>Usuario que ejecutó:</b><br>" & Page.User.Identity.Name.ToString()
                 correo.SecuenciaCorreo(objErr)
 
 
@@ -36,6 +36,6 @@ Public Class _Error
     End Sub
 
     Protected Sub Referencia_Click(sender As Object, e As EventArgs)
-        Response.Redirect("AdminInicio.aspx")
+        Response.Redirect("~/Menu/Index.aspx")
     End Sub
 End Class

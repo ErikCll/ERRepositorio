@@ -6,12 +6,15 @@
     <label class=" font-weight-bold">Requisito:</label>
     <asp:Label runat="server" ID="lblRequisito"></asp:Label>
        <br />
-    <label class="font-weight-bold">Estado:</label>
+    <div runat="server" id="divHead" >
+         <label class="font-weight-bold" >Estado:</label>
     <asp:Label runat="server" ID="lblAprobada"  Visible="false">Aprobada <a class=" ion-record text-green"></a></asp:Label>
         <asp:Label runat="server" ID="lblEnAprobacion"  Visible="false">Pendiente de aprobación <a class=" ion-record text-yellow"></a></asp:Label>
             <asp:Label runat="server" ID="lblRechazada" Visible="false">Rechazada <a class=" ion-record text-red"></a></asp:Label>
                 <asp:Label runat="server" ID="lblSinEvidencia" Visible="true">Sin evidencia <a class=" ion-record text-red"></a></asp:Label>
                     <asp:Label runat="server" ID="lblNoAplica" Visible="false">No Aplica <a class=" ion-record text-gray"></a></asp:Label>
+    </div>
+   
 
 
 </asp:Content>
@@ -34,7 +37,7 @@
                         <div class="tab-pane active" id="captura" runat="server" >
      <div class="row">  
          <div class="box box-info" style="border-top-color: #5b6060" >
-                <div class="box-body" id="DivInsertar" >
+                <div class="box-body" id="DivInsertar" runat="server" >
                     <div class="row">
 
                         <div class="col-sm-8 col-md-4 col-lg-4">
@@ -82,7 +85,7 @@
                             <div class="form-group Botones">
                                 <asp:Button class="btn btn-primary" ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="btnGuardar" BackColor="#5b6060" BorderColor="#5b6060" />
                                 <a id="btn_ClearButton" class="btn btn-default" role="button" onclick="limpiar()">Limpiar</a>
-                                        <a id="btnCerrar" class="btn btn-default " role="button">Cerrar</a>
+                                        <a id="btnCerrar" class="btn btn-default " runat="server">Cerrar</a>
 
                             </div>
                         </div>
@@ -101,11 +104,11 @@
                           <asp:BoundField DataField="estado" />
                                                                                </Columns></asp:GridView>
           <div class="btn-group">
-                <a id="lnk_Agregar" class="btn btn-sm text-blue" ><span class=" ion-plus" ></span>Agregar</a>
+                <a id="lnk_Agregar" class="btn btn-sm text-blue" runat="server" ><span class=" ion-plus" ></span>Agregar</a>
             </div>
                                  <div class="embed-responsive embed-responsive-1by1">
             
-                <iframe class="embed-responsive-item" runat="server" id="frame" visible="false" frameBorder="0" style="border:0" ></iframe>
+                <iframe class="embed-responsive-item" runat="server" id="frame" visible="false" frameBorder="0" style="border:0"></iframe>
                     </div></div>
                     </div>
              <div class="tab-pane" id="consulta" runat="server" >
@@ -208,6 +211,14 @@
        <asp:PostBackTrigger ControlID="btnGuardar"  />
    </Triggers>
     </asp:UpdatePanel>
+   <div class="col-lg-12">
+       <div class="row">
+                         <div class="embed-responsive embed-responsive-1by1">
+            
+                <iframe class="embed-responsive-item" runat="server" id="iframe2" visible="false" frameBorder="0" style="border:0"></iframe>
+                    </div>
+       </div>
+   </div>
   <%--     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
             <ProgressTemplate>
             <div class="col" style="position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #000000; opacity: 0.7;">--%>
@@ -223,21 +234,23 @@
 
                Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function(){
 
-  var div = $('#DivInsertar');
+  var div = $("#<%=DivInsertar.ClientID%>");
                         div.hide();
-                        $('#lnk_Agregar').click(function () {
+                        $("#<%=lnk_Agregar.ClientID%>").click(function () {
 
                             //div.slideToggle(500);
                             div.slideDown();
 
                         });
-                        $('#btnCerrar').click(function () {
+                        $("#<%=btnCerrar.ClientID%>").click(function () {
                             div.slideUp();
                                  }); 
           });
            
             function DisableButton() {
                 document.getElementById("<%= btnGuardar.ClientID %>").disabled = true;
+                document.getElementById("<%= btnGuardar.ClientID %>").value="Cargando..."
+
 
   }
   window.onbeforeunload = DisableButton;

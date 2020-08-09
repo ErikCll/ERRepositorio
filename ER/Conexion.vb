@@ -5,8 +5,9 @@ Imports System.Windows.Forms
 Public Class Conexion
 
     'Private cadena As String = "server=NPLSMXL7471M3X,1433\SQLEXPRESS ; User=sa ; database=ER ; password=Sopenco21"
-    Private cadena As String = " Server=tcp:jcol.database.windows.net,1433;Initial Catalog=orygon;Persist Security Info=False;User ID=jcol;Password=Sopenco21;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    'Private cadena As String = " Server=tcp:jcol.database.windows.net,1433;Initial Catalog=orygon;Persist Security Info=False;User ID=jcol;Password=Sopenco21;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 
+    Private cadena As String = "Server=tcp:eregional.database.windows.net,1433;Initial Catalog=eregional;Persist Security Info=False;User ID=er;Password=Datos2020;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 
     Public conn As SqlConnection
     Private cmb As SqlCommandBuilder
@@ -32,6 +33,8 @@ Public Class Conexion
     Public IdEvidencia As Integer
     Public LocalizacionName As String
     Public PlazaName As String
+    Public Rol As String
+
 
     Private Sub Conectar()
         conn = New SqlConnection(cadena)
@@ -100,7 +103,44 @@ Public Class Conexion
     End Function
 
 
+
 #End Region
+
+    Public Function InsertarInstalaciones(ByVal IdUusario As String, ByVal IdInstalacion As String) As Boolean
+
+        conn.Open()
+        Using cmd = New SqlCommand("INSERT INTO Op_UsIns (Id_Usuario,Id_Instalacion) VALUES(@Id_Usuario,@Id_Instalacion)", conn)
+            cmd.Parameters.Clear()
+            cmd.Parameters.AddWithValue("@Id_Usuario", IdUusario)
+            cmd.Parameters.AddWithValue("@Id_Instalacion", IdInstalacion)
+            cmd.ExecuteNonQuery()
+
+
+        End Using
+        conn.Close()
+
+
+
+
+    End Function
+
+    Public Function EliminarInstalaciones(ByVal IdUusario As String, ByVal IdInstalacion As String) As Boolean
+
+        conn.Open()
+        Using cmd = New SqlCommand("DELETE FROM Op_UsIns WHERE Id_Usuario=@Id_Usuario AND Id_Instalacion=@Id_Instalacion", conn)
+            cmd.Parameters.Clear()
+            cmd.Parameters.AddWithValue("@Id_Usuario", IdUusario)
+            cmd.Parameters.AddWithValue("@Id_Instalacion", IdInstalacion)
+            cmd.ExecuteNonQuery()
+
+
+        End Using
+        conn.Close()
+
+
+
+    End Function
+
 
 
 #Region "Funcion Eliminar"
@@ -138,7 +178,7 @@ Public Class Conexion
 
 
     Public Function Autenticar(ByVal usuario As String, ByVal password As String) As Boolean
-        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso =@Nombre AND contrasena =@Password AND Activado IS NULL"
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario  WHERE Acceso =@Nombre AND contrasena =@Password COLLATE Latin1_General_CS_AS AND Activado IS NULL"
         '//conn.Open();
         '//SqlCommand cmd = New SqlCommand(sqlQuery, conn)
         '//cmd.Parameters.Add(New SqlParameter("Nombre", usuario))
@@ -176,6 +216,8 @@ Public Class Conexion
         Email = dr(4)
         LocalizacionName = dr(5)
         PlazaName = dr(6)
+        Rol = dr(7)
+
 
 
         conn.Close()
@@ -217,6 +259,26 @@ Public Class Conexion
         '//consulta a la base de datos
 
         Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Acceso='" + usuario + "' AND Activado IS NULL"
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlQuery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
+
+
+    Public Function AutenticaEmail(ByVal correo As String) As Boolean
+
+        '//consulta a la base de datos
+
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Email='" + correo + "' AND Activado IS NULL"
         '//cadena conexion
         conn.Open()
 
@@ -314,6 +376,66 @@ Public Class Conexion
         '//consulta a la base de datos
 
         Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND Contrasena='" + Password + "'"
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlQuery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
+
+
+
+    Public Function EsCliente(ByVal IdUsuario As String) As Boolean
+
+        '//consulta a la base de datos
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsCliente=1"
+
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlQuery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
+
+    Public Function EsConsultor(ByVal IdUsuario As String) As Boolean
+
+        '//consulta a la base de datos
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsConsultor=1"
+
+        '//cadena conexion
+        conn.Open()
+
+        cmd = New SqlCommand(sqlQuery, conn)
+
+        Dim i As Integer = cmd.ExecuteScalar()
+        conn.Close()
+        If i > 0 Then
+            Return True
+        Else Return False
+        End If
+
+    End Function
+
+
+    Public Function EsOperador(ByVal IdUsuario As String) As Boolean
+
+        '//consulta a la base de datos
+        Dim sqlQuery As String = "SELECT COUNT(*) FROM Usuario WHERE Id_usuario=" + IdUsuario.ToString + " AND EsOperador=1"
+
         '//cadena conexion
         conn.Open()
 

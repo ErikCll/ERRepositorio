@@ -159,15 +159,21 @@
   <ItemGroup>
     <Content Include="Administrador\AdminInicio.aspx" />
     <Content Include="Administrador\Area.aspx" />
-    <Content Include="Administrador\Contrasena.aspx" />
-    <Content Include="Administrador\Empleado.aspx" />
+    <Content Include="Administrador\MOTE.aspx" />
+    <Content Include="docs\MiniER.PNG" />
+    <Content Include="docs\MiniLogo.PNG" />
+    <Content Include="docs\SimbologiaFicha2.PNG" />
+    <Content Include="docs\SimbologiaFicha3.PNG" />
+    <Content Include="docs\SimbologiaFicha4.PNG" />
+    <Content Include="Menu\Contrasena.aspx" />
+    <Content Include="Menu\Usuario.aspx" />
     <Content Include="Administrador\Evidencia.aspx" />
-    <Content Include="Administrador\Instalacion.aspx" />
+    <Content Include="Menu\Instalacion.aspx" />
     <Content Include="Administrador\Requisito.aspx" />
     <Content Include="Administrador\Requisitos.aspx" />
     <Content Include="Administrador\StyleSheet1.css" />
     <Content Include="Administrador\Tablero.aspx" />
-    <Content Include="Administrador\Usuario.aspx" />
+    <Content Include="Menu\Detalle.aspx" />
     <Content Include="Bootstrap\css\AdminLTE.min.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Bootstrap\css\bootstrap-grid.min.css" />
@@ -183,14 +189,32 @@
     <Content Include="Bootstrap\js\jquery-3.4.1.min.js" />
     <Content Include="Bootstrap\js\popper.min.js" />
     <Content Include="Administrador\Error.aspx" />
+    <Content Include="Construccion\Evidencia.aspx" />
+    <Content Include="Construccion\Inicio.aspx" />
+    <Content Include="Construccion\RequisitoC.aspx" />
+    <Content Include="Construccion\TableroC.aspx" />
+    <Content Include="docs\FichaBasica.PNG" />
+    <Content Include="docs\Infr.PNG" />
     <Content Include="docs\LogoER.jpg" />
     <Content Include="docs\LogoW.png" />
+    <Content Include="docs\Mercado.PNG" />
+    <Content Include="docs\Poligono.PNG" />
     <Content Include="ER\Inicio.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Prueba.aspx" />
+    <Content Include="Menu\Index.aspx" />
+    <Content Include="Operacion\DocRegulador.aspx" />
+    <Content Include="Operacion\Evidencia.aspx" />
+    <Content Include="Operacion\Evidencias.aspx" />
+    <Content Include="Operacion\Inicio.aspx" />
+    <Content Include="Operacion\Regulador.aspx" />
+    <Content Include="Operacion\Requisito.aspx" />
+    <Content Include="Operacion\Requisitos.aspx" />
     <Content Include="RecuperarContrasena.aspx" />
+    <Content Include="Requisito\FichaBasica.aspx" />
+    <Content Include="Requisito\InfrLog.aspx" />
+    <Content Include="Requisito\MercadoPotencial.aspx" />
+    <Content Include="Requisito\PoligonoInfluencia.aspx" />
     <Content Include="Web.config" />
-    <Content Include="WebForm1.aspx" />
     <Content Include="Administrador\WebForm2.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -216,18 +240,25 @@
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\AtributosEmpleado.vb" />
-    <Compile Include="Administrador\Contrasena.aspx.designer.vb">
+    <Compile Include="Administrador\MOTE.aspx.designer.vb">
+      <DependentUpon>MOTE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administrador\MOTE.aspx.vb">
+      <DependentUpon>MOTE.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Menu\Contrasena.aspx.designer.vb">
       <DependentUpon>Contrasena.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\Contrasena.aspx.vb">
+    <Compile Include="Menu\Contrasena.aspx.vb">
       <DependentUpon>Contrasena.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Administrador\Empleado.aspx.designer.vb">
-      <DependentUpon>Empleado.aspx</DependentUpon>
+    <Compile Include="Menu\Usuario.aspx.designer.vb">
+      <DependentUpon>Usuario.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\Empleado.aspx.vb">
-      <DependentUpon>Empleado.aspx</DependentUpon>
+    <Compile Include="Menu\Usuario.aspx.vb">
+      <DependentUpon>Usuario.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\Evidencia.aspx.designer.vb">
@@ -237,10 +268,10 @@
       <DependentUpon>Evidencia.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Administrador\Instalacion.aspx.designer.vb">
+    <Compile Include="Menu\Instalacion.aspx.designer.vb">
       <DependentUpon>Instalacion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\Instalacion.aspx.vb">
+    <Compile Include="Menu\Instalacion.aspx.vb">
       <DependentUpon>Instalacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
@@ -265,15 +296,50 @@
       <DependentUpon>Tablero.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Administrador\Usuario.aspx.designer.vb">
-      <DependentUpon>Usuario.aspx</DependentUpon>
+    <Compile Include="Menu\Detalle.aspx.designer.vb">
+      <DependentUpon>Detalle.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administrador\Usuario.aspx.vb">
-      <DependentUpon>Usuario.aspx</DependentUpon>
+    <Compile Include="Menu\Detalle.aspx.vb">
+      <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="AtributosUsuario.vb" />
     <Compile Include="Conexion.vb" />
+    <Compile Include="Construccion\Evidencia.aspx.designer.vb">
+      <DependentUpon>Evidencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Construccion\Evidencia.aspx.vb">
+      <DependentUpon>Evidencia.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Construccion\Inicio.aspx.designer.vb">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Construccion\Inicio.aspx.vb">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Construccion\RequisitoC.aspx.designer.vb">
+      <DependentUpon>RequisitoC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Construccion\RequisitoC.aspx.vb">
+      <DependentUpon>RequisitoC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Construccion\Site1.Master.designer.vb">
+      <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Construccion\Site1.Master.vb">
+      <DependentUpon>Site1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Construccion\TableroC.aspx.designer.vb">
+      <DependentUpon>TableroC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Construccion\TableroC.aspx.vb">
+      <DependentUpon>TableroC.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Correo.vb">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -305,6 +371,20 @@
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Menu\Index.aspx.designer.vb">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\Index.aspx.vb">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Menu\Menu.Master.designer.vb">
+      <DependentUpon>Menu.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Menu\Menu.Master.vb">
+      <DependentUpon>Menu.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -325,12 +405,61 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Prueba.aspx.designer.vb">
-      <DependentUpon>Prueba.aspx</DependentUpon>
+    <Compile Include="Operacion\DocRegulador.aspx.designer.vb">
+      <DependentUpon>DocRegulador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Prueba.aspx.vb">
-      <DependentUpon>Prueba.aspx</DependentUpon>
+    <Compile Include="Operacion\DocRegulador.aspx.vb">
+      <DependentUpon>DocRegulador.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Evidencia.aspx.designer.vb">
+      <DependentUpon>Evidencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Evidencia.aspx.vb">
+      <DependentUpon>Evidencia.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Evidencias.aspx.designer.vb">
+      <DependentUpon>Evidencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Evidencias.aspx.vb">
+      <DependentUpon>Evidencias.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Inicio.aspx.designer.vb">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Inicio.aspx.vb">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Regulador.aspx.designer.vb">
+      <DependentUpon>Regulador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Regulador.aspx.vb">
+      <DependentUpon>Regulador.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Requisito.aspx.designer.vb">
+      <DependentUpon>Requisito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Requisito.aspx.vb">
+      <DependentUpon>Requisito.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Requisitos.aspx.designer.vb">
+      <DependentUpon>Requisitos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Requisitos.aspx.vb">
+      <DependentUpon>Requisitos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Operacion\Site2.Master.designer.vb">
+      <DependentUpon>Site2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Operacion\Site2.Master.vb">
+      <DependentUpon>Site2.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RecuperarContrasena.aspx.designer.vb">
       <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
@@ -339,11 +468,32 @@
       <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="WebForm1.aspx.designer.vb">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="Requisito\FichaBasica.aspx.designer.vb">
+      <DependentUpon>FichaBasica.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm1.aspx.vb">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="Requisito\FichaBasica.aspx.vb">
+      <DependentUpon>FichaBasica.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Requisito\InfrLog.aspx.designer.vb">
+      <DependentUpon>InfrLog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Requisito\InfrLog.aspx.vb">
+      <DependentUpon>InfrLog.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Requisito\MercadoPotencial.aspx.designer.vb">
+      <DependentUpon>MercadoPotencial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Requisito\MercadoPotencial.aspx.vb">
+      <DependentUpon>MercadoPotencial.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Requisito\PoligonoInfluencia.aspx.designer.vb">
+      <DependentUpon>PoligonoInfluencia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Requisito\PoligonoInfluencia.aspx.vb">
+      <DependentUpon>PoligonoInfluencia.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Administrador\WebForm2.aspx.designer.vb">
@@ -378,13 +528,42 @@
     <Content Include="EstatusPDF\EvidenciaEnAprobacion.pdf" />
     <Content Include="EstatusPDF\SinEvidencia.pdf" />
     <Content Include="docs\ManualDeUsuario.pdf" />
+    <Content Include="Construccion\Site1.Master" />
+    <Content Include="Menu\Menu.Master" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\PublishProfiles\energiareg - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - FTP1.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - FTP2.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - FTP3.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - FTP4.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - ReadOnly - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - ReadOnly - FTP1.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - ReadOnly - FTP2.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - ReadOnly - FTP3.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - ReadOnly - FTP4.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - Web Deploy.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - Web Deploy1.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - Web Deploy2.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - Web Deploy3.pubxml" />
+    <None Include="My Project\PublishProfiles\energiareg - Web Deploy4.pubxml" />
     <None Include="My Project\PublishProfiles\EnergiaRegional - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - FTP1.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - FTP2.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - FTP3.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - FTP4.pubxml" />
     <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP1.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP2.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP3.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - ReadOnly - FTP4.pubxml" />
     <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy1.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy2.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy3.pubxml" />
+    <None Include="My Project\PublishProfiles\EnergiaRegional - Web Deploy4.pubxml" />
     <None Include="My Project\PublishProfiles\ERdemo - FTP.pubxml" />
     <None Include="My Project\PublishProfiles\ERdemo - ReadOnly - FTP.pubxml" />
     <None Include="My Project\Settings.settings">
@@ -392,6 +571,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Operacion\Site2.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

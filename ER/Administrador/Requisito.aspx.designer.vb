@@ -23,6 +23,15 @@ Partial Public Class Requisito
     Protected WithEvents lblRequisito As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control divHead.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents divHead As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
     '''Control lblAprobada.
     '''</summary>
     '''<remarks>
@@ -113,6 +122,15 @@ Partial Public Class Requisito
     Protected WithEvents captura As Global.System.Web.UI.HtmlControls.HtmlGenericControl
     
     '''<summary>
+    '''Control DivInsertar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents DivInsertar As Global.System.Web.UI.HtmlControls.HtmlGenericControl
+    
+    '''<summary>
     '''Control File1.
     '''</summary>
     '''<remarks>
@@ -176,6 +194,15 @@ Partial Public Class Requisito
     Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
+    '''Control btnCerrar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnCerrar As Global.System.Web.UI.HtmlControls.HtmlAnchor
+    
+    '''<summary>
     '''Control gridEvidencia.
     '''</summary>
     '''<remarks>
@@ -183,6 +210,15 @@ Partial Public Class Requisito
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents gridEvidencia As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control lnk_Agregar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lnk_Agregar As Global.System.Web.UI.HtmlControls.HtmlAnchor
     
     '''<summary>
     '''Control frame.
@@ -219,4 +255,13 @@ Partial Public Class Requisito
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents gridEvidencia2 As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control iframe2.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents iframe2 As Global.System.Web.UI.HtmlControls.HtmlIframe
 End Class

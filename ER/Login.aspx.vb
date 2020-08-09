@@ -1,14 +1,20 @@
 ﻿Public Class Login
     Inherits System.Web.UI.Page
     Dim obj As New Conexion()
+    Dim correo As New Correo()
 
 
     Private Sub Login_Error(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Error
-        'Dim objErr As Exception = Server.GetLastError().GetBaseException()
-        'Session("Error") = objErr
-        'Response.Redirect("../Error.aspx")
-        Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al ingresar.")
-        scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+
+        FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet)
+        Dim URL As String = (New System.IO.FileInfo(Page.Request.Url.AbsolutePath)).Name
+        Session("URL") = URL
+        Dim objErr As Exception = Server.GetLastError().GetBaseException()
+        Session("Error") = objErr
+        Response.Redirect("~/Administrador/Error.aspx", True)
+
+        'Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al ingresar.")
+        'scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
 
 
     End Sub
@@ -33,7 +39,7 @@
 
         If obj.Autenticar(Login1.UserName, Login1.Password) Then
             FormsAuthentication.RedirectFromLoginPage(Login1.UserName, Login1.RememberMeSet)
-            Dim sqlString As String = "SELECT Id_Usuario,Acceso,ISNULL(Ins.Nombre,''),ISNULL(Ins.id_Instalacion,''),email Nombre,ISNULL(CONCAT(ins.Localizacion,', ',Reg.Nombre),'')'Localizacion',ISNULL(Ins.Plaza,'') FROM Usuario us LEFT JOIN Cat_Empleado Emp on us.Id_empleado=emp.Id_empleado LEFT JOIN Cat_Instalacion Ins on Emp.Id_instalacion=Ins.Id_instalacion LEFT JOIN Cat_Region Reg on ins.Id_region=Reg.Id_region  WHERE Acceso='" + Login1.UserName + "' AND us.ACTIVADO IS NULL"
+            Dim sqlString As String = "  SELECT TOP(1) us.Id_Usuario, Acceso,ISNULL(Ins.Nombre,''),ISNULL(Ins.id_Instalacion,''),us.email Nombre,ISNULL(CONCAT(ins.Localizacion,', ',Reg.Nombre),'')'Localizacion',ISNULL(Ins.Plaza,''),CASE WHEN EsCliente=1 THEN 'Cliente' WHEN EsConsultor=1 THEN 'Consultor' WHEN EsOperador=1 THEN 'Constructor/Operador' ELSE 'Administrador' END FROM Usuario us LEFT JOIN Op_UsIns op on us.Id_usuario=op.Id_Usuario LEFT JOIN Cat_Instalacion ins on op.Id_Instalacion=ins.Id_instalacion LEFT JOIN  Cat_Region Reg on ins.Id_region=Reg.Id_region  WHERE Acceso='" + Login1.UserName + "' AND us.ACTIVADO IS NULL"
             obj.ObtenerIdUsuario(sqlString)
             Dim IdUsuario = obj.Id
             'Dim Acceso = obj.AccesoNAme
@@ -42,6 +48,7 @@
             Dim IdInstalacion = obj.InstalacionId
             Dim Localizacion = obj.LocalizacionName
             Dim Plaza = obj.PlazaName
+            Dim Rol = obj.Rol
             Dim objUs As New AtributosUsuario
             With objUs
 
@@ -55,6 +62,7 @@
                 .Id_Instalacion = IdInstalacion
                 .Localizacion = Localizacion
                 .Plaza = Plaza
+                .Rol = Rol
 
 
             End With

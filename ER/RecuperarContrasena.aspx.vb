@@ -13,9 +13,10 @@
 
     End Sub
 
-    'Protected Sub btnRegresar_Click(sender As Object, e As EventArgs) Handles btnRegresar.Click
-    '    Response.Redirect("Administrador/")
-    'End Sub
+    Protected Sub btnRegresar_Click(sender As Object, e As EventArgs) Handles btnRegresar.Click
+        FormsAuthentication.SignOut()
+        Response.Redirect("Administrador/AdminInicio.aspx")
+    End Sub
 
     Protected Sub btnEnviar_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
         Dim correo As New Correo()

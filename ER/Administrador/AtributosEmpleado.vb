@@ -6,6 +6,8 @@
     Public Property ApellidoMaterno As String
     Public Property Instalacion As String
     Public Property CreacionFecha As String
+    Public Property Email As String
+    Public Property Usuario As String
 
 
 

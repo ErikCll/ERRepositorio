@@ -27,7 +27,7 @@
 
                     Dim script As String = "alert('No cuentas con el acceso para este apartado'); window.location.href= 'AdminInicio.aspx';"
 
-                        ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+                    ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
 
 
                 End If
@@ -138,10 +138,10 @@
             If obj.Eliminar(sqlQuery) Then
                 MostrarGridRequisito()
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se eliminó correctamente el dato.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(Literal2, Literal2.GetType(), "script", txtJS, False)
             Else
                 Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al eliminar el dato.")
-                ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                ScriptManager.RegisterClientScriptBlock(Literal2, Literal2.GetType(), "script", txtJS, False)
             End If
 
         ElseIf e.CommandName = "Editar" Then
@@ -197,11 +197,11 @@
                     btnEditar.Visible = True
 
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se actualizó el dato correctamente.")
-                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(Literal2, Literal2.GetType(), "script", txtJS, False)
 
                 Else
                     Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Ocurrió un error al actualizar el dato.")
-                    ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
+                    ScriptManager.RegisterClientScriptBlock(Literal2, Literal2.GetType(), "script", txtJS, False)
                 End If
 
             End If
@@ -443,4 +443,7 @@
         Link3.Visible = True
         txt3.Visible = True
     End Sub
+
+
 End Class
+

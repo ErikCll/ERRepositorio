@@ -11,6 +11,13 @@ Public Class Admin
 
     End Property
 
+    Public ReadOnly Property Instalacion() As String
+        Get
+            Return lblInstalacion.Text
+        End Get
+
+    End Property
+
     Private Sub OpBitacora_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
 
 
@@ -24,8 +31,33 @@ Public Class Admin
                 Response.Redirect("AdminInicio.aspx")
 
             End If
+            If objUs.Rol = "Constructor/Operador" Then
 
-            If obj.EsAdministrador(objUs.Id_usuario) Then
+                Dim script As String = "alert('No cuentas con el rol para acceder.'); window.location.href= '../Menu/Index.aspx';"
+
+                ScriptManager.RegisterStartupScript(Me, Me.GetType(), "alertMessage", script, True)
+
+            End If
+
+            LlenarInstalacion()
+
+
+            If RadComboBox1.Items.Count = 1 Then
+                lblInstalacion.Visible = True
+                lblInstalacion.Text = objUs.Instalacion
+                lblIdInstalacion.Text = objUs.Id_Instalacion
+                lblPlaza.Text = objUs.Plaza
+                lblLocalizacion.Text = objUs.Localizacion
+            ElseIf RadComboBox1.Items.Count = 0 Then
+                lblInstalacion.Visible = True
+                lblInstalacion.Text = "Sin instalación"
+                lblIdInstalacion.Text = -1
+
+            Else
+
+
+
+
                 RadComboBox1.Visible = True
                 If Session("IdInstalacion") = Nothing Then
                     lblIdInstalacion.Text = RadComboBox1.SelectedIndex
@@ -34,16 +66,31 @@ Public Class Admin
                     lblIdInstalacion.Text = Session("IdInstalacion")
                     lblLocalizacion.Text = Session("Ubicacion")
                     lblPlaza.Text = Session("Plaza")
+                    lblInstalacion.Text = RadComboBox1.SelectedItem.Text
+
                 End If
-            Else
-
-                lblInstalacion.Visible = True
-                lblInstalacion.Text = objUs.Instalacion
-                lblIdInstalacion.Text = objUs.Id_Instalacion
-                lblPlaza.Text = objUs.Plaza
-                lblLocalizacion.Text = objUs.Localizacion
-
             End If
+
+
+            'If obj.EsAdministrador(objUs.Id_usuario) Then
+            '    RadComboBox1.Visible = True
+            '    If Session("IdInstalacion") = Nothing Then
+            '        lblIdInstalacion.Text = RadComboBox1.SelectedIndex
+            '    Else
+            '        RadComboBox1.SelectedValue = Session("IdInstalacion")
+            '        lblIdInstalacion.Text = Session("IdInstalacion")
+            '        lblLocalizacion.Text = Session("Ubicacion")
+            '        lblPlaza.Text = Session("Plaza")
+            '    End If
+            'Else
+
+            '    lblInstalacion.Visible = True
+            '    lblInstalacion.Text = objUs.Instalacion
+            '    lblIdInstalacion.Text = objUs.Id_Instalacion
+            '    lblPlaza.Text = objUs.Plaza
+            '    lblLocalizacion.Text = objUs.Localizacion
+
+            'End If
 
 
             'lblInstalacion.Text = objUs.Instalacion
@@ -68,11 +115,11 @@ Public Class Admin
 
 
 
-            Dim query As String = "SELECT Nivel1 FROM Cat_Menu_V3 GROUP BY Nivel1,Nivel1_no ORDER BY Nivel1_no ASC"
+            Dim query As String = "SELECT Nivel1 FROM Cat_Menu_V3 WHERE Activado IS NULL GROUP BY Nivel1,Nivel1_no ORDER BY Nivel1_no ASC"
             obj.Llenar(query)
             AdminTopListView.DataSource = obj.ds2
             AdminTopListView.DataBind()
-            LlenarInstalacion()
+            'LlenarInstalacion()
 
         End If
 
@@ -88,8 +135,22 @@ Public Class Admin
     Public Sub LlenarInstalacion()
         'Dim query As String = "SELECT Id_Instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL"
         'obj.LlenarDropDownList(query)
-        RadComboBox1.DataSource = obj.LlenarDropDownList("SELECT Id_Instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL")
-        RadComboBox1.DataBind()
+        Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+        If objUs Is Nothing Then
+            FormsAuthentication.SignOut()
+            Response.Redirect("AdminInicio.aspx")
+
+        End If
+
+        If obj.EsAdministrador(objUs.Id_usuario) Then
+            RadComboBox1.DataSource = obj.LlenarDropDownList("SELECT Id_Instalacion,Nombre FROM Cat_Instalacion WHERE Activado IS NULL")
+            RadComboBox1.DataBind()
+        Else
+            RadComboBox1.DataSource = obj.LlenarDropDownList("SELECT Nav.Id_instalacion, Nav.Nombre  FROM Cat_Instalacion Nav  JOIN (SELECT Id_Instalacion FROM Op_UsIns WHERE Id_Usuario=" + objUs.Id_usuario.ToString() + ") UsAct on Nav.Id_instalacion=UsAct.Id_Instalacion  WHERE nav.Activado IS NULL")
+            RadComboBox1.DataBind()
+        End If
+
+
 
 
     End Sub
@@ -112,7 +173,7 @@ Public Class Admin
             Response.Redirect("Instalacion.aspx")
 
         Else
-            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede ingresar a este apartado.")
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede acceder.")
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
         End If
     End Sub
@@ -124,15 +185,29 @@ Public Class Admin
             Response.Redirect("AdminInicio.aspx")
 
         End If
-        If obj.EsAdministrador(objUs.Id_usuario) Then
+        If objUs.Rol = "Administrador" Then
             Response.Redirect("Requisitos.aspx")
 
         Else
-            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede ingresar a este apartado.")
+            Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el administrador puede acceder.")
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
         End If
     End Sub
 
+    Protected Sub Construccion_Click(sender As Object, e As EventArgs)
+
+
+
+        Response.Redirect("~/Construccion/Inicio.aspx")
+    End Sub
+
+
+    Protected Sub Operacion_Click(sender As Object, e As EventArgs)
+
+
+
+        Response.Redirect("~/Operacion/Inicio.aspx")
+    End Sub
     Protected Sub Tablero_Click(sender As Object, e As EventArgs)
 
 
@@ -156,6 +231,8 @@ Public Class Admin
         '    End If
         'End If
 
+
+
         If lblIdInstalacion.Text = -1 Then
             Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Seleccionar Estación de Servicio.")
             ScriptManager.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
@@ -163,11 +240,7 @@ Public Class Admin
             Response.Redirect("Tablero.aspx")
 
         End If
-
-
     End Sub
-
-
     Protected Sub AdminTopListView_ItemDataBound(sender As Object, e As ListViewItemEventArgs)
 
         Dim itm As ListViewDataItem = CType(e.Item, ListViewDataItem)
@@ -202,7 +275,7 @@ Public Class Admin
 
 
 
-        Dim query As String = "SELECT Nivel2 FROM Cat_Menu_V3 WHERE Nivel1 = '" + name.Text + "' AND NIVEL2 IS NOT NULL GROUP BY Nivel2,Nivel2_no ORDER BY Nivel2_no ASC"
+        Dim query As String = "SELECT Nivel2 FROM Cat_Menu_V3 WHERE Nivel1 = '" + name.Text + "' AND NIVEL2 IS NOT NULL AND Activado IS NULL GROUP BY Nivel2,Nivel2_no ORDER BY Nivel2_no ASC"
 
         obj.Llenar(query)
         childMenu.DataSource = obj.ds2
@@ -212,7 +285,7 @@ Public Class Admin
         For Each item In childMenu.Items
             Dim name2 As Label = CType(item.FindControl("lbl2"), Label)
             Dim recommendedProducts3 As ListView = TryCast(item.FindControl("Menu3"), ListView)
-            Dim query2 As String = "SELECT Nivel3 FROM Cat_Menu_V3 WHERE Nivel2 = '" + name2.Text + "' AND NIVEL3 IS NOT NULL GROUP BY Nivel3"
+            Dim query2 As String = "SELECT Nivel3 FROM Cat_Menu_V3 WHERE Nivel2 = '" + name2.Text + "' AND NIVEL3 IS NOT NULL AND Activado IS NULL GROUP BY Nivel3"
             obj.Llenar(query2)
             recommendedProducts3.DataSource = obj.ds2
             recommendedProducts3.DataBind()
@@ -395,6 +468,8 @@ Public Class Admin
         lblPlaza.Text = obj.drInstalacion("Plaza").ToString()
         Session("Ubicacion") = lblLocalizacion.Text
         Session("Plaza") = lblPlaza.Text
+        obj.drInstalacion.Close()
+        obj.conn.Close()
 
         Response.Redirect(Request.UrlReferrer.ToString())
         'Response.Redirect("AdminInicio.aspx")

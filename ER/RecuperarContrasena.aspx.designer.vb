@@ -41,6 +41,15 @@ Partial Public Class RecuperarContrasena
     Protected WithEvents txtCorreo As Global.System.Web.UI.HtmlControls.HtmlInputGenericControl
     
     '''<summary>
+    '''Control btnRegresar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnRegresar As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
     '''Control btnEnviar.
     '''</summary>
     '''<remarks>

@@ -5,8 +5,7 @@ Imports Microsoft.WindowsAzure.Storage.Auth
 Imports Microsoft.WindowsAzure.Storage.Blob
 Imports Microsoft.WindowsAzure.Storage.File
 Imports Microsoft.WindowsAzure.Common
-
-
+Imports System.Globalization
 
 Public Class Requisito
     Inherits System.Web.UI.Page
@@ -32,7 +31,10 @@ Public Class Requisito
     End Sub
 
     Protected Sub Page_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Init
+        If (Request.QueryString("req")) = Nothing Then
+            Response.Redirect("AdminInicio.aspx")
 
+        End If
         If CType(Me.Master, Admin).IdInstalacion = -1 Then
             Response.Redirect("AdminInicio.aspx")
         End If
@@ -48,15 +50,32 @@ Public Class Requisito
         Dim decodedString = System.Convert.FromBase64String(Request.QueryString("req"))
         Dim requisito = System.Text.Encoding.UTF8.GetString(decodedString)
 
-            'Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
+        'Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("req")))
 
-            lblRequisito.Text = requisito
-            MostrarGridEvidencia()
-            MostrarGridEvidencia2()
+        lblRequisito.Text = requisito
+        MostrarGridEvidencia()
+        MostrarGridEvidencia2()
+        If Not IsPostBack Then
+            Dim objUs As AtributosUsuario = CType(Session("DatosUsuario"), AtributosUsuario)
+            If objUs Is Nothing Then
+                FormsAuthentication.SignOut()
+                Response.Redirect(Request.UrlReferrer.ToString())
+            End If
+            If objUs.Rol = "Cliente" Then
+                DivInsertar.Visible = False
+                lnk_Agregar.Visible = False
+
+            Else
+
+            End If
+        End If
 
     End Sub
 
+
     Public Sub MostrarGridEvidencia()
+        Dim decodedRequisito = System.Convert.FromBase64String(Request.QueryString("req"))
+        Dim requisito = System.Text.Encoding.UTF8.GetString(decodedRequisito)
 
         Dim decodedString As String = System.Text.ASCIIEncoding.ASCII.GetString(Convert.FromBase64String(Request.QueryString("id")))
         Dim id As String = decodedString
@@ -65,17 +84,16 @@ Public Class Requisito
         gridEvidencia.DataSource = obj.Consultar(Query)
         gridEvidencia.DataBind()
         If gridEvidencia.Rows.Count = 0 Then
-            'frame.Src = "~/EstatusPDF/SinEvidencia.pdf"
-            'btnGuardar.Visible = True
+
 
         Else
-
-            'Dim row As GridViewRow
             Dim Id_Evidencia As String = gridEvidencia.Rows(0).Cells(0).Text
 
-            'frame.Src = "~/EvidenciaPDF/" & Id_Evidencia.ToString() & ".pdf"
-            frame.Src = "https://er2020.blob.core.windows.net/erdocs/" & Id_Evidencia.ToString() & ".pdf"
+            frame.Src = "https://eregional.blob.core.windows.net/ereg/" & Id_Evidencia.ToString() & ".pdf"
+            'frame.Src = "https://er2020.blob.core.windows.net/erdocs/" & Id_Evidencia.ToString() & ".pdf"
+
             frame.Visible = True
+
             Dim estado = gridEvidencia.Rows(0).Cells(2).Text
 
 
@@ -102,9 +120,86 @@ Public Class Requisito
                 frame.Visible = False
             End If
 
-
-
         End If
+
+        'Dim row As GridViewRow
+
+        'frame.Src = "~/EvidenciaPDF/" & Id_Evidencia.ToString() & ".pdf"
+        'Select Case id
+        '        Case 1
+        '            iframe2.Src = "~/Requisito/FichaBasica.aspx?ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&reqn=" + requisito
+
+        '            iframe2.Visible = True
+        '            UpdatePanel1.Visible = False
+        '            divHead.Visible = False
+
+        '        Case 18
+        '            iframe2.Src = "~/Requisito/PoligonoInfluencia.aspx?ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&reqn=" + requisito
+        '            iframe2.Visible = True
+        '            UpdatePanel1.Visible = False
+        '            divHead.Visible = False
+
+        '        Case 19
+        '            iframe2.Src = "~/Requisito/MercadoPotencial.aspx?ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&reqn=" + requisito
+        '            iframe2.Visible = True
+        '            UpdatePanel1.Visible = False
+        '            divHead.Visible = False
+        '        Case 20
+        '            iframe2.Src = "~/Requisito/InfrLog.aspx?ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&reqn=" + requisito
+        '            iframe2.Visible = True
+        '            UpdatePanel1.Visible = False
+        '            divHead.Visible = False
+        '        Case Else
+        '            If gridEvidencia.Rows.Count = 0 Then
+
+
+        '            Else
+        '                Dim Id_Evidencia As String = gridEvidencia.Rows(0).Cells(0).Text
+
+        '                'frame.Src = "https://eregional.blob.core.windows.net/ereg/" & Id_Evidencia.ToString() & ".pdf"
+        '                frame.Src = "https://er2020.blob.core.windows.net/erdocs/" & Id_Evidencia.ToString() & ".pdf"
+
+        '                frame.Visible = True
+
+        '                Dim estado = gridEvidencia.Rows(0).Cells(2).Text
+
+
+        '                If estado = 0 Then
+        '                    'frame.Src = "~/EstatusPDF/EvidenciaEnAprobacion.pdf"
+        '                    'btnGuardar.Visible = False
+        '                    lblEnAprobacion.Visible = True
+        '                    lblSinEvidencia.Visible = False
+        '                ElseIf estado = 1 Then
+        '                    'frame.Src = "~/EvidenciaPDF/" & id.ToString() & ".pdf"
+        '                    'btnGuardar.Visible = False
+        '                    lblAprobada.Visible = True
+        '                    lblSinEvidencia.Visible = False
+
+        '                ElseIf estado = 2 Then
+
+        '                    'frame.Src = "~/EstatusPDF/EvidenciaRechazada.pdf"
+        '                    lblRechazada.Visible = True
+        '                    lblSinEvidencia.Visible = False
+
+        '                ElseIf estado = 3 Then
+        '                    lblNoAplica.Visible = True
+        '                    lblSinEvidencia.Visible = False
+        '                    frame.Visible = False
+        '                End If
+
+        '            End If
+
+
+        '    End Select
+        'frame.Src = "https://eregional.blob.core.windows.net/ereg/" & Id_Evidencia.ToString() & ".pdf"
+        ''frame.Src = "https://er2020.blob.core.windows.net/erdocs/" & Id_Evidencia.ToString() & ".pdf"
+
+        'frame.Visible = True
+        'frame.Src = "https://er2020.blob.core.windows.net/erdocs/" & Id_Evidencia.ToString() & ".pdf"
+
+
+
+
 
 
 
@@ -181,15 +276,18 @@ Public Class Requisito
         Else
             Dim nombre As String = File1.FileName
             Dim fileExt As String = System.IO.Path.GetExtension(File1.FileName)
-            Dim AccountName As String = "er2020"
-            Dim AccountKey As String = "yhDHxitC9NvUx5p3vLHwUJWxWx7rdLw47/PI88KVsS8/2EIdN2ZAM+ATi8PWKyB7zXGEXE2mFAAgw1MHw3z/JA=="
+            'Dim AccountName As String = "er2020"
+            'Dim AccountKey As String = "yhDHxitC9NvUx5p3vLHwUJWxWx7rdLw47/PI88KVsS8/2EIdN2ZAM+ATi8PWKyB7zXGEXE2mFAAgw1MHw3z/JA=="
+
+            Dim AccountName As String = "eregional"
+            Dim AccountKey As String = "Yz7goqjHkr1u/fYG0NkHjZC/Z4aK21B7ihNqJzPRVYJF0h+DeI//hig0uXsLDJcWEWvVKpnDunb4bD1Kbl2YeA=="
             'Dim ruta As String = Server.MapPath(File1.PostedFile.FileName)
 
 
             If File1.HasFile Then
 
                 If fileExt = ".pdf" Or fileExt = ".PDF" Then
-                    Dim sqlQuery As String = "INSERT INTO Op_Ev_Req(id_requisito,estado,Observaciones,id_usuario,activado,id_Instalacion) VALUES(" + id.ToString() + ",0,'" + txtDesc.Value + "'," + IdUsuario.ToString() + ",NULL," + CType(Me.Master, Admin).IdInstalacion.ToString() + ")"
+                    Dim sqlQuery As String = "INSERT INTO Op_Ev_Req(id_requisito,estado,Observaciones,id_usuario,activado,id_Instalacion,fecha_registro) VALUES(" + id.ToString() + ",0,'" + txtDesc.Value + "'," + IdUsuario.ToString() + ",NULL," + CType(Me.Master, Admin).IdInstalacion.ToString() + ",DATEADD(HH, -5, GETDATE()))"
                     If obj.Insertar(sqlQuery) Then
                         MostrarGridEvidencia()
                         MostrarGridEvidencia2()
@@ -199,7 +297,7 @@ Public Class Requisito
                         Dim creds As StorageCredentials = New StorageCredentials(AccountName, AccountKey)
                         Dim account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=" + AccountName + ";AccountKey=" + AccountKey)
                         Dim client As CloudBlobClient = account.CreateCloudBlobClient()
-                        Dim sampleContainer As CloudBlobContainer = client.GetContainerReference("erdocs")
+                        Dim sampleContainer As CloudBlobContainer = client.GetContainerReference("ereg")
                         sampleContainer.CreateIfNotExists()
 
 
@@ -220,20 +318,25 @@ Public Class Requisito
 
 
 
+                        'Dim dt = DateTime.ParseExact(DateTime.Now.AddHours(-5).ToLongDateString, "dddd, MMMM dd, yyyy", New CultureInfo("en-US"))
 
+                        'Dim Fecha As String = dt.ToString("D", New CultureInfo("es-ES"))
 
 
                         Dim mensaje As String = "<!doctype html> <html>" &
-                            "<body>Evidencia cargada para el requisito: <b>" + Requisito + "</b><hr>" &
-                "<br>Creado por el usuario: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>" &
+                            "<body>Evidencia cargada para el requisito: <b>" + Requisito + "</b>, Instalación: <b>" + CType(Me.Master, Admin).Instalacion.ToString() + "</b>, Etapa: <b>Estudio de factibilidad ES</b><hr>" &
+                "<br>Creado por el usuario: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.AddHours(-5).ToLongDateString() + ".</b><br>" &
                           "Observaciones: <b>" + txtDesc.Value.ToString() + "</b></body></html>"
 
-                        Dim queryCorreo As String = "SELECT Email FROM Usuario us LEFT JOIN Cat_Empleado Emp on us.Id_empleado=emp.Id_empleado LEFT JOIN Cat_Instalacion Ins on Emp.Id_instalacion=Ins.Id_instalacion WHERE emp.id_Instalacion=" + CType(Me.Master, Admin).IdInstalacion.ToString() + " AND us.EsSupervisor=1 AND Us.Activado IS NULL 
-"
+                        Dim queryCorreo As String = "SELECT Email FROM Usuario us JOIN Op_UsIns ins on us.Id_usuario=ins.Id_Usuario WHERE ins.Id_Instalacion=" + CType(Me.Master, Admin).IdInstalacion.ToString() + " AND us.EsConsultor=1 AND us.Activado IS NULL"
+
+
                         correo.EnviarCorreoAdministrador(mensaje, queryCorreo)
+
+
                         txtDesc.Value = String.Empty
 
-                        'Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se cargó la evidencia correctamente, en espera de aprobación.")
+                        'Dim txtJS As String = String.Format(" < script > alert('{0}');</script>", "Se cargó la evidencia correctamente, en espera de aprobación.")
                         'scrScript.RegisterClientScriptBlock(litControl, litControl.GetType(), "script", txtJS, False)
                         Dim script As String = "alert('Se cargó la evidencia correctamente, en espera de aprobación.'); window.location.href= '" + Request.UrlReferrer.ToString() + "';"
 
@@ -269,7 +372,7 @@ Public Class Requisito
         gridEvidencia2.DataSource = obj.Consultar(Query)
         gridEvidencia2.DataBind()
         For Each row As GridViewRow In gridEvidencia2.Rows
-            Dim link As HyperLink = CType(row.FindControl("link1"), HyperLink)
+            Dim link As HyperLink = CType(row.Cells(0).FindControl("link1"), HyperLink)
             Dim btnAprobar As LinkButton = CType(row.FindControl("btnAprobar"), LinkButton)
             Dim btnRechazar As LinkButton = CType(row.FindControl("btnRechazar"), LinkButton)
             Dim btnEliminar As LinkButton = CType(row.FindControl("btnEliminar"), LinkButton)
@@ -326,7 +429,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.EsSupervisorAdministrador(IdUsuario) Then
+            If objUs.Rol = "Consultor" Or objUs.Rol = "Administrador" Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -338,11 +441,15 @@ Public Class Requisito
                 If obj.Modificar(Query) Then
                     'MostrarGridEvidencia()
                     'MostrarGridEvidencia2()
+                    'Dim dt = DateTime.ParseExact(DateTime.Now.AddHours(-5).ToLongDateString, "dddd, MMMM dd, yyyy", New CultureInfo("en-US"))
 
-                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Aprobada</b>.<hr>" &
-            "<br>Aprobada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>"
+                    'Dim Fecha As String = dt.ToString("D", New CultureInfo("es-ES"))
+                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Aprobada</b>, Instalación: <b>" + CType(Me.Master, Admin).Instalacion.ToString() + "</b>, Etapa: <b>Estudio de factibilidad ES</b><hr>" &
+            "<br>Aprobada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.AddHours(-5).ToLongDateString() + ".</b><br>"
 
                     correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
+
+
                     'Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se aprobó correctamente la evidencia.")
                     'ScriptManager.RegisterClientScriptBlock(litControl2, litControl.GetType(), "script", txtJS, False)
                     Dim script As String = "alert('Se aprobó correctamente la evidencia.'); window.location.href= '" + Request.UrlReferrer.ToString() + "';"
@@ -356,7 +463,7 @@ Public Class Requisito
                 End If
 
             Else
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el supervisor puede realizar este proceso.")
+                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "No cuentas con el rol para realizar este proceso.")
                 ScriptManager.RegisterClientScriptBlock(litControl2, litControl.GetType(), "script", txtJS, False)
 
             End If
@@ -371,7 +478,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.EsSupervisorAdministrador(IdUsuario) Then
+            If objUs.Rol = "Consultor" Or objUs.Rol = "Administrador" Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -383,11 +490,16 @@ Public Class Requisito
                 If obj.Modificar(Query) Then
                     'MostrarGridEvidencia()
                     'MostrarGridEvidencia2()
+                    'Dim dt = DateTime.ParseExact(DateTime.Now.AddHours(-5).ToLongDateString, "dddd, MMMM dd, yyyy", New CultureInfo("en-US"))
 
-                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Rechazada</b>.<hr>" &
-            "<br>Rechazada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.ToLongDateString() + ".</b><br>"
+                    'Dim Fecha As String = dt.ToString("D", New CultureInfo("es-ES"))
+                    Dim mensaje As String = "La evidencia para el requisito <b>" + Requisito + "</b> fue <b>Rechazada</b>, Instalación: <b>" + CType(Me.Master, Admin).Instalacion.ToString() + "</b>, Etapa: <b>Estudio de factibilidad ES</b><hr>" &
+            "<br>Rechazada por: <b>" + Page.User.Identity.Name.ToString() + "</b>, el día <b>" + DateTime.Now.AddHours(-5).ToLongDateString() + ".</b><br>"
+
 
                     correo.EnviarCorreoUsuario(mensaje, CorreoUsuario.Text)
+
+
                     'Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Se rechazó correctamente la evidencia.")
                     'ScriptManager.RegisterClientScriptBlock(litControl2, litControl.GetType(), "script", txtJS, False)
 
@@ -401,7 +513,7 @@ Public Class Requisito
                 End If
 
             Else
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el supervisor puede realizar este proceso.")
+                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "No cuentas con el rol para realizar este proceso.")
                 ScriptManager.RegisterClientScriptBlock(litControl2, litControl.GetType(), "script", txtJS, False)
             End If
 
@@ -414,7 +526,7 @@ Public Class Requisito
             Dim IdUsuario = objUs.Id_usuario
             Dim Email = obj.Email
 
-            If obj.EsSupervisorAdministrador(IdUsuario) Then
+            If objUs.Rol = "Consultor" Or objUs.Rol = "Administrador" Then
                 Dim ctl = e.CommandSource
                 Dim row As GridViewRow = ctl.NamingContainer
                 Dim IdEvidencia As Integer = gridEvidencia2.DataKeys(row.RowIndex).Value
@@ -439,7 +551,7 @@ Public Class Requisito
                 End If
 
             Else
-                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "Solo el supervisor puede realizar este proceso.")
+                Dim txtJS As String = String.Format("<script>alert('{0}');</script>", "No cuentas con el rol para realizar este proceso.")
                 ScriptManager.RegisterClientScriptBlock(litControl2, litControl.GetType(), "script", txtJS, False)
             End If
 

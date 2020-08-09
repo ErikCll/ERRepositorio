@@ -239,6 +239,15 @@ Partial Public Class Requisitos
     Protected WithEvents btnBuscar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
+    '''Control Literal2.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents Literal2 As Global.System.Web.UI.WebControls.Literal
+    
+    '''<summary>
     '''Control gridMenu.
     '''</summary>
     '''<remarks>

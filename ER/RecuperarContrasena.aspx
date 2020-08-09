@@ -43,8 +43,8 @@
                 <br />
                 <div class="row">
                     <div class="col-sm-12 col-md-4 col-lg-4">
-<%--                                                <asp:Button runat="server" ID="btnRegresar" Text="Regresar" CssClass="btn btn-default"  />--%>
-                                                                                     <a class="btn btn-default" href="#" onclick="history.back();">Regresar</a>  
+                                                <asp:Button runat="server" ID="btnRegresar" Text="Regresar" CssClass="btn btn-default"  />
+<%--                                                                                     <a class="btn btn-default" href="#" onclick="history.back();">Regresar</a>  --%>
 
                         <asp:Button runat="server" id="btnEnviar" Text="Enviar" CssClass="btn btn-primary ml-1" ValidationGroup="btnEnviar"/>
 

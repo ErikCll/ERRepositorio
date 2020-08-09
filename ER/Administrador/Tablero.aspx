@@ -28,7 +28,7 @@
     </div>
        <br />
        <div class="row">
-           <div class="container">
+           <div class="container col-12">
                <div class="table-responsive">
                    <div style="overflow:auto;width:auto">
                        <asp:GridView runat="server"
@@ -45,15 +45,27 @@
                                <asp:BoundField  DataField="Nivel1" ItemStyle-Width="320px"/>
                                <asp:BoundField  DataField="Nivel2" ItemStyle-Width="100px"/>
                                <asp:BoundField DataField="Nivel3" ItemStyle-Width="80px" />
-                               <asp:BoundField DataField="Requisito" HeaderText="Requisito" />
-                               <asp:TemplateField HeaderText="Evidencia" >
+
+                               <asp:TemplateField HeaderText="Requisito" ItemStyle-HorizontalAlign="Left">
+                                   <ItemTemplate>
+                              <asp:HyperLink runat="server" ID="Requisitohy" class=" btn-link" Text='<%#Eval("Requisito") %>' ></asp:HyperLink>
+
+                                   </ItemTemplate>
+                               </asp:TemplateField>                               <asp:TemplateField HeaderText="Evidencia" >
                                    <ItemTemplate>
                                         <asp:Label runat="server" ID="lblIdEvidencia"  Text='<%#Eval("id_Evidencia") %>' Visible="false"></asp:Label>
                                        <asp:HyperLink runat="server" CssClass="ion-android-document" ID="hyRequisito" Visible="false"></asp:HyperLink>
                                    </ItemTemplate>
                                </asp:TemplateField>
-                               <asp:BoundField  DataField="Fecha" HeaderText="Fecha de creación" ItemStyle-Width="100px"/>
-                               <asp:TemplateField HeaderText="Estado" ItemStyle-Width="150px" ItemStyle-HorizontalAlign="Center">
+<%--                               <asp:BoundField  DataField="Fecha" HeaderText="Fecha de creación" ItemStyle-Width="100px"/>--%>
+
+                               <asp:TemplateField HeaderText="Fecha de creación" ItemStyle-Width="100px">
+                                   <ItemTemplate>
+                                       <asp:Label runat="server" ID="lblFecha"  Text='<%# Eval("Fecha") %>'></asp:Label>
+                                   </ItemTemplate>
+                               </asp:TemplateField>
+
+                               <asp:TemplateField HeaderText="Estado" ItemStyle-Width="150px" ItemStyle-HorizontalAlign="Center" >
                                    <ItemTemplate>
                                        <asp:Label runat="server" Text='<%# Eval("Estado") %>' ID="lblEstado">
                                           

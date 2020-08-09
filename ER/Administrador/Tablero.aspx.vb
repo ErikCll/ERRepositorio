@@ -38,8 +38,12 @@
         gridTablero.DataSource = obj.Consultar(Query)
         gridTablero.DataBind()
         For Each row As GridViewRow In gridTablero.Rows
+            Dim IdRequisito As Integer = gridTablero.DataKeys(row.RowIndex).Value
+
             Dim link As HyperLink = CType(row.FindControl("hyRequisito"), HyperLink)
             Dim IdEvidencia As Label = CType(row.FindControl("lblIdEvidencia"), Label)
+            Dim lblFecha As Label = CType(row.FindControl("lblFecha"), Label)
+
             Dim Estado As Label = CType(row.FindControl("lblEstado"), Label)
 
             Dim IconAprobada As HtmlControl = CType(row.FindControl("IconAprobada"), HtmlControl)
@@ -48,7 +52,12 @@
             Dim IconRojoe As HtmlControl = CType(row.FindControl("IconRojo"), HtmlControl)
             Dim IconNoAplica2 As HtmlControl = CType(row.FindControl("IconNoAplica2"), HtmlControl)
 
+            Dim RequisitoLink As HyperLink = CType(row.FindControl("Requisitohy"), HyperLink)
+            Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdEvidencia.Text)))
+            Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdRequisito.ToString())))
 
+            Dim encodedRequisito = System.Text.Encoding.UTF8.GetBytes(RequisitoLink.Text)
+            Dim nameReq = System.Convert.ToBase64String(encodedRequisito)
             If IdEvidencia.Text = "" Then
                 link.Visible = False
             Else
@@ -57,11 +66,74 @@
 
 
                 'link.NavigateUrl = "https://er2020.blob.core.windows.net/erdocs/" & IdEvidencia.Text & ".pdf"
-                Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdEvidencia.Text)))
+                'Dim encodedString As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdEvidencia.Text)))
+                'Dim encodedString2 As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdRequisito.ToString())))
 
-                link.NavigateUrl = "Evidencia.aspx?id=" + encodedString
+                'Dim encodedRequisito = System.Text.Encoding.UTF8.GetBytes(RequisitoLink.Text)
+                'Dim nameReq = System.Convert.ToBase64String(encodedRequisito)
+
+
+                link.NavigateUrl = "Evidencia.aspx?id=" + encodedString + "&req=" + encodedString2 + "&ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&rn=" + nameReq
 
             End If
+
+            Dim encodedStringId As String = (Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(IdRequisito.ToString())))
+            Dim encodedStringReq = System.Text.Encoding.UTF8.GetBytes(RequisitoLink.Text)
+            Dim s = System.Convert.ToBase64String(encodedStringReq)
+
+            RequisitoLink.NavigateUrl = "Requisito.aspx?id=" + encodedStringId + "&req=" + s
+            'Select Case IdRequisito
+
+            '    Case 1
+
+            '        link.Visible = True
+            '        link.Target = "_blank"
+
+            '        link.NavigateUrl = "Evidencia.aspx?id=" + encodedString + "&req=" + encodedString2 + "&ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&rn=" + nameReq
+            '        Estado.Text = ""
+            '        lblFecha.Text = ""
+
+            '    Case 18
+            '        link.Visible = True
+            '        link.Target = "_blank"
+
+            '        link.NavigateUrl = "Evidencia.aspx?id=" + encodedString + "&req=" + encodedString2 + "&ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&rn=" + nameReq
+            '        Estado.Text = ""
+            '        lblFecha.Text = ""
+
+            '    Case 19
+            '        link.Visible = True
+            '        link.Target = "_blank"
+
+            '        link.NavigateUrl = "Evidencia.aspx?id=" + encodedString + "&req=" + encodedString2 + "&ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&rn=" + nameReq
+            '        Estado.Text = ""
+            '        lblFecha.Text = ""
+
+            '    Case 20
+            '        link.Visible = True
+            '        link.Target = "_blank"
+
+            '        link.NavigateUrl = "Evidencia.aspx?id=" + encodedString + "&req=" + encodedString2 + "&ins=" + CType(Me.Master, Admin).IdInstalacion.ToString() + "&rn=" + nameReq
+            '        Estado.Text = ""
+            '        lblFecha.Text = ""
+
+            '    Case Else
+            '        If Estado.Text = "Aprobada" Then
+            '            IconAprobada.Visible = True
+            '        ElseIf Estado.Text = "Rechazada" Then
+            '            IconRojoe.Visible = True
+            '        ElseIf Estado.Text = "Pendiente de Aprobación" Then
+            '            IconEnAprobacion.Visible = True
+            '        ElseIf Estado.Text = "No Aplica" Then
+            '            IconNoAplica2.Visible = True
+            '            link.Visible = False
+            '        Else
+
+            '            IconRojoe.Visible = True
+            '        End If
+
+
+            'End Select
             If Estado.Text = "Aprobada" Then
                 IconAprobada.Visible = True
             ElseIf Estado.Text = "Rechazada" Then
@@ -75,6 +147,9 @@
 
                 IconRojoe.Visible = True
             End If
+
+
+
 
         Next
     End Sub
